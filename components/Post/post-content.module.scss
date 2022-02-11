@@ -1,10 +1,21 @@
 .markdown-content {
+  padding: 0 0.5rem;
   max-width: 960px;
   margin: auto;
+
+  p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
 
   pre {
     padding: 0.5rem;
     background-color: #00000010;
     border-radius: 0.5rem;
+  }
+
+  img {
+    width: 100%;
+    border-radius: 1rem;
   }
 }

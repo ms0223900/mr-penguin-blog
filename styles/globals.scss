@@ -14,3 +14,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {}
+
+.video--wrapper {
+  position: relative;
+  padding-bottom: 56%;
+  width: 100%;
+  height: 0;
+
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}

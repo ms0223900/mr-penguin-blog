@@ -115,6 +115,6 @@ const mockArticle = {
   <h1>Hi</h1>
   
   `,
-}
+};
 
-export default mockArticle
+export default mockArticle;

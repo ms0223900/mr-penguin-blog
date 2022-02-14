@@ -1,0 +1,21 @@
+.nav-header {
+  display: flex;
+  align-items: center;
+
+  ul {
+    li {
+      list-style-type: none;
+      margin: 0 3rem;
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        border-color: #ddd;
+        border-bottom: 3px solid #ddd;
+      }
+    }
+  }
+
+  .nav-list--wrapper {
+    display: flex;
+  }
+}

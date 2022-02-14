@@ -1,0 +1,15 @@
+.nav-item {
+  // background-color: #aaa;
+
+  &:hover {
+    .sub-nav-list--wrapper {
+      display: block;
+    }
+  }
+
+  .sub-nav-list--wrapper {
+    position: absolute;
+    top: 60px;
+    display: none;
+  }
+}

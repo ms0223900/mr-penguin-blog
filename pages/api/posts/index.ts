@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import posts from 'static/mock/posts';
+import posts from 'static/posts';
 import { PostResponse } from './[post_id]';
 
 export type SinglePostFromPostList = Omit<PostResponse, 'content'>;

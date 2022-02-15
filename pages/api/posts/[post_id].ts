@@ -1,12 +1,8 @@
+import { Image, SinglePost } from 'common-types';
 import { NextApiRequest, NextApiResponse } from 'next';
-import posts from 'static/mock/posts';
+import posts from 'static/posts';
 
-export interface PostResponse {
-  id: string;
-  title: string;
-  description: string;
-  content: string;
-}
+export type PostResponse = SinglePost;
 
 export default function handler(
   req: NextApiRequest,

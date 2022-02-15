@@ -1,4 +1,7 @@
+@import '/styles/utils/breakpoints';
+
 .root {
+  z-index: 100000;
   position: sticky;
   top: 0;
   border-bottom: 4px solid var(--primary-main);
@@ -11,12 +14,16 @@
     padding: 0.25rem 0;
 
     .logo {
-      padding: 0 3rem;
+      padding: 0 1rem;
       white-space: pre-wrap;
       text-align: center;
       font-weight: bolder;
       font-size: 24px;
       color: var(--primary-main);
+
+      @include md() {
+        padding: 0 3rem;
+      }
     }
 
     ul {

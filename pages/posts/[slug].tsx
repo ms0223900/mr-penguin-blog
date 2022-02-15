@@ -5,13 +5,15 @@ import mockArticle from 'static/mock/mock-article';
 import Head from 'next/head';
 import { PostResponse } from 'pages/api/posts/[post_id]';
 import { API } from 'config';
+import { SinglePost } from 'common-types';
 
 export interface PostViewProps extends PostContentProps {
   title: string;
   description: string;
 }
 
-const PostView = ({ title, description, content }: PostViewProps) => {
+const PostView = (props: PostViewProps) => {
+  const { title, description, content } = props;
   return (
     <div>
       <Head>
@@ -19,7 +21,7 @@ const PostView = ({ title, description, content }: PostViewProps) => {
         <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PostContent content={content} />
+      <PostContent {...props} />
     </div>
   );
 };
@@ -40,10 +42,11 @@ export const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
   const postId = params?.slug;
   const res = (await fetch(`${API}/api/posts/${postId}`).then((res) =>
     res.json()
-  )) as { data: PostResponse | null };
+  )) as { data: SinglePost | null };
 
-  let articleData: PostResponse = {
+  let articleData: SinglePost = {
     id: '',
+    subTitle: '',
     title: 'NotFound',
     description: 'Post not found',
     content: '',

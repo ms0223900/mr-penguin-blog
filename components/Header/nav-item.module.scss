@@ -1,10 +1,16 @@
+@import '/styles/utils/breakpoints';
+
 .nav-item {
   position: relative;
-  padding: 1rem 2rem;
+  padding: 1rem;
   border-bottom: 2px solid var(--primary-main);
   border-color: transparent;
   // padding-right: 3rem;
   // background-color: #aaa;
+
+  @include md() {
+    padding: 1rem 2rem;
+  }
 
   &:hover {
     border-color: var(--primary-main);

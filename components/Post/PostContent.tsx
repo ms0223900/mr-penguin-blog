@@ -1,3 +1,8 @@
+import { Container, Divider, Theme, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Box } from '@mui/system';
+import { SinglePost } from 'common-types';
+import replaceMarkdownHighlightContent from 'lib/functions/replaceMarkdownHighlightContent';
 import React, { memo } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -5,38 +10,49 @@ import remarkGfm from 'remark-gfm';
 import remarkHeadingId from 'remark-heading-id';
 import styles from './post-content.module.scss';
 
-export interface PostContentProps {
-  content: string;
-}
+export type PostContentProps = SinglePost;
 
-const replaceHighlight = (content: string) => {
-  const matched = content.matchAll(/\s?==.+==\s?/g);
-  if (!matched) return content;
+const useStyles = makeStyles<Theme>(
+  (theme) => ({
+    root: {},
+    titleWrapper: {
+      padding: `${theme.spacing(2)} 0`,
+      paddingLeft: theme.spacing(1),
+    },
+    postTitle: {
+      ...theme.typography.h4,
+      fontWeight: 'bolder',
+    },
+    postSubtitle: {
+      ...theme.typography.h5,
+    },
+  }),
+  {
+    name: 'MuiCustom',
+  }
+);
 
-  const matchedArr = [...matched];
-  let res = content;
-  matchedArr.forEach((matched) => {
-    const matchedStr = matched[0];
-    const markedStr = matchedStr
-      .replace(' ==', '<mark>')
-      .replace('== ', '</mark>');
-    res = res.replace(matchedStr, markedStr);
-  });
-
-  return res;
-};
-
-const PostContent = ({ content }: PostContentProps) => {
+const PostContent = ({ title, subTitle, content }: PostContentProps) => {
+  const classes = useStyles();
   return (
-    <div>
+    <Container>
+      <Box className={classes.titleWrapper}>
+        <Typography className={classes.postTitle} component={'h1'}>
+          {title}
+        </Typography>
+        <Typography className={classes.postSubtitle} component={'h2'}>
+          {subTitle}
+        </Typography>
+      </Box>
+      <Divider />
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm, remarkHeadingId]}
         className={styles['markdown-content']}
       >
-        {replaceHighlight(content)}
+        {replaceMarkdownHighlightContent(content)}
       </ReactMarkdown>
-    </div>
+    </Container>
   );
 };
 

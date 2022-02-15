@@ -4,6 +4,7 @@ const posts: PostResponse[] = [
   {
     id: '2022-02-10',
     title: '2022 02 10 日記',
+    subTitle: '任天堂Direct 今年的ND還算有新意',
     description:
       '任天堂Direct\n今年的ND還算有新意，至少完全沒有冷場，出現許多完全沒有料到作品，尤其是那款殺人足球，看起來還蠻有趣的，而且就是因為預告片看不太出來詳細的玩法，更令人好奇這款遊戲到底"好玩在哪"，光從PV來看，內容似乎不多，就是互相踢踢足球這樣。',
     content: `
@@ -56,17 +57,23 @@ const posts: PostResponse[] = [
   {
     id: '2022-02-09',
     title: '2022 02 09 日記',
+    subTitle: '部落格的流量策略',
+    thumbnail: {
+      src: 'https://i.imgur.com/Z7G983zh.jpg',
+    },
     description: ':))',
     content: `### 部落格的流量策略
 既然WordPress的SEO做得比較好， ==那就用WordPress不就好了？== 
-
 \`\`\`
 // some code here
 const a = 'b';
 a === b; // false
 \`\`\`
 
-產出各種時下熱門議題的"教學"文章， ==作為"導流"吸引近網頁== ，似乎是個不錯的做法。`,
+產出各種時下熱門議題的"教學"文章， ==作為"導流"吸引近網頁== ，似乎是個不錯的做法。
+
+![](https://i.imgur.com/Z7G983zh.jpg)
+`,
   },
 ];
 

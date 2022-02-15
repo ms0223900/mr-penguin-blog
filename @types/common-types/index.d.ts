@@ -7,4 +7,20 @@ declare module 'common-types' {
     link?: string;
     subNavList: SingleNav[];
   }
+
+  interface SinglePost {
+    id: string;
+    title: string;
+    subTitle: string;
+    description: string;
+    content: string;
+    thumbnail?: Image;
+  }
+
+  interface Image {
+    name?: string;
+    src: string;
+  }
+
+  type ID = string | number;
 }

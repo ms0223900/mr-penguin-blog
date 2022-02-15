@@ -2,6 +2,7 @@ import { Container, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import PostCardItem from 'components/Post/PostCardItem';
 import { API } from 'config';
+import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import { GetServerSideProps, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -43,8 +44,9 @@ const PostListView = (props: PostListViewProps) => {
 
 export const getServerSideProps: GetServerSideProps<
   PostListViewProps
-> = async () => {
-  const res = (await fetch(`${API}/api/posts`).then((res) => res.json())) as {
+> = async ({ req }) => {
+  const uri = getUriFromReqHeaders(req.headers);
+  const res = (await fetch(`${uri}/api/posts`).then((res) => res.json())) as {
     data: PostListResponse;
   };
   const postListData = res.data;

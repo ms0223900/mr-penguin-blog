@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { PostResponse } from 'pages/api/posts/[post_id]';
 import { API } from 'config';
 import { SinglePost } from 'common-types';
+import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 
 export interface PostViewProps extends PostContentProps {
   title: string;
@@ -38,9 +39,13 @@ const PostView = (props: PostViewProps) => {
 
 export const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
   params,
+  req,
+  resolvedUrl,
 }) => {
+  const uri = getUriFromReqHeaders(req.headers);
+
   const postId = params?.slug;
-  const res = (await fetch(`${API}/api/posts/${postId}`).then((res) =>
+  const res = (await fetch(`${uri}/api/posts/${postId}`).then((res) =>
     res.json()
   )) as { data: SinglePost | null };
 

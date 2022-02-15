@@ -7,10 +7,10 @@ import Link from 'next/link';
 
 const NavHeader = () => {
   return (
-    <Box component={'nav'} paddingY={2} paddingX={1}>
+    <Box className={styles.root} component={'nav'} paddingX={1}>
       <Container className={styles['nav-header']}>
         <Link href={'/'}>
-          <a>{'Logo'}</a>
+          <a className={styles.logo}>{'Mr.Penguin'}</a>
         </Link>
         <ul className={styles['nav-list--wrapper']}>
           {navListData.map((n, i) => (

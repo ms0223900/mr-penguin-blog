@@ -17,9 +17,7 @@ const NavItem = ({ title, link, icon: SvgIcon, subNavList }: NavItemProps) => {
       {subNavList.length > 0 && (
         <List className={styles['sub-nav-list--wrapper']}>
           {subNavList.map((sub) => (
-            <ListItem key={sub.link}>
-              <NavItem {...sub} />
-            </ListItem>
+            <NavItem key={sub.link} {...sub} />
           ))}
         </List>
       )}

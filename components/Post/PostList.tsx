@@ -35,11 +35,23 @@ const PostListView = (props: PostListViewProps) => {
   return (
     <div>
       <Head>
-        <title>{`Mr.Penguin | ${'Post List'}`}</title>
+        <title>{`Mr.Penguin | ${'文章列表'}`}</title>
         <meta name="description" content={'Latest Posts'} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PostList {...props} />
+      <Container
+        style={{
+          padding: '1rem',
+        }}
+      >
+        <Grid container spacing={1}>
+          {props.postListData.map((p) => (
+            <Grid key={p.id} item padding={0.5} xs={12} md={4}>
+              <PostCardItem {...p} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </div>
   );
 };

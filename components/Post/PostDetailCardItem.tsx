@@ -57,7 +57,8 @@ const useStyles = makeStyles<Theme>(
       },
     },
     seeMore: {
-      position: 'relative',
+      position: 'absolute',
+      bottom: theme.spacing(1),
       zIndex: 1,
       paddingLeft: theme.spacing(4),
       textDecoration: 'underline',
@@ -65,7 +66,7 @@ const useStyles = makeStyles<Theme>(
     },
   }),
   {
-    name: 'MuiCustomStyle',
+    name: 'PostDetailCardItem',
   }
 );
 

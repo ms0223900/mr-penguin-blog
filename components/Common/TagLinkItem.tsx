@@ -38,7 +38,9 @@ const TagLinkItem = (props: TagLinkItemProps) => {
   const { tagName, color } = props;
   const classes = useStyles(props);
   return (
-    <Link href={STATIC_ROUTES.getTagSearchWithTagName(tagName)}>
+    <Box
+    // href={STATIC_ROUTES.getTagSearchWithTagName(tagName)}
+    >
       <a
         className={classes.root}
         style={{
@@ -47,7 +49,7 @@ const TagLinkItem = (props: TagLinkItemProps) => {
       >
         {tagName}
       </a>
-    </Link>
+    </Box>
   );
 };
 

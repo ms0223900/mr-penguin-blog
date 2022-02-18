@@ -11,6 +11,8 @@ const mandora: SinglePost = {
     name: 'mandora-thumbnail',
     src: 'https://imgur.com/2zoow9w.jpg',
   },
+  tagList: ['思考法'],
+  createdAt: '2022-02-02 11:00:13',
   content: `
 ==以單一核心(目標)做開展的思考法，就像曼陀羅的圖形一樣。==
 

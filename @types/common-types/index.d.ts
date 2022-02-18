@@ -1,6 +1,10 @@
 declare module 'common-types' {
   import { SvgIconComponent } from '@mui/icons-material';
   import { SvgIconClassKey } from '@mui/material';
+
+  interface TimeRecord {
+    createdAt: string;
+  }
   interface SingleNav {
     title: string;
     icon?: SvgIconComponent | null;
@@ -8,13 +12,14 @@ declare module 'common-types' {
     subNavList: SingleNav[];
   }
 
-  interface SinglePost {
+  interface SinglePost extends TimeRecord {
     id: string;
     title: string;
     subTitle: string;
     description: string;
     content: string;
     thumbnail?: Image;
+    tagList: string[];
   }
 
   interface Image {

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import posts from 'static/posts';
 import { PostResponse } from './[post_id]';
 
-export type SinglePostFromPostList = Omit<PostResponse, 'content'>;
+export type SinglePostFromPostList = PostResponse;
 export type PostListResponse = SinglePostFromPostList[];
 
 export default function handler(
@@ -11,7 +11,7 @@ export default function handler(
 ) {
   const data = posts.map((p) => ({
     ...p,
-    content: '',
+    // content: '',
   }));
   res.status(200).json({
     data,

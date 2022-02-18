@@ -1,12 +1,9 @@
-import React, { memo } from 'react';
-import PostContent, { PostContentProps } from 'components/Post/PostContent';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
-import mockArticle from 'static/mock/mock-article';
-import Head from 'next/head';
-import { PostResponse } from 'pages/api/posts/[post_id]';
-import { API } from 'config';
 import { SinglePost } from 'common-types';
+import PostContent, { PostContentProps } from 'components/Post/PostContent';
 import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import React, { memo } from 'react';
 
 export interface PostViewProps extends PostContentProps {
   title: string;
@@ -55,6 +52,8 @@ export const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
     title: 'NotFound',
     description: 'Post not found',
     content: '',
+    tagList: [],
+    createdAt: '',
   };
   if (res.data) {
     articleData = res.data;

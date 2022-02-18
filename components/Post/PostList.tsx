@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { PostListResponse, SinglePostFromPostList } from 'pages/api/posts';
 import React, { memo } from 'react';
+import PostDetailCardItem from './PostDetailCardItem';
 
 export interface PostListViewProps {
   postListData: SinglePostFromPostList[];
@@ -21,8 +22,9 @@ export const PostList = ({ postListData }: PostListViewProps) => (
   >
     <Grid container spacing={1}>
       {postListData.map((p) => (
-        <Grid key={p.id} item padding={0.5} xs={12} md={4}>
-          <PostCardItem {...p} />
+        <Grid key={p.id} item padding={0.5} xs={12} md={12}>
+          {/* <PostCardItem {...p} /> */}
+          <PostDetailCardItem {...p} />
         </Grid>
       ))}
     </Grid>

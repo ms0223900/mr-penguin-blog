@@ -17,6 +17,10 @@ const Home: NextPage<HomeProps> = (props: HomeProps) => {
       <Head>
         <title>{'Mr.Penguin'}</title>
         <meta name="description" content="Mr.Penguin Blog" />
+        <meta
+          name="google-site-verification"
+          content="5Ub9XZ7Mr0dXhHacFeVAIsYKOgw5lQOcfX0KtqanCuM"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

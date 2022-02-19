@@ -1,9 +1,10 @@
 import { SinglePost } from 'common-types';
 import PostContent, { PostContentProps } from 'components/Post/PostContent';
+import GA_EVENTS from 'ga';
 import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 export interface PostViewProps extends PostContentProps {
   title: string;
@@ -12,10 +13,15 @@ export interface PostViewProps extends PostContentProps {
 
 const PostView = (props: PostViewProps) => {
   const { title, description, content } = props;
+
+  useEffect(() => {
+    GA_EVENTS.post.browse(props.id);
+  }, [props.id]);
+
   return (
     <div>
       <Head>
-        <title>{`Mr.Penguin | ${title}`}</title>
+        <title>{`${title} | Mr.Penguin`}</title>
         <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>

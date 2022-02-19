@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-script-in-document */
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import { theme } from '../src/theme';
 import createEmotionCache from '../src/theme/createEmotionCache';
+import Script from 'next/script';
 
 export default class MyDocument extends Document<any> {
   render() {

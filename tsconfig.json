@@ -17,6 +17,7 @@
     "jsx": "preserve",
     "incremental": true,
     "typeRoots": ["./@types"],
+    "types": ["@types/gtag.js"],
     "downlevelIteration": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -11,6 +11,7 @@ const nuxt3Pinia: SinglePost = {
   subTitle: 'Nuxt3配鳳梨吃，更好吃 🍍',
   createdAt: '2022-02-22',
   content: `
+  ![pinia say hi](https://imgur.com/d6uBDkM.jpg)
   ## 前言
   
   Nuxt3雖有原生支援store，vue本身也有provide和inject可以用，但從原本的專案(vue3 + vuex)搬到Nuxt3，還是想直接用vuex無痛升級。

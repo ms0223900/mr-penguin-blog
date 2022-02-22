@@ -1,5 +1,6 @@
 import { SinglePost } from 'common-types';
 import PostContent, { PostContentProps } from 'components/Post/PostContent';
+import { WEB_TITLE } from 'config';
 import GA_EVENTS from 'ga';
 import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import { GetServerSideProps } from 'next';
@@ -21,7 +22,7 @@ const PostView = (props: PostViewProps) => {
   return (
     <div>
       <Head>
-        <title>{`${title} | Mr.Penguin`}</title>
+        <title>{`${title} | ${WEB_TITLE}`}</title>
         <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>

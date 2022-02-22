@@ -1,7 +1,7 @@
 import { Container, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import PostCardItem from 'components/Post/PostCardItem';
-import { API } from 'config';
+import { API, WEB_TITLE } from 'config';
 import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import { GetServerSideProps, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -35,7 +35,7 @@ const PostListView = (props: PostListViewProps) => {
   return (
     <div>
       <Head>
-        <title>{`Mr.Penguin | ${'文章列表'}`}</title>
+        <title>{`${'文章列表'} | ${WEB_TITLE}`}</title>
         <meta name="description" content={'Latest Posts'} />
         <link rel="icon" href="/favicon.ico" />
       </Head>

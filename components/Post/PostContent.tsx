@@ -14,7 +14,9 @@ export type PostContentProps = SinglePost;
 
 const useStyles = makeStyles<Theme>(
   (theme) => ({
-    root: {},
+    root: {
+      backgroundColor: theme.palette.common.white,
+    },
     titleWrapper: {
       padding: `${theme.spacing(2)} 0`,
       paddingLeft: theme.spacing(1),
@@ -35,7 +37,7 @@ const useStyles = makeStyles<Theme>(
 const PostContent = ({ title, subTitle, content }: PostContentProps) => {
   const classes = useStyles();
   return (
-    <Container>
+    <Container className={classes.root}>
       <Box className={classes.titleWrapper}>
         <Typography className={classes.postTitle} component={'h1'}>
           {title}

@@ -3,6 +3,7 @@ import {
   getServerSideProps,
   PostListViewProps,
 } from 'components/Post/PostList';
+import { WEB_TITLE } from 'config';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -15,8 +16,8 @@ const Home: NextPage<HomeProps> = (props: HomeProps) => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{'Mr.Penguin'}</title>
-        <meta name="description" content="Mr.Penguin Blog" />
+        <title>{WEB_TITLE + "'s Blog"}</title>
+        <meta name="description" content="Penguin Cho's Blog" />
         <meta
           name="google-site-verification"
           content="5Ub9XZ7Mr0dXhHacFeVAIsYKOgw5lQOcfX0KtqanCuM"

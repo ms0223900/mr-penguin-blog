@@ -25,7 +25,7 @@ const useStyles = makeStyles<Theme>(
       overflow: 'hidden',
 
       '&:hover': {
-        boxShadow: theme.shadows[5],
+        boxShadow: theme.shadows[6],
       },
       '&::before': {
         zIndex: 0,
@@ -82,7 +82,7 @@ const PostDetailCardItem = (props: PostDetailCardItem) => {
     <Box className={classes.root}>
       <Link href={STATIC_ROUTES.getPostWithId(id)}>
         <a>
-          <Paper className={classes.card}>
+          <Paper className={classes.card} elevation={3}>
             <Box className={classes.postInfo}>
               <Typography>{createdAt}</Typography>
               {tagList.map((t) => (

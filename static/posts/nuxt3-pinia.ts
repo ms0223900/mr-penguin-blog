@@ -7,7 +7,7 @@ const nuxt3Pinia: SinglePost = {
     src: 'https://pinia.vuejs.org/logo.svg',
   },
   description:
-    'vuex在nuxt3不管怎樣就是裝不起來(如果有大大裝的起來，還請不吝指教)，爬文爬了許久，終於找到了Pinia這個可愛的鳳梨。\nPinia是近期熱門的輕量化函式庫，用於替代vuex的"全域資料管理的函式庫，適合用於中小型專案',
+    'Pinia是近期熱門的輕量化函式庫，用於替代vuex的"全域資料管理的函式庫，適合低複雜度的中小型專案',
   subTitle: 'Nuxt3配鳳梨吃，更好吃 🍍',
   createdAt: '2022-02-22',
   content: `

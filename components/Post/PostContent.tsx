@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { SinglePost } from 'common-types';
 import replaceMarkdownHighlightContent from 'lib/functions/replaceMarkdownHighlightContent';
+import Head from 'next/head';
 import React, { memo } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -34,10 +35,21 @@ const useStyles = makeStyles<Theme>(
   }
 );
 
-const PostContent = ({ title, subTitle, content }: PostContentProps) => {
+const PostContent = ({
+  title,
+  subTitle,
+  description,
+  content,
+  thumbnail,
+}: PostContentProps) => {
   const classes = useStyles();
   return (
     <Container className={classes.root}>
+      <Head>
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={thumbnail?.src} />
+      </Head>
       <Box className={classes.titleWrapper}>
         <Typography className={classes.postTitle} component={'h1'}>
           {title}

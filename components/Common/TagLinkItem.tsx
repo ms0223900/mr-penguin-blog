@@ -17,6 +17,7 @@ const useStyles = makeStyles<Theme, TagLinkItemProps>(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      margin: theme.spacing(0.5),
       padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
       borderRadius: `10000px`,
       backgroundColor: (props) => {

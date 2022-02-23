@@ -188,7 +188,7 @@ const nuxt3Pinia: SinglePost = {
   > 除了放在setup()中，也可以在組件外使用，詳見官方文件:
   > 
   
-  [https://pinia.vuejs.org/ssr/nuxt.html#installation](https://pinia.vuejs.org/ssr/nuxt.html#installation)
+  [文件連結](https://pinia.vuejs.org/ssr/nuxt.html#using-the-store-outside-of-setup)
   
   ---
   

@@ -13,7 +13,7 @@ const NavHeader = () => {
         <Link href={'/'}>
           <a className={styles.logo}>
             {WEB_TITLE}
-            <span>{"Penguin's Dialy Life"}</span>
+            <span>{"Penguin's Daily Life"}</span>
           </a>
         </Link>
         <ul className={styles['nav-list--wrapper']}>

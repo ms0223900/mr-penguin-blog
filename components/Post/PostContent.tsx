@@ -3,8 +3,9 @@ import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { SinglePost } from 'common-types';
 import replaceMarkdownHighlightContent from 'lib/functions/replaceMarkdownHighlightContent';
+import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
 import Head from 'next/head';
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -42,7 +43,27 @@ const PostContent = ({
   content,
   thumbnail,
 }: PostContentProps) => {
+  const markdownWrapperRef = useRef<HTMLDivElement>(null);
   const classes = useStyles();
+  // test
+  useEffect(() => {
+    if (markdownWrapperRef.current) {
+      // console.log(markdownWrapperRef.current);
+      const el = markdownWrapperRef.current;
+      const heading1 = el.getElementsByTagName('h1');
+      const heading2 = el.getElementsByTagName('h2');
+      const heading3 = el.getElementsByTagName('h3');
+      const headings = [...heading1, ...heading2, ...heading3];
+
+      headings.forEach((el) => {
+        el.setAttribute('id', el.innerText);
+        const link = document.createElement('a');
+        link.innerHTML = `#`;
+        link.href = `#${el.innerText}`;
+        el.prepend(link);
+      });
+    }
+  }, []);
   return (
     <Container className={classes.root}>
       <Head>
@@ -59,13 +80,15 @@ const PostContent = ({
         </Typography>
       </Box>
       <Divider />
-      <ReactMarkdown
-        rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm, remarkHeadingId]}
-        className={styles['markdown-content']}
-      >
-        {replaceMarkdownHighlightContent(content)}
-      </ReactMarkdown>
+      <div ref={markdownWrapperRef}>
+        <ReactMarkdown
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm, remarkHeadingId]}
+          className={styles['markdown-content']}
+        >
+          {replaceMarkdownHighlightContent(content)}
+        </ReactMarkdown>
+      </div>
     </Container>
   );
 };

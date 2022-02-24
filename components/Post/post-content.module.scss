@@ -5,6 +5,28 @@
   font-size: 18px;
   // background-color: #fff;
 
+  h1,
+  h2,
+  h3 {
+    scroll-margin-top: 60px;
+
+    &::before {
+      content: ' ';
+      display: block;
+      padding-top: 90px;
+      margin-top: -75px;
+    }
+
+    a {
+      float: left;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   h2 {
     padding: 1rem 0;
     padding-top: 1.5rem;

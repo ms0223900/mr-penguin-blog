@@ -1,0 +1,8 @@
+@import '../../styles/utils/breakpoints';
+
+.table-list {
+  display: none;
+  @include xl {
+    display: block;
+  }
+}

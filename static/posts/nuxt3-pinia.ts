@@ -134,7 +134,7 @@ const nuxt3Pinia: SinglePost = {
   });
   \`\`\`
   
-  ### 在組件中使用
+  ### 在組件中使用 {#used-in-component}
   
   Counter.vue
   

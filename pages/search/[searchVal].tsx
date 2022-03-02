@@ -3,12 +3,10 @@ import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
 import { PostList } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
-import MainContext from 'context';
-import { GetServerSideProps, NextPageContext } from 'next';
-import { AppInitialProps } from 'next/app';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { memo, useContext, useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import posts from 'static/posts';
 
 const useQueryPost = () => {

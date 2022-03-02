@@ -1,22 +1,14 @@
-import { Box } from '@mui/material';
-import MainContext from 'context';
 import { useRouter } from 'next/router';
-import React, {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import SearchBar from './SearchBar';
 
 const useSearch = (initVal = '') => {
   const router = useRouter();
   const [val, setVal] = useState(initVal);
-  const { state, setState } = useContext(MainContext);
+  // const { state, setState } = useContext(MainContext);
 
   const handleSearch = useCallback(() => {
-    setState({ searchVal: val });
+    // setState({ searchVal: val });
     router.push({
       pathname: '/search/[searchVal]',
       query: {

@@ -28,4 +28,5 @@ declare module 'common-types' {
   }
 
   type ID = string | number;
+  type Callback = <Params>(...params: Params) => any;
 }

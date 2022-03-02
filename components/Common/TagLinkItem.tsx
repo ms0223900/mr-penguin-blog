@@ -1,6 +1,7 @@
 import { Box, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import { STATIC_ROUTES } from 'router';
 
@@ -36,20 +37,38 @@ const useStyles = makeStyles<Theme, TagLinkItemProps>(
 );
 
 const TagLinkItem = (props: TagLinkItemProps) => {
+  const router = useRouter();
   const { tagName, color } = props;
   const classes = useStyles(props);
   return (
     <Box
     // href={STATIC_ROUTES.getTagSearchWithTagName(tagName)}
     >
-      <a
-        className={classes.root}
-        style={{
-          backgroundColor: props.color || defaultColor,
+      <Link
+        href={{
+          pathname: '/search/[searchVal]',
+          query: {
+            searchVal: decodeURI(`@${tagName}`),
+          },
         }}
       >
-        {tagName}
-      </a>
+        <a
+          className={classes.root}
+          style={{
+            backgroundColor: props.color || defaultColor,
+          }}
+          // onClick={() => {
+          //   router.push({
+          //     pathname: '/search/[searchVal]',
+          //     query: {
+          //       searchVal: `@${tagName}`,
+          //     },
+          //   });
+          // }}
+        >
+          {tagName}
+        </a>
+      </Link>
     </Box>
   );
 };

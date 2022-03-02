@@ -1,0 +1,50 @@
+@import '/styles/utils/breakpoints';
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+
+  @include md {
+    width: auto;
+  }
+
+  .mobile-search-btn {
+    // display: block;
+    visibility: visible;
+
+    @include md {
+      // display: none;
+      visibility: hidden;
+    }
+  }
+
+  .search-input--wrapper {
+    // width: 0;
+    width: 100%;
+    transform: scaleX(0);
+    overflow: hidden;
+    transform-origin: right;
+    transition: 0.2s;
+    // display: none;
+    // visibility: hidden;
+
+    @include md {
+      // width: 100%;
+      // display: flex;
+      max-width: 360px;
+      transform: scaleX(1);
+      // visibility: visible;
+    }
+
+    &-expanded {
+      width: 100%;
+      transform: scaleX(1);
+      transition: 0.2s;
+      // display: flex;
+      // width: 200px;
+      visibility: visible;
+    }
+  }
+}

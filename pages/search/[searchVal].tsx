@@ -3,7 +3,7 @@ import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
 import { PostList } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { memo, useEffect, useMemo, useState } from 'react';
@@ -95,10 +95,27 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
   );
 };
 
+// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => ({
+//   paths: [],
+//   fallback: 'blocking',
+// });
+
+// export const getStaticProps: GetStaticProps<SearchedResultPageProps> = async (
+//   ctx
+// ) => {
+//   const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
+
+//   return {
+//     props: {
+//       headTitle,
+//     },
+//   };
+// };
+
 export const getServerSideProps: GetServerSideProps<
   SearchedResultPageProps
 > = async (ctx) => {
-  const headTitle = `搜尋: ${ctx.query.searchVal as string} | ${WEB_TITLE}`;
+  const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
 
   return {
     props: {

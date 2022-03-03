@@ -56,10 +56,12 @@ const PostListView = (props: PostListViewProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  PostListViewProps
-> = async ({ req }) => {
-  const uri = getUriFromReqHeaders(req.headers);
+export const getStaticProps: GetStaticProps<PostListViewProps> = async (
+  ctx
+) => {
+  // ctx.
+  // const uri = getUriFromReqHeaders(req.headers);
+  const uri = API;
   const res = (await fetch(`${uri}/api/posts`).then((res) => res.json())) as {
     data: PostListResponse;
   };

@@ -1,6 +1,6 @@
 import {
   PostList,
-  getServerSideProps,
+  getStaticProps,
   PostListViewProps,
 } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
@@ -30,6 +30,6 @@ const Home: NextPage<HomeProps> = (props: HomeProps) => {
   );
 };
 
-export { getServerSideProps };
+export { getStaticProps };
 
 export default Home;

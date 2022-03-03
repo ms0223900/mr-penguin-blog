@@ -1,3 +1,3 @@
-import PostList, { getServerSideProps } from 'components/Post/PostList';
-export { getServerSideProps };
+import PostList, { getStaticProps } from 'components/Post/PostList';
+export { getStaticProps };
 export default PostList;

@@ -2,13 +2,14 @@ import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { SinglePost } from 'common-types';
 import PostContent, { PostContentProps } from 'components/Post/PostContent';
-import { WEB_TITLE } from 'config';
+import { API, WEB_TITLE } from 'config';
 import GA_EVENTS from 'ga';
 import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import React, { memo, useEffect, useMemo } from 'react';
+import posts from 'static/posts';
 import styles from './slug.module.scss';
 
 export interface PostViewProps extends PostContentProps {
@@ -82,23 +83,21 @@ const PostView = (props: PostViewProps) => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   return ({
-//     paths: [
-//       '/posts/2022-02-10',
-//       '/posts/2022-02-09',
-//     ],
-//     fallback: 'blocking',
-//   })
-// }
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = posts.map((p) => `/posts/${p.id}`);
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
 
-export const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
+export const getStaticProps: GetStaticProps<PostViewProps> = async ({
   params,
-  req,
-  resolvedUrl,
+  // req,
+  // resolvedUrl,
 }) => {
-  const uri = getUriFromReqHeaders(req.headers);
-
+  // const uri = getUriFromReqHeaders(req.headers);
+  const uri = API;
   const postId = params?.slug;
   const res = (await fetch(`${uri}/api/posts/${postId}`).then((res) =>
     res.json()

@@ -19,8 +19,6 @@ const useQueryPost = () => {
   const [postList, setPostList] = useState<SinglePost[]>([]);
 
   const handleQuery = (searchVal: string) => {
-    console.log(searchVal);
-
     if (!searchVal) {
       setPostList([]);
       return [];
@@ -56,7 +54,7 @@ const useQueryPost = () => {
 };
 
 export interface SearchedResultPageProps {
-  headTitle: string;
+  headTitle?: string;
 }
 
 const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
@@ -66,7 +64,7 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
   return (
     <Container>
       <Head>
-        <title>{headTitle}</title>
+        <title>{headTitle || `搜尋: ${searchVal} | ${WEB_TITLE}`}</title>
       </Head>
       <Typography textAlign={'center'}>
         {`以下是搜尋: ${searchVal} 的結果`}
@@ -112,16 +110,16 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
 //   };
 // };
 
-export const getServerSideProps: GetServerSideProps<
-  SearchedResultPageProps
-> = async (ctx) => {
-  const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
+// export const getServerSideProps: GetServerSideProps<
+//   SearchedResultPageProps
+// > = async (ctx) => {
+//   const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
 
-  return {
-    props: {
-      headTitle,
-    },
-  };
-};
+//   return {
+//     props: {
+//       headTitle,
+//     },
+//   };
+// };
 
 export default memo(SearchedResultPage);

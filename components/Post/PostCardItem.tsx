@@ -7,7 +7,7 @@ import { STATIC_ROUTES } from 'router';
 
 const useStyles = makeStyles<Theme, PostCardItemProps>(
   (theme) => {
-    console.log(theme);
+    // console.log(theme);
     return {
       root: {
         // color: theme.palette.primary.main,

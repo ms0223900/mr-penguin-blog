@@ -23,7 +23,7 @@ const useSearch = (initVal = '') => {
 
   useEffect(() => {
     const searchVal = router.query.searchVal as string;
-    console.log(searchVal);
+    // console.log(searchVal);
     if (!searchVal) {
       setVal('');
       return;

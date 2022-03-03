@@ -8,6 +8,7 @@ import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { getMatchedPost } from 'pages/api/posts/[post_id]';
 import React, { memo, useEffect, useMemo } from 'react';
 import posts from 'static/posts';
 import styles from './slug.module.scss';
@@ -98,10 +99,14 @@ export const getStaticProps: GetStaticProps<PostViewProps> = async ({
 }) => {
   // const uri = getUriFromReqHeaders(req.headers);
   const uri = API;
-  const postId = params?.slug;
-  const res = (await fetch(`${uri}/api/posts/${postId}`).then((res) =>
-    res.json()
-  )) as { data: SinglePost | null };
+  const postId = params?.slug as string;
+  // const res = (await fetch(`${uri}/api/posts/${postId}`).then((res) =>
+  //   res.json()
+  // )) as { data: SinglePost | null };
+
+  const res = {
+    data: getMatchedPost(postId),
+  };
 
   let articleData: SinglePost = {
     id: '',

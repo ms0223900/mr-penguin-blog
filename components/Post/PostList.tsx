@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { PostListResponse, SinglePostFromPostList } from 'pages/api/posts';
 import React, { memo } from 'react';
+import posts from 'static/posts';
 import PostDetailCardItem from './PostDetailCardItem';
 
 export interface PostListViewProps {
@@ -62,8 +63,11 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
   // ctx.
   // const uri = getUriFromReqHeaders(req.headers);
   const uri = API;
-  const res = (await fetch(`${uri}/api/posts`).then((res) => res.json())) as {
-    data: PostListResponse;
+  // const res = (await fetch(`${uri}/api/posts`).then((res) => res.json())) as {
+  //   data: PostListResponse;
+  // };
+  const res = {
+    data: posts,
   };
   const postListData = res.data;
 

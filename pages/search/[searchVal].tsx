@@ -93,22 +93,22 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => ({
-//   paths: [],
-//   fallback: 'blocking',
-// });
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => ({
+  paths: [],
+  fallback: 'blocking',
+});
 
-// export const getStaticProps: GetStaticProps<SearchedResultPageProps> = async (
-//   ctx
-// ) => {
-//   const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
+export const getStaticProps: GetStaticProps<SearchedResultPageProps> = async (
+  ctx
+) => {
+  const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
 
-//   return {
-//     props: {
-//       headTitle,
-//     },
-//   };
-// };
+  return {
+    props: {
+      headTitle,
+    },
+  };
+};
 
 // export const getServerSideProps: GetServerSideProps<
 //   SearchedResultPageProps

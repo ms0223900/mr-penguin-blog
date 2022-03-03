@@ -1,5 +1,6 @@
 import { Box, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { getSearchByValParams } from 'lib/custom-hooks/useSearchByVal';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { memo } from 'react';
@@ -44,14 +45,7 @@ const TagLinkItem = (props: TagLinkItemProps) => {
     <Box
     // href={STATIC_ROUTES.getTagSearchWithTagName(tagName)}
     >
-      <Link
-        href={{
-          pathname: '/search/[searchVal]',
-          query: {
-            searchVal: decodeURI(`@${tagName}`),
-          },
-        }}
-      >
+      <Link href={getSearchByValParams(decodeURI(`@${tagName}`))}>
         <a
           className={classes.root}
           style={{

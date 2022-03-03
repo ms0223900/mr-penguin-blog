@@ -3,6 +3,7 @@ import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
 import { PostList } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
+import useSearchByVal from 'lib/custom-hooks/useSearchByVal';
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -11,11 +12,7 @@ import posts from 'static/posts';
 
 const useQueryPost = () => {
   // const { state } = useContext(MainContext);
-  const router = useRouter();
-  const searchVal = useMemo(
-    () => decodeURIComponent(router.query.searchVal as string),
-    [router.query]
-  );
+  const { searchVal } = useSearchByVal();
   const [postList, setPostList] = useState<SinglePost[]>([]);
 
   const handleQuery = (searchVal: string) => {
@@ -93,15 +90,16 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => ({
-  paths: [],
-  fallback: 'blocking',
-});
+// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => ({
+//   paths: [],
+//   fallback: false,
+//   // fallback: 'blocking',
+// });
 
 export const getStaticProps: GetStaticProps<SearchedResultPageProps> = async (
   ctx
 ) => {
-  const headTitle = `搜尋: ${ctx.params?.searchVal as string} | ${WEB_TITLE}`;
+  const headTitle = `搜尋 | ${WEB_TITLE}`;
 
   return {
     props: {

@@ -1,20 +1,15 @@
+import useSearchByVal from 'lib/custom-hooks/useSearchByVal';
 import { useRouter } from 'next/router';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import SearchBar from './SearchBar';
 
 const useSearch = (initVal = '') => {
-  const router = useRouter();
+  const { searchVal, handleSearchByVal } = useSearchByVal();
   const [val, setVal] = useState(initVal);
   // const { state, setState } = useContext(MainContext);
 
   const handleSearch = useCallback(() => {
-    // setState({ searchVal: val });
-    router.push({
-      pathname: '/search/[searchVal]',
-      query: {
-        searchVal: val,
-      },
-    });
+    handleSearchByVal(val);
   }, [val]);
 
   const handleChange = useCallback((e: any) => {
@@ -22,7 +17,6 @@ const useSearch = (initVal = '') => {
   }, []);
 
   useEffect(() => {
-    const searchVal = router.query.searchVal as string;
     // console.log(searchVal);
     if (!searchVal) {
       setVal('');
@@ -30,7 +24,7 @@ const useSearch = (initVal = '') => {
     }
     setVal(searchVal);
     // if(!router.query)
-  }, [router.query.searchVal]);
+  }, [searchVal]);
 
   return {
     val,

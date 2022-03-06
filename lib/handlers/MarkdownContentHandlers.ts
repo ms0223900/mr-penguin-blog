@@ -1,5 +1,12 @@
+import { SinglePost } from 'common-types';
+
 const MarkdownContentHandlers = {
-  getSummaryContent: (content: string, maxContentStrLine = 10) => {
+  getSummaryContent: (
+    content: SinglePost['content'],
+    maxContentStrLine = 10
+  ) => {
+    if (!content) return '';
+
     const devided = content.split(/\n/g);
     // console.log(devided);
     const summaryContentList = devided.slice(0, maxContentStrLine);
@@ -7,7 +14,15 @@ const MarkdownContentHandlers = {
     return res;
   },
 
-  getHeadingTxtWithIdList: (content: string) => {
+  getHeadingTxtWithIdList: (
+    content: SinglePost['content']
+  ): {
+    level: number;
+    txt: string;
+    id: string;
+  }[] => {
+    if (!content) return [];
+
     const devided = content.split(/\n/g);
     const reg = /\#+\s.+(\s?\{\#.+\})?/g;
     const headingList = devided.filter((d) => !!d.match(reg));

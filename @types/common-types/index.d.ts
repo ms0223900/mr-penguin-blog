@@ -17,8 +17,8 @@ declare module 'common-types' {
     title: string;
     subTitle: string;
     description: string;
-    content: string;
-    thumbnail?: Image;
+    content: string | null;
+    thumbnail: Image | null;
     tagList: string[];
   }
 
@@ -29,4 +29,16 @@ declare module 'common-types' {
 
   type ID = string | number;
   type Callback = <Params>(...params: Params) => any;
+
+  export interface StrapiResponseAttr<Attrs> {
+    id: ID;
+    attributes: Attrs;
+  }
+
+  export interface StrapiResponseWithSingleAttr<Data> {
+    data: StrapiResponseAttr<Data>;
+  }
+  export interface StrapiResponseWithListAttr<Data> {
+    data: StrapiResponseAttr<Data>[];
+  }
 }

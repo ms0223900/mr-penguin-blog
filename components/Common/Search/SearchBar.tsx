@@ -49,7 +49,7 @@ const SearchBar = (props: SearchBarProps) => {
           ref={inputRef}
           fullWidth={true}
           autoFocus={true}
-          placeholder={'找所有文章'}
+          placeholder={'找所有文章(加上@可以利用標籤過濾)'}
           value={value}
           onKeyUp={(e) => {
             if (e.key === 'Enter') {

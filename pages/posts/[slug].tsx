@@ -4,13 +4,13 @@ import { SinglePost } from 'common-types';
 import PostContent, { PostContentProps } from 'components/Post/PostContent';
 import { API, WEB_TITLE } from 'config';
 import GA_EVENTS from 'ga';
-import getUriFromReqHeaders from 'lib/functions/getUriFromReqHeaders';
+import queryArticleByArticleId from 'gql/queryArticleByArticleId';
+import queryArticleList from 'gql/queryArticleList';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import { getMatchedPost } from 'pages/api/posts/[post_id]';
 import React, { memo, useEffect, useMemo } from 'react';
-import posts from 'static/posts';
+import QueriedArticleHandlers from '../../lib/handlers/QueriedArticleHandlers';
 import styles from './slug.module.scss';
 
 export interface PostViewProps extends PostContentProps {
@@ -85,7 +85,11 @@ const PostView = (props: PostViewProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = posts.map((p) => `/posts/${p.id}`);
+  // const paths = posts.map((p) => `/posts/${p.id}`);
+  const queried = await queryArticleList();
+  const paths = QueriedArticleHandlers.getArticleIdList(
+    queried.data.articles
+  ).map((id) => `/posts/${id}`);
   return {
     paths,
     fallback: 'blocking',
@@ -100,13 +104,14 @@ export const getStaticProps: GetStaticProps<PostViewProps> = async ({
   // const uri = getUriFromReqHeaders(req.headers);
   const uri = API;
   const postId = params?.slug as string;
-  // const res = (await fetch(`${uri}/api/posts/${postId}`).then((res) =>
-  //   res.json()
-  // )) as { data: SinglePost | null };
 
-  const res = {
-    data: getMatchedPost(postId),
-  };
+  // const res = {
+  //   data: getMatchedPost(postId),
+  // };
+  const queried = await queryArticleByArticleId(postId);
+  const res = queried.data.articles.data[0]
+    ? QueriedArticleHandlers.handleQueriedArticleList(queried.data.articles)[0]
+    : undefined;
 
   let articleData: SinglePost = {
     id: '',
@@ -116,9 +121,10 @@ export const getStaticProps: GetStaticProps<PostViewProps> = async ({
     content: '',
     tagList: [],
     createdAt: '',
+    thumbnail: null,
   };
-  if (res.data) {
-    articleData = res.data;
+  if (res) {
+    articleData = res;
   }
 
   return {

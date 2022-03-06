@@ -2,6 +2,7 @@ import { Box, Paper, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
+import DateStringifyHandlers from 'lib/handlers/DateStringifyHandlers';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
 import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
@@ -42,6 +43,9 @@ const useStyles = makeStyles<Theme>(
       },
     },
     postInfo: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
       position: 'absolute',
       top: theme.spacing(2),
       right: theme.spacing(2),
@@ -77,6 +81,10 @@ const PostDetailCardItem = (props: PostDetailCardItem) => {
     () => MarkdownContentHandlers.getSummaryContent(content),
     [content]
   );
+  const cardDate = useMemo(
+    () => DateStringifyHandlers.stringify(createdAt, 'MM/DD'),
+    [createdAt]
+  );
 
   return (
     <Box className={classes.root}>
@@ -84,7 +92,7 @@ const PostDetailCardItem = (props: PostDetailCardItem) => {
         <a>
           <Paper className={classes.card} elevation={3}>
             <Box className={classes.postInfo}>
-              <Typography>{createdAt}</Typography>
+              <Typography>{cardDate}</Typography>
               {tagList.map((t) => (
                 <TagLinkItem key={t} tagName={t} />
               ))}

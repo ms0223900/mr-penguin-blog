@@ -1,4 +1,8 @@
-const replaceMarkdownHighlightContent = (content: string) => {
+import { SinglePost } from 'common-types';
+
+const replaceMarkdownHighlightContent = (content: SinglePost['content']) => {
+  if (!content) return '';
+
   const matched = content.matchAll(/\s?==.+==\s?/g);
   if (!matched) return content;
 

@@ -1,42 +1,66 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, CircularProgress, Container, Typography } from '@mui/material';
 import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
 import { PostList } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
+import queryArticleByTag from 'gql/queryArticleByTag';
+import queryArticleByVal from 'gql/queryArticleByVal';
 import useSearchByVal from 'lib/custom-hooks/useSearchByVal';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import useToggle from 'lib/custom-hooks/useToggle';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import React, { memo, useEffect, useMemo, useState } from 'react';
-import posts from 'static/posts';
+import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
+import React, { memo, useEffect, useState } from 'react';
 
 const useQueryPost = () => {
   // const { state } = useContext(MainContext);
+  const { toggle: loading, setToggle: setLoading } = useToggle();
   const { searchVal } = useSearchByVal();
   const [postList, setPostList] = useState<SinglePost[]>([]);
 
-  const handleQuery = (searchVal: string) => {
+  const handleQuery = async (searchVal: string) => {
     if (!searchVal) {
       setPostList([]);
       return [];
     }
 
-    if (searchVal.includes('@')) {
-      const res = posts.filter((p) =>
-        p.tagList.includes(searchVal.replace('@', ''))
+    try {
+      setLoading(true);
+      if (searchVal.includes('@')) {
+        const tag = searchVal.replace('@', '');
+        const queried = await queryArticleByTag(tag);
+        const articles = QueriedArticleHandlers.handleQueriedArticleList(
+          queried.data.articles
+        );
+        setPostList(articles);
+        return articles;
+      }
+      const queried = await queryArticleByVal(searchVal);
+      const articles = QueriedArticleHandlers.handleQueriedArticleList(
+        queried.data.articles
       );
-      setPostList(res);
-      return res;
+      setPostList(articles);
+      return articles;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
 
-    const res = posts.filter((p) => {
-      const contentsForSearch = [p.title, p.subTitle, p.content, p.description];
-      for (const c of contentsForSearch) {
-        if (c.includes(searchVal)) return true;
-      }
-    });
-    setPostList(res);
-    return res;
+    // if (searchVal.includes('@')) {
+    //   const res = posts.filter((p) =>
+    //     p.tagList.includes(searchVal.replace('@', ''))
+    //   );
+    //   setPostList(res);
+    //   return res;
+    // }
+
+    // const res = posts.filter((p) => {
+    //   const contentsForSearch = [p.title, p.subTitle, p.content, p.description];
+    //   for (const c of contentsForSearch) {
+    //     if (c && c.includes(searchVal)) return true;
+    //   }
+    // });
   };
 
   useEffect(() => {
@@ -44,6 +68,7 @@ const useQueryPost = () => {
   }, [searchVal]);
 
   return {
+    loading,
     searchVal: searchVal,
     postList,
     handleQuery,
@@ -55,7 +80,7 @@ export interface SearchedResultPageProps {
 }
 
 const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
-  const { searchVal, postList } = useQueryPost();
+  const { loading, searchVal, postList } = useQueryPost();
   const recommendedTagList = ['vue', 'nuxt3'];
 
   return (
@@ -66,9 +91,14 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
       <Typography textAlign={'center'}>
         {`以下是搜尋: ${searchVal} 的結果`}
       </Typography>
+      {loading && (
+        <Box textAlign={'center'}>
+          <CircularProgress />
+        </Box>
+      )}
       <hr />
       {postList.length > 0 && <PostList postListData={postList} />}
-      {!postList.length && (
+      {!postList.length && !loading && (
         <Box>
           <Typography
             variant="h5"

@@ -1,4 +1,4 @@
-type DateInput = number | string | Date | null | undefined;
+export type DateInput = number | string | Date | null | undefined;
 
 const DateValidator = {
   handleDateStrForSafari: (dateInput?: DateInput): DateInput => {

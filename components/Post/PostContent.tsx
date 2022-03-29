@@ -1,17 +1,21 @@
+import React, { memo, useEffect, useRef } from 'react';
 import { Container, Divider, Theme, Typography } from '@mui/material';
+import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+import {
+  darcula,
+  vscDarkPlus,
+} from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { SinglePost } from 'common-types';
 import replaceMarkdownHighlightContent from 'lib/functions/replaceMarkdownHighlightContent';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
 import Head from 'next/head';
-import React, { memo, useEffect, useRef } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkHeadingId from 'remark-heading-id';
 import styles from './post-content.module.scss';
-
 export type PostContentProps = SinglePost;
 
 const useStyles = makeStyles<Theme>(
@@ -85,6 +89,31 @@ const PostContent = ({
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm, remarkHeadingId]}
           className={styles['markdown-content']}
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || '');
+              if (!inline && match) {
+                return (
+                  <SyntaxHighlighter
+                    style={vscDarkPlus}
+                    language={match[1]}
+                    PreTag="div"
+                    wrapLines={true}
+                    wrapLongLines={true}
+                    {...props}
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                );
+              }
+              return (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            },
+          }}
         >
           {replaceMarkdownHighlightContent(content)}
         </ReactMarkdown>

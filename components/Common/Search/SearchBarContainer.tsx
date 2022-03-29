@@ -9,6 +9,8 @@ const useSearch = (initVal = '') => {
   // const { state, setState } = useContext(MainContext);
 
   const handleSearch = useCallback(() => {
+    if (!val) return;
+
     handleSearchByVal(val);
   }, [val]);
 

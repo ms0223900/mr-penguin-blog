@@ -11,10 +11,13 @@ import styles from '../styles/Home.module.css';
 export type HomeProps = PostListViewProps;
 
 const Home: NextPage<HomeProps> = (props: HomeProps) => {
+  const titleStr = WEB_TITLE + "'s Blog"
   return (
     <div className={styles.container}>
       <Head>
-        <title>{WEB_TITLE + "'s Blog"}</title>
+        <title>{titleStr}</title>
+        <meta property="og:title" content={titleStr} />
+        <meta property="og:image" content={'./defaultThumbnail.jpg'} />
         <meta name="description" content="Penguin Cho's Blog" />
         <meta
           name="google-site-verification"

@@ -70,11 +70,6 @@ const PostContent = ({
   }, []);
   return (
     <Container className={classes.root}>
-      <Head>
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={thumbnail?.src} />
-      </Head>
       <Box className={classes.titleWrapper}>
         <Typography className={classes.postTitle} component={'h1'}>
           {title}

@@ -34,7 +34,7 @@ const useStyles = makeStyles<Theme, PostViewProps>(
 );
 
 const PostView = (props: PostViewProps) => {
-  const { title, description, content } = props;
+  const { title, description, content, thumbnail } = props;
   const classes = useStyles(props);
 
   useEffect(() => {
@@ -51,6 +51,9 @@ const PostView = (props: PostViewProps) => {
       <Head>
         <title>{`${title} | ${WEB_TITLE}`}</title>
         <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={thumbnail?.src} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ul

@@ -59,6 +59,15 @@ const useStyles = makeStyles<Theme>(
         fontWeight: 'bolder',
         // fontSize: theme.typography.h5.fontSize,
       },
+
+      '& .MuiCustomPostContent-titleWrapper': {
+        paddingTop: 0,
+        textAlign: 'left',
+      },
+
+      '& .MuiCustomPostContent-dateTagWrapper': {
+        display: 'none',
+      },
     },
     seeMore: {
       position: 'absolute',

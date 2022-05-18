@@ -1,21 +1,18 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect, useMemo, useRef } from 'react';
 import { Container, Divider, Theme, Typography } from '@mui/material';
 import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
-import {
-  darcula,
-  vscDarkPlus,
-} from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { SinglePost } from 'common-types';
 import replaceMarkdownHighlightContent from 'lib/functions/replaceMarkdownHighlightContent';
-import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
-import Head from 'next/head';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkHeadingId from 'remark-heading-id';
 import styles from './post-content.module.scss';
+import TagLinkItem from 'components/Common/TagLinkItem';
+import DateStringifyHandlers from 'lib/handlers/DateStringifyHandlers';
 export type PostContentProps = SinglePost;
 
 const useStyles = makeStyles<Theme>(
@@ -26,17 +23,32 @@ const useStyles = makeStyles<Theme>(
     titleWrapper: {
       padding: `${theme.spacing(2)} 0`,
       paddingLeft: theme.spacing(1),
+      paddingTop: `${5}rem`,
+      textAlign: 'center',
     },
     postTitle: {
       ...theme.typography.h4,
       fontWeight: 'bolder',
+      color: 'var(--primary-main)',
+      lineHeight: 1.6,
+    },
+    dateTagWrapper: {
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      paddingBottom: '1rem',
+      '& .post-date': {
+        display: 'block',
+        opacity: 0.5,
+        paddingBottom: '1rem',
+      },
     },
     postSubtitle: {
       ...theme.typography.h5,
     },
   }),
   {
-    name: 'MuiCustom',
+    name: 'MuiCustomPostContent',
   }
 );
 
@@ -45,7 +57,9 @@ const PostContent = ({
   subTitle,
   description,
   content,
+  tagList,
   thumbnail,
+  createdAt,
 }: PostContentProps) => {
   const markdownWrapperRef = useRef<HTMLDivElement>(null);
   const classes = useStyles();
@@ -66,8 +80,19 @@ const PostContent = ({
         link.href = `#${el.innerText}`;
         el.prepend(link);
       });
+
+      // const linkEls = el.getElementsByTagName('a');
+      // for (let i = 0; i < linkEls.length; i++) {
+      //   const linkEl = linkEls[i];
+      //   linkEl.setAttribute('target', '_blank');
+      // }
     }
   }, []);
+  const postDate = useMemo(
+    () => DateStringifyHandlers.stringify(createdAt, 'YYYY/MM/DD'),
+    [createdAt]
+  );
+
   return (
     <Container className={classes.root}>
       <Box className={classes.titleWrapper}>
@@ -77,6 +102,14 @@ const PostContent = ({
         <Typography className={classes.postSubtitle} component={'h2'}>
           {subTitle}
         </Typography>
+      </Box>
+      <Box className={classes.dateTagWrapper}>
+        <span className="post-date">{postDate}</span>
+        <Box>
+          {tagList.map((t) => (
+            <TagLinkItem key={t} tagName={t} />
+          ))}
+        </Box>
       </Box>
       <Divider />
       <div ref={markdownWrapperRef}>

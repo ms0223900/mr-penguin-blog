@@ -11,7 +11,7 @@ import styles from '../styles/Home.module.css';
 export type HomeProps = PostListViewProps;
 
 const Home: NextPage<HomeProps> = (props: HomeProps) => {
-  const titleStr = WEB_TITLE + "'s Blog"
+  const titleStr = WEB_TITLE + "'s Blog";
   return (
     <div className={styles.container}>
       <Head>

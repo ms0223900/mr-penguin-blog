@@ -82,7 +82,9 @@ const PostView = (props: PostViewProps) => {
           </li>
         ))}
       </ul>
-      <PostContent {...props} />
+      <div className={styles['post-content--wrapper']}>
+        <PostContent {...props} />
+      </div>
     </div>
   );
 };

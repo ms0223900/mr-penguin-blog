@@ -7,7 +7,7 @@ import { SingleQueriedArticle } from './types';
 const schema = gql`
   query GET_ARTICLE_LIST {
     # Write your query or mutation here
-    articles(sort: ["publishedAt:desc"]) {
+    articles(sort: ["publishedAt:desc"], pagination: { limit: -1 }) {
       data {
         ...ARTICLE_ENTITY
       }

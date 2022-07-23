@@ -81,6 +81,19 @@ const PostContent = ({
         el.prepend(link);
       });
 
+      // const imgList = [...el.getElementsByTagName('img')];
+      // for (let i = 0; i < imgList.length; i++) {
+      //   const el = imgList[i];
+      //   const alt = el.getAttribute('alt');
+      //   if (!alt) continue;
+      //   if (alt?.toLowerCase() === 'untitled') continue;
+
+      //   const altEl = document.createElement('div');
+      //   altEl.classList.add('img-alt');
+      //   altEl.innerText = alt;
+      //   el.parentElement?.appendChild(altEl);
+      // }
+
       // const linkEls = el.getElementsByTagName('a');
       // for (let i = 0; i < linkEls.length; i++) {
       //   const linkEl = linkEls[i];

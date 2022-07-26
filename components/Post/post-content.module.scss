@@ -58,11 +58,26 @@
       list-style: initial;
       line-height: 1.6;
       white-space: pre-wrap;
+      padding-bottom: 0.75rem;
     }
   }
 
   ol > li {
     list-style: auto;
+  }
+
+  ul,
+  ol {
+    & > li {
+      & ol,
+      & ul {
+        white-space: normal;
+
+        & li {
+          white-space: normal;
+        }
+      }
+    }
   }
 
   pre {
@@ -111,6 +126,7 @@
   a {
     display: block;
     color: var(--primary-main);
+    word-break: break-all;
 
     // &::before {
     //   content: '\a';

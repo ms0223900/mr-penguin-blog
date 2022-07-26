@@ -94,11 +94,11 @@ const PostContent = ({
       //   el.parentElement?.appendChild(altEl);
       // }
 
-      // const linkEls = el.getElementsByTagName('a');
-      // for (let i = 0; i < linkEls.length; i++) {
-      //   const linkEl = linkEls[i];
-      //   linkEl.setAttribute('target', '_blank');
-      // }
+      const linkEls = el.getElementsByTagName('a');
+      for (let i = 0; i < linkEls.length; i++) {
+        const linkEl = linkEls[i];
+        linkEl.setAttribute('target', '_blank');
+      }
     }
   }, []);
   const postDate = useMemo(

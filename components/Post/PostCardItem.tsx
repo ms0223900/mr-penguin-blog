@@ -10,14 +10,20 @@ const useStyles = makeStyles<Theme, PostCardItemProps>(
     // console.log(theme);
     return {
       root: {
+        width: '100%',
         // color: theme.palette.primary.main,
+        borderRadius: '0.5rem',
+        overflow: 'hidden',
         height: '100%',
+        marginBottom: '80px',
+        paddingBottom: '80px',
         minHeight: theme.spacing(30),
         '&:hover': {
           boxShadow: theme.shadows[3],
         },
       },
       card: {
+        position: 'relative',
         display: 'block',
         height: '100%',
         // backgroundImage: (props) => {
@@ -32,8 +38,11 @@ const useStyles = makeStyles<Theme, PostCardItemProps>(
         cursor: 'pointer',
       },
       titleDescpWrapper: {
+        position: 'absolute',
+        bottom: -80,
+        width: '100%',
         padding: theme.spacing(1),
-        paddingBottom: theme.spacing(5),
+        // paddingBottom: theme.spacing(5),
         background: `linear-gradient(180deg, #ffffff 0%, #ffffff 60%, #ffffff10 100%)`,
         '& h3': {
           ...theme.typography.h5,
@@ -54,7 +63,7 @@ const PostCardItem = (props: PostCardItemProps) => {
   const { id, title, subTitle, thumbnail } = props;
   const classes = useStyles(props);
   return (
-    <Paper className={classes.root}>
+    <div className={classes.root}>
       <Link href={STATIC_ROUTES.getPostWithId(id)}>
         <Box
           component={'a'}
@@ -71,7 +80,7 @@ const PostCardItem = (props: PostCardItemProps) => {
           </Box>
         </Box>
       </Link>
-    </Paper>
+    </div>
   );
 };
 

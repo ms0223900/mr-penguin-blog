@@ -44,7 +44,7 @@ const PostListView = (props: PostListViewProps) => {
           padding: '1rem',
         }}
       >
-        <Grid container spacing={1}>
+        <Grid container spacing={3} rowSpacing={6}>
           {props.postListData.map((p) => (
             <Grid key={p.id} item padding={0.5} xs={12} md={4}>
               <PostCardItem {...p} />

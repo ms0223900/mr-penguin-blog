@@ -1,7 +1,7 @@
 import PostList, {
   getStaticProps,
-  getServerSideProps,
+  // getServerSideProps,
 } from 'components/Post/PostList';
-// export { getStaticProps };
-export { getServerSideProps };
+export { getStaticProps };
+// export { getServerSideProps };
 export default PostList;

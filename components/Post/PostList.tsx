@@ -58,7 +58,33 @@ const PostListView = (props: PostListViewProps) => {
 
 const isDEV = process.env.NODE_ENV === 'development';
 
-export const getStaticProps: GetStaticProps<PostListViewProps> = async (
+const getStaticProps: GetStaticProps<PostListViewProps> = async (ctx) => {
+  // const res = {
+  //   data: posts,
+  // };
+  // const postListData = res.data;
+  try {
+    const queried = await queryArticleList();
+    const postListData = QueriedArticleHandlers.handleQueriedArticleList(
+      queried.data.articles
+    );
+
+    return {
+      props: {
+        postListData,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        postListData: [],
+      },
+    };
+  }
+};
+
+const getServerSideProps: GetServerSideProps<PostListViewProps> = async (
   ctx
 ) => {
   // const res = {
@@ -86,33 +112,8 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
   }
 };
 
-export const getServerSideProps: GetServerSideProps<PostListViewProps> = async (
-  ctx
-) => {
-  // const res = {
-  //   data: posts,
-  // };
-  // const postListData = res.data;
-  try {
-    const queried = await queryArticleList();
-    const postListData = QueriedArticleHandlers.handleQueriedArticleList(
-      queried.data.articles
-    );
-
-    return {
-      props: {
-        postListData,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        postListData: [],
-      },
-    };
-  }
-};
+export { getStaticProps };
+// export { getServerSideProps }
 
 const Comp = memo(PostListView) as any;
 

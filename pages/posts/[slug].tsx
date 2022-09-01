@@ -89,57 +89,19 @@ const PostView = (props: PostViewProps) => {
   );
 };
 
-// const getStaticPaths: GetStaticPaths = async () => {
-//   // const paths = posts.map((p) => `/posts/${p.id}`);
-//   const queried = await queryArticleList();
-//   const paths = QueriedArticleHandlers.getArticleIdList(
-//     queried.data.articles
-//   ).map((id) => `/posts/${id}`);
-//   return {
-//     paths,
-//     fallback: 'blocking',
-//   };
-// };
+const getStaticPaths: GetStaticPaths = async () => {
+  // const paths = posts.map((p) => `/posts/${p.id}`);
+  const queried = await queryArticleList();
+  const paths = QueriedArticleHandlers.getArticleIdList(
+    queried.data.articles
+  ).map((id) => `/posts/${id}`);
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
 
-// const getStaticProps: GetStaticProps<PostViewProps> = async ({
-//   params,
-//   // req,
-//   // resolvedUrl,
-// }) => {
-//   // const uri = getUriFromReqHeaders(req.headers);
-//   const uri = API;
-//   const postId = params?.slug as string;
-
-//   // const res = {
-//   //   data: getMatchedPost(postId),
-//   // };
-//   const queried = await queryArticleByArticleId(postId);
-//   const res = queried.data.articles.data[0]
-//     ? QueriedArticleHandlers.handleQueriedArticleList(queried.data.articles)[0]
-//     : undefined;
-
-//   let articleData: SinglePost = {
-//     id: '',
-//     subTitle: '',
-//     title: 'NotFound',
-//     description: 'Post not found',
-//     content: '',
-//     tagList: [],
-//     createdAt: '',
-//     thumbnail: null,
-//   };
-//   if (res) {
-//     articleData = res;
-//   }
-
-//   return {
-//     props: {
-//       ...articleData,
-//     },
-//   };
-// };
-
-const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
+const getStaticProps: GetStaticProps<PostViewProps> = async ({
   params,
   // req,
   // resolvedUrl,
@@ -177,8 +139,46 @@ const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
   };
 };
 
-// export { getStaticPaths };
-// export { getStaticProps };
-export { getServerSideProps };
+// const getServerSideProps: GetServerSideProps<PostViewProps> = async ({
+//   params,
+//   // req,
+//   // resolvedUrl,
+// }) => {
+//   // const uri = getUriFromReqHeaders(req.headers);
+//   const uri = API;
+//   const postId = params?.slug as string;
+
+//   // const res = {
+//   //   data: getMatchedPost(postId),
+//   // };
+//   const queried = await queryArticleByArticleId(postId);
+//   const res = queried.data.articles.data[0]
+//     ? QueriedArticleHandlers.handleQueriedArticleList(queried.data.articles)[0]
+//     : undefined;
+
+//   let articleData: SinglePost = {
+//     id: '',
+//     subTitle: '',
+//     title: 'NotFound',
+//     description: 'Post not found',
+//     content: '',
+//     tagList: [],
+//     createdAt: '',
+//     thumbnail: null,
+//   };
+//   if (res) {
+//     articleData = res;
+//   }
+
+//   return {
+//     props: {
+//       ...articleData,
+//     },
+//   };
+// };
+
+export { getStaticPaths };
+export { getStaticProps };
+// export { getServerSideProps };
 
 export default memo(PostView);

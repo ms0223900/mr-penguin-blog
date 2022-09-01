@@ -2,7 +2,7 @@ import { Container, Grid } from '@mui/material';
 import PostCardItem from 'components/Post/PostCardItem';
 import { WEB_TITLE } from 'config';
 import queryArticleList from 'gql/queryArticleList';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { SinglePostFromPostList } from 'pages/api/posts';
 import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
@@ -56,6 +56,8 @@ const PostListView = (props: PostListViewProps) => {
   );
 };
 
+const isDEV = process.env.NODE_ENV === 'development';
+
 export const getStaticProps: GetStaticProps<PostListViewProps> = async (
   ctx
 ) => {
@@ -84,4 +86,34 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
   }
 };
 
-export default memo(PostListView);
+export const getServerSideProps: GetServerSideProps<PostListViewProps> = async (
+  ctx
+) => {
+  // const res = {
+  //   data: posts,
+  // };
+  // const postListData = res.data;
+  try {
+    const queried = await queryArticleList();
+    const postListData = QueriedArticleHandlers.handleQueriedArticleList(
+      queried.data.articles
+    );
+
+    return {
+      props: {
+        postListData,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        postListData: [],
+      },
+    };
+  }
+};
+
+const Comp = memo(PostListView) as any;
+
+export default Comp;

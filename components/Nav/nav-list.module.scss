@@ -9,9 +9,10 @@
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
     max-width: 960px;
     margin: auto;
-    justify-content: space-between;
   }
 
   li {

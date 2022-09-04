@@ -1,12 +1,10 @@
 import { Box } from '@mui/material';
-import { SinglePost } from 'common-types';
 import React, { memo } from 'react';
 import Card1Item from './Card1Item';
 import styles from './card-1-list.module.scss';
+import { PostCardListData } from './types';
 
-export interface Card1ListProps {
-  postListData: SinglePost[];
-}
+export type Card1ListProps = PostCardListData;
 
 const Card1List = ({ postListData }: Card1ListProps) => {
   return (

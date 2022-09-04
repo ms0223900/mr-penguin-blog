@@ -1,6 +1,13 @@
 @import '/styles/utils/breakpoints';
 
 .title--wrapper {
+  padding-bottom: 3rem;
+  width: 100%;
+
+  @include lg {
+    padding-bottom: 6rem;
+  }
+
   .title {
     display: flex;
     align-items: center;

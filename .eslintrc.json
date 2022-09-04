@@ -8,7 +8,7 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
-  "ignorePatterns": ["out/*"],
+  "ignorePatterns": ["out/*", "node_modules/*"],
   "rules": {
     // "@typescript-eslint/indent": ["warn", 2]
   }

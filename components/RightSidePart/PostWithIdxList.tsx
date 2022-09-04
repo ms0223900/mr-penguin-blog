@@ -8,7 +8,13 @@ export interface PostWithIdxListProps {
 
 const PostWithIdxList = ({ postWithIdxListData }: PostWithIdxListProps) => {
   return (
-    <Box maxWidth={400}>
+    <Box
+      maxWidth={400}
+      borderRadius={2}
+      style={{
+        backgroundColor: '#fff',
+      }}
+    >
       {postWithIdxListData.map((p) => (
         <PostWithIdxItem key={p.postId} {...p} />
       ))}

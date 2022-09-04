@@ -14,7 +14,7 @@ const TitleWrapper = ({ title, seeMoreLink, children }: TitleWrapperProps) => {
   return (
     <Box className={styles['title--wrapper']}>
       <Box className={styles.title}>
-        <Typography fontWeight={'bold'}>{title}</Typography>
+        <h2>{title}</h2>
         <Button>
           <Link href={seeMoreLink}>
             <a className={styles['see-more-link']}>

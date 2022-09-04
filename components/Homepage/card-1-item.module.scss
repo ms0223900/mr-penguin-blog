@@ -1,7 +1,16 @@
+@use '/styles/utils/functions' as *;
+
 .card-1-item {
   display: block;
   flex-shrink: 0;
   max-width: 240px;
+
+  &:hover {
+    :global(.MuiPaper-root) {
+      background-color: #00000007;
+      // box-shadow: 0 0 10px #00000010;
+    }
+  }
 
   h3,
   h4 {
@@ -20,7 +29,8 @@
 
       h3 {
         font-size: 20px;
-        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+        @include text-ellipsis(2);
       }
 
       h4 {

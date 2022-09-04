@@ -30,7 +30,7 @@ const Homepage = ({
         xs={12}
         columnSpacing={{
           xs: 0,
-          lg: 6,
+          lg: 8,
         }}
       >
         <Grid item xs={12} lg={8}>
@@ -46,7 +46,16 @@ const Homepage = ({
             </TitleWrapper>
           </Box>
         </Grid>
-        <Grid item xs={12} lg={4}>
+        <Grid
+          item
+          xs={12}
+          lg={4}
+          order={{
+            xs: -1,
+            lg: 1,
+          }}
+          className={'right-part'}
+        >
           <TitleWithIconWrapper {...selectedPostListDataWithTitle}>
             <PostWithIdxList {...selectedPostListDataWithTitle} />
           </TitleWithIconWrapper>

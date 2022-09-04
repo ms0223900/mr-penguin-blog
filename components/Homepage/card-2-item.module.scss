@@ -4,7 +4,9 @@
 .card-2-item {
   display: flex;
   align-items: center;
+  padding: 0.5rem;
   max-width: 760px;
+  border-radius: 0.5rem;
 
   &:hover {
     background-color: #eee;
@@ -15,17 +17,19 @@
   }
 
   .thumbnail--root {
-    max-width: 120px;
-    max-height: 80px;
+    flex-shrink: 0;
+    width: 120px;
+    height: 80px;
     border-radius: 0.25rem;
     border-radius: 0.5rem;
     overflow: hidden;
     display: flex;
     align-items: center;
+    background-color: #fff;
 
     @include lg {
-      max-width: 280px;
-      max-height: 160px;
+      width: 280px;
+      height: 160px;
     }
   }
 

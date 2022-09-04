@@ -3,6 +3,7 @@ import { Box, Paper } from '@mui/material';
 import { SinglePost } from 'common-types';
 import TagItemV2 from 'components/Common/TagItemV2';
 import TagListV2 from 'components/Common/TagListV2';
+import ThumbnailImg from 'components/Common/ThumbnailImg';
 import Link from 'next/link';
 import React, { memo } from 'react';
 import { STATIC_ROUTES } from 'router';
@@ -20,15 +21,20 @@ const Card1Item = ({
   return (
     <Link href={STATIC_ROUTES.getPostWithId(id)}>
       <a className={styles['card-1-item']}>
-        <Paper>
+        <Paper
+          style={{
+            overflow: 'hidden',
+          }}
+        >
           {thumbnail && (
-            <div className="img--wrapper">
-              <img
-                loading="lazy"
-                src={thumbnail.src}
-                alt={thumbnail.name || 'thumbnail'}
-              />
-            </div>
+            <ThumbnailImg
+              {...thumbnail}
+              wrapperProps={{
+                style: {
+                  height: 160,
+                },
+              }}
+            />
           )}
           <Box className={styles['content--wrapper']}>
             <Box className={styles['title--wrapper']}>

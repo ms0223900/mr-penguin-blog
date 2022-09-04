@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { NavItemProps } from './types';
 import styles from './nav-item.module.scss';
 // import { ReactComponent as IconMenuIcon } from './IconMenuBook.svg';
+import IconExpandMore from './IconExpandMore.svg';
 // console.log(IconMenuIcon);
 
 const NavItem = ({ icon: IconComp, title, link }: NavItemProps) => {
@@ -19,6 +20,14 @@ const NavItem = ({ icon: IconComp, title, link }: NavItemProps) => {
             {IconComp}
           </div>
           <p>{title}</p>
+          <Box
+            style={{
+              width: 24,
+            }}
+            marginLeft={0.5}
+          >
+            <IconExpandMore stroke={2} />
+          </Box>
         </a>
       </Link>
     </li>

@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import NavItem from 'components/Nav/NavItem';
+import NavList from 'components/Nav/NavList';
 import IconMenuIcon from 'components/Nav/IconMenuBook.svg';
 import 'styles/globals.scss';
 
@@ -16,3 +17,9 @@ NavWithIcon.args = {
   title: '愛讀書',
   link: '/posts-page/books',
 };
+
+const NavListTemp: ComponentStory<typeof NavList> = (args: any) => (
+  <NavList {...args} />
+);
+
+export const navList = NavListTemp.bind({});

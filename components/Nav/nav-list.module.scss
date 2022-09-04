@@ -1,0 +1,21 @@
+.nav-list {
+  background-color: var(--primary-main);
+  height: 60px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    padding-inline-start: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 960px;
+    margin: auto;
+    justify-content: space-between;
+  }
+
+  li {
+    list-style: none;
+    filter: contrast(1) brightness(100);
+  }
+}

@@ -12,18 +12,22 @@ const NavItem = ({ icon: IconComp, title, link }: NavItemProps) => {
     <li>
       <Link href={link}>
         <a className={styles['nav-item']}>
-          <div
-            style={{
-              width: 24,
-            }}
-          >
-            {IconComp}
-          </div>
-          <p>{title}</p>
+          <Box display={'flex'} alignItems={'center'}>
+            <div
+              style={{
+                width: 24,
+              }}
+              className={'img--wrapper'}
+            >
+              {IconComp}
+            </div>
+            <p>{title}</p>
+          </Box>
           <Box
             style={{
               width: 24,
             }}
+            className={'img--wrapper'}
             marginLeft={0.5}
           >
             <IconExpandMore stroke={2} />

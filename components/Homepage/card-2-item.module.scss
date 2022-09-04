@@ -1,0 +1,70 @@
+@import '/styles/utils/breakpoints';
+@import '/styles/utils/functions';
+
+.card-2-item {
+  display: flex;
+  align-items: center;
+  max-width: 760px;
+
+  &:hover {
+    background-color: #eee;
+  }
+
+  @include lg {
+    align-items: stretch;
+  }
+
+  .thumbnail--root {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 0.25rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    @include lg {
+      max-width: 280px;
+      max-height: 160px;
+    }
+  }
+
+  .content--wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 0.5rem;
+
+    @include lg {
+      padding: 0.75rem;
+      // padding-left: 0.75rem;
+    }
+  }
+
+  .title--wrapper {
+    h3,
+    h4 {
+      margin: 0;
+      padding: 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      padding-bottom: 0.5rem;
+    }
+
+    h4 {
+      @include text-ellipsis(1);
+      font-size: 16px;
+      color: var(--text-primary-second);
+    }
+  }
+
+  .tag-list--root {
+    display: none;
+
+    @include lg {
+      display: block;
+    }
+  }
+}

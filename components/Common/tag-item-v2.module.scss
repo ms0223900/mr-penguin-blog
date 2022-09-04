@@ -1,0 +1,11 @@
+.tag-item-v2 {
+  flex-shrink: 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--primary-main);
+  border-radius: 10000px;
+  font-size: 14px;
+
+  &:hover {
+    background-color: var(--primary-main-hover);
+  }
+}

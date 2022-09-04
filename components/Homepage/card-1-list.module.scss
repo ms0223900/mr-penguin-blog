@@ -1,0 +1,17 @@
+@import '/styles/utils/breakpoints';
+
+.card-1-list {
+  --gap: 20px;
+
+  display: flex;
+  gap: 20px;
+  padding-bottom: var(--gap);
+  width: 100%;
+  overflow: auto;
+
+  @include lg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: calc(240px * 3 + var(--gap) * 2);
+  }
+}

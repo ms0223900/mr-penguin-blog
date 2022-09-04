@@ -1,0 +1,29 @@
+@import '/styles/utils/breakpoints';
+
+.title--wrapper {
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 4px solid var(--primary-main);
+    font-size: 20px;
+    font-weight: bold;
+
+    .see-more-link {
+      display: flex;
+      align-items: center;
+      // font-size: 16px;
+
+      > span {
+        font-size: 14px;
+        color: #000;
+      }
+    }
+
+    @include lg {
+      font-size: 24px;
+    }
+  }
+}

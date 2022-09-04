@@ -1,6 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import NavItem from 'components/Nav/NavItem';
 import NavList from 'components/Nav/NavList';
+import Header from 'components/NewHeader/Header';
 import IconMenuIcon from 'components/Nav/IconMenuBook.svg';
 import 'styles/globals.scss';
 
@@ -23,3 +24,9 @@ const NavListTemp: ComponentStory<typeof NavList> = (args: any) => (
 );
 
 export const navList = NavListTemp.bind({});
+
+const HeaderTemp: ComponentStory<typeof Header> = (args: any) => (
+  <Header {...args} />
+);
+
+export const header = HeaderTemp.bind({});

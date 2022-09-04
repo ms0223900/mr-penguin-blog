@@ -7,10 +7,15 @@ const useToggle = (initToggle = false) => {
     setToggle((s) => !s);
   }, []);
 
+  const handleClose = useCallback(() => {
+    setToggle(false);
+  }, []);
+
   return {
     toggle,
     setToggle,
     handleToggle,
+    handleClose,
   };
 };
 

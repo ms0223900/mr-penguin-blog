@@ -1,6 +1,48 @@
+@import '/styles/utils/breakpoints';
+// @use '/styles/utils/breakpoints' as *;
+
 .header {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: auto;
+  height: 60px;
+  padding: 0.5rem;
+  background-color: #fff;
+  border-bottom: 4px solid var(--primary-main);
+
+  .main--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    max-width: 1200px;
+    height: 100%;
+
+    .menu-btn {
+      display: flex;
+
+      @include lg {
+        display: none;
+      }
+    }
+
+    .center {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+
+      @include lg {
+        display: flex;
+      }
+    }
+  }
+
+  .mobile--wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    @include lg {
+      display: none;
+    }
+  }
 }

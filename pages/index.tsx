@@ -1,3 +1,4 @@
+import HomepageContainer from 'components/Homepage/HomepageContainer';
 import {
   PostList,
   getStaticProps,
@@ -27,7 +28,7 @@ const Home: NextPage<HomeProps> = (props: HomeProps) => {
       </Head>
 
       <main className={styles.main}>
-        <PostList {...props} />
+        <HomepageContainer postListData={props.postListData} />
       </main>
     </div>
   );

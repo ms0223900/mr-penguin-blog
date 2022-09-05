@@ -1,2 +1,11 @@
+@import '/styles/utils/breakpoints';
+
 .homepage {
+  .about-me {
+    display: none;
+
+    @include lg {
+      display: block;
+    }
+  }
 }

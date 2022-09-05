@@ -14,7 +14,7 @@ const TitleWithIconWrapper = ({
   children,
 }: TitleWithIconWrapperProps) => {
   return (
-    <Box paddingBottom={4}>
+    <Box paddingBottom={10}>
       <Box className={styles['title-wrapper']}>
         {iconEl && <div className={styles['icon--wrapper']}>{iconEl}</div>}
         <h2>{title}</h2>

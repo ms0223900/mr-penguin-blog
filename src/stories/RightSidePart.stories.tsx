@@ -5,8 +5,9 @@ import PostWithIdxItem, {
   PostWithIdxItemProps,
 } from 'components/RightSidePart/PostWithIdxItem';
 import PostWithIdxList from 'components/RightSidePart/PostWithIdxList';
-import 'styles/globals.scss';
+import AboutMe from 'components/RightSidePart/AboutMe';
 import MakeDataListHelpers from 'lib/functions/MakeDataListHelpers';
+import 'styles/globals.scss';
 
 export default {
   title: 'RightSidePart/TitleWrapper',
@@ -61,4 +62,15 @@ postWithIdxList.args = {
       }),
     5
   ),
+};
+
+
+const AboutMeTemp: ComponentStory<typeof AboutMe> = (args) => (
+  <AboutMe {...args} />
+);
+
+export const aboutMe = AboutMeTemp.bind({});
+aboutMe.args = {
+  title: 'Penguin Loves Boooooks',
+  iconEl: <ArticleOutlined />,
 };

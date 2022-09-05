@@ -1,5 +1,7 @@
+import { PersonSearchOutlined } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
+import AboutMe from 'components/RightSidePart/AboutMe';
 import PostWithIdxList, {
   PostWithIdxListProps,
 } from 'components/RightSidePart/PostWithIdxList';
@@ -11,6 +13,7 @@ import Card1List from './Card1List';
 import Card2List from './Card2List';
 import TitleWrapper, { TitleWrapperProps } from './TitleWrapper';
 import { PostCardListData } from './types';
+import styles from './homepage.module.scss';
 
 export interface HomepageProps {
   postCardListWithTitleData: (Omit<TitleWrapperProps, 'children'> &
@@ -24,7 +27,12 @@ const Homepage = ({
   selectedPostListDataWithTitle,
 }: HomepageProps) => {
   return (
-    <Box width={'100%'} maxWidth={1200} margin={'auto'}>
+    <Box
+      className={styles.homepage}
+      width={'100%'}
+      maxWidth={1200}
+      margin={'auto'}
+    >
       <Grid
         container
         xs={12}
@@ -59,6 +67,14 @@ const Homepage = ({
           <TitleWithIconWrapper {...selectedPostListDataWithTitle}>
             <PostWithIdxList {...selectedPostListDataWithTitle} />
           </TitleWithIconWrapper>
+          <Box className={styles['about-me']}>
+            <TitleWithIconWrapper
+              title={'About Me'}
+              iconEl={<PersonSearchOutlined />}
+            >
+              <AboutMe />
+            </TitleWithIconWrapper>
+          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -7,8 +7,12 @@
 
   &:hover {
     :global(.MuiPaper-root) {
-      background-color: #00000007;
+      // background-color: #00000007;
       // box-shadow: 0 0 10px #00000010;
+    }
+
+    h3 {
+      color: var(--primary-main);
     }
   }
 

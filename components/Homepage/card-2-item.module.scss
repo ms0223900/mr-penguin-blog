@@ -7,9 +7,11 @@
   padding: 0.5rem;
   max-width: 760px;
   border-radius: 0.5rem;
+  background-color: #fff;
 
   &:hover {
-    background-color: #eee;
+    // background-color: #;
+    box-shadow: 0 0 6px #ccc;
   }
 
   @include lg {
@@ -55,6 +57,7 @@
     h3 {
       font-size: 20px;
       padding-bottom: 0.5rem;
+      line-height: 1.6;
     }
 
     h4 {

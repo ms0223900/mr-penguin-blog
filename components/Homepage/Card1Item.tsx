@@ -24,6 +24,7 @@ const Card1Item = ({
         <Paper
           style={{
             overflow: 'hidden',
+            height: '100%',
           }}
         >
           {thumbnail && (

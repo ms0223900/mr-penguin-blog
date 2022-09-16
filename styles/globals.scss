@@ -116,6 +116,17 @@ p {
   overflow: hidden;
   background-color: #fff;
 
+  &.thumbnail--wrapper {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+
   img {
     width: 100%;
   }

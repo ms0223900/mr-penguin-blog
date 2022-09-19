@@ -1,5 +1,11 @@
 import { SinglePost } from 'common-types';
 
+export interface SingleHeadingTxt {
+  level: number;
+  txt: string;
+  id: string;
+}
+
 const MarkdownContentHandlers = {
   getSummaryContent: (
     content: SinglePost['content'],

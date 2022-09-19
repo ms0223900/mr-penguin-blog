@@ -1,0 +1,21 @@
+.post-header-list {
+  .header-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding-bottom: 1rem;
+    line-height: 1.3;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .hash-deco {
+      display: block;
+      padding-right: 0.5rem;
+      color: var(--primary-main);
+      font-weight: bold;
+      font-size: 24px;
+    }
+  }
+}

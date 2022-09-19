@@ -1,4 +1,4 @@
-import { StrapiResponseWithListAttr } from 'common-types';
+import { SinglePost, StrapiResponseWithListAttr } from 'common-types';
 
 export interface SingleQueriedArticle {
   articleId: string;
@@ -14,4 +14,7 @@ export interface SingleQueriedArticle {
   thumbnail: StrapiResponseWithListAttr<{
     url: string;
   }>;
+  related_articles: StrapiResponseWithListAttr<
+    Pick<SingleQueriedArticle, 'articleId' | 'title' | 'subTitle'>
+  >;
 }

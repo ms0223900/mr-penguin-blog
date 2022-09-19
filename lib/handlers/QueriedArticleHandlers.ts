@@ -32,6 +32,10 @@ const QueriedArticleHandlers = (() => {
         createdAt: a.attributes.publishedAt,
         thumbnail: getThumbnail(a.attributes),
         tagList: getTagList(a.attributes.article_tags),
+        relatedArticleList: a.attributes.related_articles.data.map((a) => ({
+          ...a.attributes,
+          id: a.attributes.articleId.toString(),
+        })),
       })
     );
 

@@ -39,6 +39,7 @@ const mandora: SinglePost = {
 
 ![Untitled](https://imgur.com/c2Yv2KO.jpg)  
 `,
+  relatedArticleList: [],
 };
 
 export default mandora;

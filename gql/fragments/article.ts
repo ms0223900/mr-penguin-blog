@@ -25,6 +25,15 @@ const ARTICLE_ENTITY = gql`
           }
         }
       }
+      related_articles {
+        data {
+          attributes {
+            articleId
+            title
+            subTitle
+          }
+        }
+      }
     }
   }
 `;

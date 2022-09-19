@@ -419,6 +419,7 @@ const nuxt3Pinia: SinglePost = {
   [https://github.com/ms0223900/nuxt3-pinia-template](https://github.com/ms0223900/nuxt3-pinia-template)
   `,
   tagList: ['nuxt3', 'vue'],
+  relatedArticleList: [],
 };
 
 export default nuxt3Pinia;

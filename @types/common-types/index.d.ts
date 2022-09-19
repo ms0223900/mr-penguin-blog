@@ -20,7 +20,9 @@ declare module 'common-types' {
     content: string | null;
     thumbnail: Image | null;
     tagList: string[];
+    relatedArticleList: SingleBasicPostLinkData[];
   }
+  type SingleBasicPostLinkData = Pick<SinglePost, 'id' | 'title' | 'subTitle'>;
 
   interface Image {
     name?: string;

@@ -14,5 +14,6 @@ export const makeMockSinglePost = (
   },
   createdAt: '',
   tagList: [],
+  relatedArticleList: [],
   ...options,
 });

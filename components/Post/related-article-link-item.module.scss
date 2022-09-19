@@ -1,0 +1,32 @@
+.related-article-link-item {
+  display: block;
+  padding: 0.2rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--primary-main);
+
+  &:hover {
+    background-color: #eee;
+
+    .title--wrapper {
+      color: var(--primary-main);
+    }
+  }
+
+  .title--wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+
+    .icon--wrapper {
+      padding-left: 1rem;
+
+      svg {
+        fill: var(--primary-main);
+      }
+    }
+  }
+
+  .subtitle--wrapper {
+    color: var(--text-primary-second);
+  }
+}

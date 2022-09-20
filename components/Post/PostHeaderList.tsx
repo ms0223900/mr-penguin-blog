@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 import TitleWithIconWrapper from 'components/RightSidePart/TitleWithIconWrapper';
 import { SingleHeadingTxt } from 'lib/handlers/MarkdownContentHandlers';
 import React, { memo, useMemo } from 'react';
+import getCurrentPostHeaderLevel from './functions/getCurrentPostHeaderLevel';
 import styles from './post-header-list.module.scss';
 
 export interface PostHeaderListProps {
@@ -10,8 +11,8 @@ export interface PostHeaderListProps {
 }
 
 const PostHeaderList = ({ headerListData }: PostHeaderListProps) => {
-  const maxLevel = useMemo(
-    () => Math.max(...headerListData.map((h) => h.level)),
+  const minLevel = useMemo(
+    () => Math.min(...headerListData.map((h) => h.level)),
     [headerListData]
   );
   return (
@@ -27,7 +28,7 @@ const PostHeaderList = ({ headerListData }: PostHeaderListProps) => {
               href={`#${h.txt}`}
               className={styles['header-item']}
               style={{
-                paddingLeft: (maxLevel - h.level) * 20,
+                paddingLeft: getCurrentPostHeaderLevel(minLevel, h.level) * 20,
               }}
             >
               <span className={styles['hash-deco']}>{'#'}</span>

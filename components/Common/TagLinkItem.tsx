@@ -60,7 +60,7 @@ const TagLinkItem = (props: TagLinkItemProps) => {
           //   });
           // }}
         >
-          {tagName}
+          {`#${tagName}`}
         </a>
       </Link>
     </Box>

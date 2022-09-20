@@ -118,11 +118,6 @@ const PostContent = ({
       </Box>
       <Box className={classes.dateTagWrapper}>
         <span className="post-date">{postDate}</span>
-        <Box>
-          {tagList.map((t) => (
-            <TagLinkItem key={t} tagName={t} />
-          ))}
-        </Box>
       </Box>
       <Divider />
       <div ref={markdownWrapperRef}>
@@ -159,6 +154,13 @@ const PostContent = ({
           {replaceMarkdownHighlightContent(content)}
         </ReactMarkdown>
       </div>
+
+      <Box display={'flex'} alignItems={'center'} paddingY={6}>
+        {/* <Typography fontWeight={'bolder'}>{'TAG: '}</Typography> */}
+        {tagList.map((t) => (
+          <TagLinkItem key={t} tagName={t} />
+        ))}
+      </Box>
     </Container>
   );
 };

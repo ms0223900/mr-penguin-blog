@@ -141,4 +141,17 @@
     border-radius: 0.25rem;
     // white-space: pre-wrap;
   }
+
+  :not(div code) {
+  }
+
+  code:not([class]) {
+    padding: 0.1rem 0.5rem;
+    background-color: #ddd;
+    border-radius: 0.25rem;
+    font-size: 16px;
+    font-weight: bold;
+    // color: var(--primary-main);
+    color: #f00;
+  }
 }

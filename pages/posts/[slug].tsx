@@ -12,6 +12,7 @@ import GA_EVENTS from 'ga';
 import queryArticleByArticleId from 'gql/queryArticleByArticleId';
 import queryArticleByTag from 'gql/queryArticleByTag';
 import queryArticleList from 'gql/queryArticleList';
+import queryReadMoreArticleList from 'gql/queryReadMoreArticleList';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -125,6 +126,7 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
     : undefined;
 
   let articleData: SinglePost = {
+    uid: -1,
     id: '',
     subTitle: '',
     title: 'NotFound',
@@ -139,9 +141,10 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
     articleData = res;
   }
 
+  const articleUid = articleData.uid;
   let relatedPostListData = articleData.relatedArticleList;
   if (relatedPostListData.length <= 3) {
-    const paginationLimit = 3 - relatedPostListData.length;
+    const paginationLimit = 3;
     const tagName = articleData.tagList[0];
     // console.log('paginationLimit: ', paginationLimit);
     // console.log('tagName: ', tagName);
@@ -150,23 +153,25 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
       otherPostListData = (
         await queryArticleByTag(tagName, {
           paginationLimit,
+          articleUid,
         })
       ).data.articles.data;
     } else {
-      otherPostListData = (
-        await queryArticleList({
-          paginationLimit,
-        })
-      ).data.articles.data;
+      otherPostListData = (await queryReadMoreArticleList(articleUid)).data
+        .articles.data;
     }
     const handledOtherPostListData =
-      QueriedArticleHandlers.handleQueriedArticleList({
+      QueriedArticleHandlers.convertQueriedSimpleArticleList({
         data: otherPostListData,
-      });
+      }).filter((a) => !relatedPostListData.map((r) => r.id).includes(a.id));
 
     relatedPostListData = [...relatedPostListData, ...handledOtherPostListData];
   }
-  // console.log('relatedPostListData: ', relatedPostListData);
+  // console.log('articleUid: ', articleUid);
+  // console.log(
+  //   'relatedPostListData: ',
+  //   relatedPostListData.map((p) => p.title)
+  // );
 
   const props: PostViewProps = {
     post: articleData,

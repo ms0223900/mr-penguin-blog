@@ -1,6 +1,13 @@
-import { Image, SinglePost, StrapiResponseWithListAttr } from 'common-types';
+import {
+  ID,
+  Image,
+  SingleBasicPostLinkData,
+  SinglePost,
+  StrapiResponseWithListAttr,
+} from 'common-types';
 import { QueriedArticleList } from 'gql/queryArticleList';
-import { SingleQueriedArticle } from 'gql/types';
+import { QueriedReadMoreArticleList } from 'gql/queryReadMoreArticleList';
+import { SingleQueriedArticle, SingleQuriedSimpleArticle } from 'gql/types';
 
 const QueriedArticleHandlers = (() => {
   const getThumbnail = (
@@ -21,6 +28,17 @@ const QueriedArticleHandlers = (() => {
     articleTagList: StrapiResponseWithListAttr<{ title: string }>
   ): string[] => articleTagList.data.map((t) => t.attributes.title);
 
+  const convertSingleQuriedSimpleArticle = (
+    uid: ID,
+    simpleArticle: SingleQuriedSimpleArticle
+  ): SingleBasicPostLinkData => {
+    return {
+      ...simpleArticle,
+      uid,
+      id: simpleArticle.articleId.toString(),
+    };
+  };
+
   const handleQueriedArticleList = (
     queried: QueriedArticleList
   ): SinglePost[] => {
@@ -28,12 +46,13 @@ const QueriedArticleHandlers = (() => {
     const res = articles.map(
       (a): SinglePost => ({
         ...a.attributes,
-        id: a.attributes.articleId.toString(),
+        ...convertSingleQuriedSimpleArticle(a.id, a.attributes),
         createdAt: a.attributes.publishedAt,
         thumbnail: getThumbnail(a.attributes),
         tagList: getTagList(a.attributes.article_tags),
         relatedArticleList: a.attributes.related_articles.data.map((a) => ({
           ...a.attributes,
+          uid: a.id,
           id: a.attributes.articleId.toString(),
         })),
       })
@@ -42,12 +61,23 @@ const QueriedArticleHandlers = (() => {
     return res;
   };
 
+  const convertQueriedSimpleArticleList = (
+    queried: QueriedReadMoreArticleList
+  ): SingleBasicPostLinkData[] => {
+    const { data: articles } = queried;
+    return articles.map((a) => ({
+      ...a.attributes,
+      ...convertSingleQuriedSimpleArticle(a.id, a.attributes),
+    }));
+  };
+
   const getArticleIdList = (queried: QueriedArticleList): string[] =>
     queried.data.map((a) => a.attributes.articleId);
 
   return {
     handleQueriedArticleList,
     getArticleIdList,
+    convertQueriedSimpleArticleList,
   };
 })();
 

@@ -27,6 +27,7 @@ const ARTICLE_ENTITY = gql`
       }
       related_articles {
         data {
+          id
           attributes {
             articleId
             title

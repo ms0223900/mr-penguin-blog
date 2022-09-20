@@ -1,6 +1,7 @@
 import { SinglePost } from 'common-types';
 
 const taichungLatternFes: SinglePost = {
+  uid: 3,
   id: 'taichung-lattern-fes',
   createdAt: '2022-02-17',
   title: '台中燈會走走',

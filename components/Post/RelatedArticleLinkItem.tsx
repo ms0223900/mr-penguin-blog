@@ -13,19 +13,20 @@ export type RelatedArticleLinkItemProps = Pick<
 
 const RelatedArticleLinkItem = (props: RelatedArticleLinkItemProps) => {
   return (
-    <Link href={STATIC_ROUTES.getPostWithId(props.id)}>
-      <a className={styles['related-article-link-item']}>
-        <Box className={styles['title--wrapper']}>
-          <Typography fontSize={'20px'}>{props.title}</Typography>
-          <Box className={styles['icon--wrapper']}>
-            <NorthEastOutlined />
-          </Box>
+    <a
+      className={styles['related-article-link-item']}
+      href={STATIC_ROUTES.getPostWithId(props.id)}
+    >
+      <Box className={styles['title--wrapper']}>
+        <Typography fontSize={'20px'}>{props.title}</Typography>
+        <Box className={styles['icon--wrapper']}>
+          <NorthEastOutlined />
         </Box>
-        <Box className={styles['subtitle--wrapper']}>
-          <span>{props.subTitle}</span>
-        </Box>
-      </a>
-    </Link>
+      </Box>
+      <Box className={styles['subtitle--wrapper']}>
+        <span>{props.subTitle}</span>
+      </Box>
+    </a>
   );
 };
 

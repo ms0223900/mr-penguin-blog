@@ -1,6 +1,7 @@
 import { SinglePost } from 'common-types';
 
 const nuxt3Pinia: SinglePost = {
+  uid: 1,
   id: 'nuxt3-pinia',
   title: 'Nuxt3 + Pinia實戰教學',
   thumbnail: {

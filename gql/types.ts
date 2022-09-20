@@ -1,4 +1,9 @@
-import { SinglePost, StrapiResponseWithListAttr } from 'common-types';
+import { ID, SinglePost, StrapiResponseWithListAttr } from 'common-types';
+
+export type SingleQuriedSimpleArticle = Pick<
+  SingleQueriedArticle,
+  'articleId' | 'title' | 'subTitle'
+>;
 
 export interface SingleQueriedArticle {
   articleId: string;

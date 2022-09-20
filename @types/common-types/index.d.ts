@@ -13,7 +13,8 @@ declare module 'common-types' {
   }
 
   interface SinglePost extends TimeRecord {
-    id: string;
+    uid: ID;
+    id: string; // 網址用的id，是一串文字
     title: string;
     subTitle: string;
     description: string;
@@ -22,7 +23,10 @@ declare module 'common-types' {
     tagList: string[];
     relatedArticleList: SingleBasicPostLinkData[];
   }
-  type SingleBasicPostLinkData = Pick<SinglePost, 'id' | 'title' | 'subTitle'>;
+  type SingleBasicPostLinkData = Pick<
+    SinglePost,
+    'uid' | 'id' | 'title' | 'subTitle'
+  >;
 
   interface Image {
     name?: string;

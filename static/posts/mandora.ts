@@ -1,6 +1,7 @@
 import { SinglePost } from 'common-types';
 
 const mandora: SinglePost = {
+  uid: 0,
   id: 'mandora-thinking',
   title: '曼陀羅思考法',
   subTitle: '單一核心(目標)做開展的思考法，就像曼陀羅的圖形一樣',

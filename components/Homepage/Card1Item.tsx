@@ -5,9 +5,10 @@ import TagItemV2 from 'components/Common/TagItemV2';
 import TagListV2 from 'components/Common/TagListV2';
 import ThumbnailImg from 'components/Common/ThumbnailImg';
 import Link from 'next/link';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { STATIC_ROUTES } from 'router';
 import styles from './card-1-item.module.scss';
+import checkPostIsNew from './functions/checkPostIsNew';
 
 export type Card1ItemProps = SinglePost;
 
@@ -17,10 +18,23 @@ const Card1Item = ({
   subTitle,
   thumbnail,
   tagList,
+  createdAt,
 }: Card1ItemProps) => {
+  const shouldShowNewTag = useMemo(
+    () => checkPostIsNew(createdAt),
+    [createdAt]
+  );
+
   return (
     <Link href={STATIC_ROUTES.getPostWithId(id)}>
       <a className={styles['card-1-item']}>
+        {shouldShowNewTag && (
+          <img
+            className={styles['new-tag-img']}
+            src={'/assets/icons/icon-new-tag.png'}
+            alt={'new-tag-icon'}
+          />
+        )}
         <Paper
           style={{
             overflow: 'hidden',

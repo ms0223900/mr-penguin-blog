@@ -1,9 +1,19 @@
 @use '/styles/utils/functions' as *;
 
 .card-1-item {
+  position: relative;
   display: block;
   flex-shrink: 0;
   max-width: 240px;
+
+  .new-tag-img {
+    display: block;
+    width: 26px;
+    position: absolute;
+    top: -3px;
+    right: 6px;
+    filter: drop-shadow(0px 0px 3px #aaa);
+  }
 
   &:hover {
     :global(.MuiPaper-root) {

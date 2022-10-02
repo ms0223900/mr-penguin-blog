@@ -9,7 +9,6 @@ export interface PostWithIdxListProps {
 const PostWithIdxList = ({ postWithIdxListData }: PostWithIdxListProps) => {
   return (
     <Box
-      maxWidth={400}
       borderRadius={2}
       style={{
         backgroundColor: '#fff',

@@ -1,0 +1,67 @@
+@import '/styles/utils/breakpoints';
+
+.footer {
+  --divider-gap: 1rem;
+
+  padding: 20px;
+  background-color: var(--primary-main);
+  color: white;
+
+  .content {
+    margin: auto;
+    max-width: 680px;
+    width: 100%;
+
+    .self-intro {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: var(--divider-gap);
+      border-bottom: 1px solid #ffffff50;
+
+      .self-name {
+        text-align: center;
+        > h4 {
+          font-size: 16px;
+        }
+
+        > p {
+          font-size: 14px;
+          opacity: 0.7;
+        }
+      }
+
+      .email--wrapper {
+        padding-top: 0.5rem;
+        // padding-left: 60px;
+      }
+    }
+
+    .links--wrapper {
+      padding-top: var(--divider-gap);
+      justify-content: space-between;
+      // opacity: 0.7;
+
+      > a {
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  @include md {
+    .content {
+      .self-intro {
+        flex-direction: row;
+
+        .email--wrapper {
+          padding-top: 0;
+          padding-left: 60px;
+        }
+      }
+    }
+  }
+}

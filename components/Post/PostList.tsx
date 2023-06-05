@@ -9,6 +9,7 @@ import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
 import React, { memo } from 'react';
 import posts from 'static/posts';
 import PostDetailCardItem from './PostDetailCardItem';
+import styles from './post-list.module.scss';
 
 export interface PostListViewProps {
   postListData: SinglePostFromPostList[];
@@ -33,7 +34,7 @@ export const PostList = ({ postListData }: PostListViewProps) => (
 
 const PostListView = (props: PostListViewProps) => {
   return (
-    <div>
+    <div className={styles['post-list--wrapper']}>
       <Head>
         <title>{`${'文章列表'} | ${WEB_TITLE}`}</title>
         <meta name="description" content={'Latest Posts'} />

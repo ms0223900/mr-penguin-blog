@@ -6,6 +6,11 @@ const navListData: SingleNav[] = [
     link: '/posts',
     subNavList: [],
   },
+  {
+    title: 'Projects',
+    link: '/projects',
+    subNavList: [],
+  },
   // {
   //   title: 'Books',
   //   subNavList: [],

@@ -1,0 +1,9 @@
+@use '/styles/utils/breakpoints' as bk;
+
+.post-list--wrapper {
+  min-height: calc(100vh - 150px - 73px);
+
+  @include bk.md {
+    min-height: calc(100vh - 126px - 73px);
+  }
+}

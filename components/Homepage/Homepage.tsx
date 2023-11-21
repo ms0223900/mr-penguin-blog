@@ -19,16 +19,16 @@ import Card2List from './Card2List';
 import TitleWrapper, { TitleWrapperProps } from './TitleWrapper';
 import { PostCardListData } from './types';
 import styles from './homepage.module.scss';
-import GroupPostsItem, {
-  GroupPostsItemProps,
-} from './GroupPosts/GroupPostsItem';
+import GroupPostsItemContainer, {
+  GroupPostsItemContainerProps,
+} from './GroupPosts/GroupPostsItemContainer';
 
 export interface HomepageProps {
   postCardListWithTitleData: (Omit<TitleWrapperProps, 'children'> &
     PostCardListData)[];
   selectedPostListDataWithTitle: TitleWithIconWrapperProps &
     PostWithIdxListProps;
-  groupPostListData: GroupPostsItemProps[];
+  groupPostListData: GroupPostsItemContainerProps[];
 }
 
 const Homepage = ({
@@ -82,7 +82,7 @@ const Homepage = ({
             iconEl={<ViewTimelineOutlined />}
           >
             {groupPostListData.map((groupPosts, i) => (
-              <GroupPostsItem key={i} {...groupPosts} />
+              <GroupPostsItemContainer key={i} {...groupPosts} />
             ))}
           </TitleWithIconWrapper>
           <Box className={styles['about-me']}>

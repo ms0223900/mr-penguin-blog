@@ -1,4 +1,4 @@
-import { PersonSearchOutlined } from '@mui/icons-material';
+import { GroupOutlined, PersonSearchOutlined } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import AboutMe from 'components/RightSidePart/AboutMe';
@@ -14,6 +14,7 @@ import Card2List from './Card2List';
 import TitleWrapper, { TitleWrapperProps } from './TitleWrapper';
 import { PostCardListData } from './types';
 import styles from './homepage.module.scss';
+import GroupPostsItem from './GroupPosts/GroupPostsItem';
 
 export interface HomepageProps {
   postCardListWithTitleData: (Omit<TitleWrapperProps, 'children'> &
@@ -66,6 +67,9 @@ const Homepage = ({
         >
           <TitleWithIconWrapper {...selectedPostListDataWithTitle}>
             <PostWithIdxList {...selectedPostListDataWithTitle} />
+          </TitleWithIconWrapper>
+          <TitleWithIconWrapper title={'分類文章'} iconEl={<GroupOutlined />}>
+            <GroupPostsItem />
           </TitleWithIconWrapper>
           <Box className={styles['about-me']}>
             <TitleWithIconWrapper

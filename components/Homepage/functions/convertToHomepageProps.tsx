@@ -45,6 +45,7 @@ const convertToHomepageProps = (
         convertToPostWithIdxItemProps
       ),
     },
+    groupPostListData: [], // TODO
   };
 
   return res;

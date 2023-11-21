@@ -1,4 +1,9 @@
-import { GroupOutlined, PersonSearchOutlined } from '@mui/icons-material';
+import {
+  AddBoxOutlined,
+  GroupOutlined,
+  PersonSearchOutlined,
+  ViewTimelineOutlined,
+} from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import AboutMe from 'components/RightSidePart/AboutMe';
@@ -14,18 +19,22 @@ import Card2List from './Card2List';
 import TitleWrapper, { TitleWrapperProps } from './TitleWrapper';
 import { PostCardListData } from './types';
 import styles from './homepage.module.scss';
-import GroupPostsItem from './GroupPosts/GroupPostsItem';
+import GroupPostsItem, {
+  GroupPostsItemProps,
+} from './GroupPosts/GroupPostsItem';
 
 export interface HomepageProps {
   postCardListWithTitleData: (Omit<TitleWrapperProps, 'children'> &
     PostCardListData)[];
   selectedPostListDataWithTitle: TitleWithIconWrapperProps &
     PostWithIdxListProps;
+  groupPostListData: GroupPostsItemProps[];
 }
 
 const Homepage = ({
   postCardListWithTitleData,
   selectedPostListDataWithTitle,
+  groupPostListData,
 }: HomepageProps) => {
   return (
     <Box
@@ -68,8 +77,13 @@ const Homepage = ({
           <TitleWithIconWrapper {...selectedPostListDataWithTitle}>
             <PostWithIdxList {...selectedPostListDataWithTitle} />
           </TitleWithIconWrapper>
-          <TitleWithIconWrapper title={'分類文章'} iconEl={<GroupOutlined />}>
-            <GroupPostsItem />
+          <TitleWithIconWrapper
+            title={'分類文章'}
+            iconEl={<ViewTimelineOutlined />}
+          >
+            {groupPostListData.map((groupPosts, i) => (
+              <GroupPostsItem key={i} {...groupPosts} />
+            ))}
           </TitleWithIconWrapper>
           <Box className={styles['about-me']}>
             <TitleWithIconWrapper

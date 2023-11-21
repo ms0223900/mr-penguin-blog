@@ -1,0 +1,28 @@
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-main);
+    svg {
+      fill: var(--primary-main);
+      transition: all 0.2s;
+      transform: translateX(4px);
+    }
+  }
+}
+
+.list--wrapper {
+  padding-left: 1rem;
+}
+
+.list-item {
+  &:hover {
+    color: var(--primary-main);
+    font-weight: bold;
+  }
+}

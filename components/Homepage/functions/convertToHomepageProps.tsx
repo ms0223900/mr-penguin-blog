@@ -21,6 +21,35 @@ const checkPostShouldPutInByTagList = (post: SinglePost, tagList: string[]) => {
   return false;
 };
 
+const groupPostsByTag = (
+  posts: SinglePost[]
+): { tag: string; posts: SinglePost[] }[] => {
+  const postsByTagMap: Record<SinglePost['tagList'][0], SinglePost[]> = {};
+
+  for (let i = 0; i < posts.length; i++) {
+    const post = posts[i];
+    const { tagList } = post;
+
+    tagList.forEach((tag) => {
+      if (!postsByTagMap[tag]) postsByTagMap[tag] = [];
+
+      postsByTagMap[tag].push(post);
+    });
+  }
+
+  const res = [];
+  const tags = Object.keys(postsByTagMap);
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    res[i] = {
+      tag,
+      posts: postsByTagMap[tag] || [],
+    };
+  }
+
+  return res;
+};
+
 const convertToHomepageProps = (
   postListData: SinglePost[],
   selectedPostListData: SinglePost[]
@@ -45,7 +74,10 @@ const convertToHomepageProps = (
         convertToPostWithIdxItemProps
       ),
     },
-    groupPostListData: [], // TODO
+    groupPostListData: groupPostsByTag(postListData).map((posts) => ({
+      tagTitle: posts.tag,
+      postList: posts.posts,
+    })), // TODO
   };
 
   return res;

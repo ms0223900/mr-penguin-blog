@@ -8,19 +8,26 @@ import styles from './group-posts-item.module.scss';
 export interface GroupPostsItemProps {
   postList: SinglePost[];
   tagTitle: string;
+  isOpen?: boolean;
 }
 
 const GroupPostsItem: React.FC<GroupPostsItemProps> = ({
+  isOpen,
   tagTitle,
   postList,
 }) => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h4 className={styles.title}>
         <ChevronRightOutlined />
         {tagTitle}
       </h4>
-      <ul className={styles['list--wrapper']}>
+      <ul
+        className={styles['list--wrapper']}
+        style={{
+          display: isOpen ? 'list-item' : 'none',
+        }}
+      >
         {postList.map((post) => (
           <Link key={post.id} href={`/posts/${post.id}`}>
             <a className={styles['list-item']}>

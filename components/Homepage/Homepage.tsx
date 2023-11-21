@@ -78,7 +78,7 @@ const Homepage = ({
             <PostWithIdxList {...selectedPostListDataWithTitle} />
           </TitleWithIconWrapper>
           <TitleWithIconWrapper
-            title={'分類文章'}
+            title={'文章分類'}
             iconEl={<ViewTimelineOutlined />}
           >
             {groupPostListData.map((groupPosts, i) => (

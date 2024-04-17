@@ -1,0 +1,35 @@
+.wrapper {
+  padding-bottom: 0.5rem;
+}
+
+.title {
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-main);
+    svg {
+      fill: var(--primary-main);
+      transition: all 0.2s;
+      transform: translateX(4px);
+    }
+  }
+}
+
+.list--wrapper {
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.list-item {
+  &:hover {
+    color: var(--primary-main);
+    font-weight: bold;
+  }
+}

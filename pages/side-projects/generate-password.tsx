@@ -5,14 +5,17 @@ import clsx from "clsx";
 
 const MIN_PWD_LENGTH = 8;
 const MAX_PWD_LENGTH = 16;
+const DEFAULT_PWD_LENGTH = 12;
 
 const GeneratePassword: React.FC = (props) => {
-    const [pwdLength, setPwdLength] = useState(MIN_PWD_LENGTH);
+    const [pwdLength, setPwdLength] = useState(DEFAULT_PWD_LENGTH);
     const [password, setPassword] = useState('');
+    const [withSpecialChar, setWithSpecialChar] = useState(true);
 
     function handleGenerateRandPwd() {
         const pwd = new RandomHashPassword().generate({
-            length: pwdLength
+            length: pwdLength,
+            withSpecialChar: withSpecialChar,
         });
         setPassword(pwd)
         // TODO, copy
@@ -21,6 +24,10 @@ const GeneratePassword: React.FC = (props) => {
     function handlePwdLengthChanged(e: any) {
         setPwdLength(e.target.value)
 
+    }
+
+    function handleCheckSpecialChar(e: any) {
+        setWithSpecialChar(e.checkbox)
     }
 
     return (
@@ -44,29 +51,47 @@ const GeneratePassword: React.FC = (props) => {
                 </p>
             </div>
             <hr />
-            <label className={
-                clsx("p-2 py-4")
-            }>
-                <span>Password Length: </span>
-                <input
-                    className={"p-2 px-4"}
-                    type="number"
-                    value={pwdLength}
-                    min={MIN_PWD_LENGTH}
-                    max={MAX_PWD_LENGTH}
-                    onChange={handlePwdLengthChanged}
-                />
-            </label>
-            <button className={
-                clsx(
-                    "max-w-[400px]",
-                    "px-5 py-3 bg-cyan-800 text-white",
-                    "rounded-lg",
-                    "font-bold"
+            <div className={clsx(
+                "pt-4"
+            )}>
+                <button className={
+                    clsx(
+                        "max-w-[400px]",
+                        "px-5 py-3 bg-cyan-800 text-white",
+                        "rounded-lg",
+                        "font-bold"
+                    )
+                } onClick={handleGenerateRandPwd}>
+                    Generate and Copy :)
+                </button>
+            </div>
+            <div className={
+                clsx("py-2",
+                    "flex flex-col flex-gap-2 justify-center"
                 )
-            } onClick={handleGenerateRandPwd}>
-                Generate and Copy:)
-            </button>
+            }>
+                <label className={
+                    clsx("p-2 py-4")
+                }>
+                    <span>Password Length: </span>
+                    <input
+                        className={"p-2 px-4"}
+                        type="number"
+                        value={pwdLength}
+                        min={MIN_PWD_LENGTH}
+                        max={MAX_PWD_LENGTH}
+                        onChange={handlePwdLengthChanged}
+                    />
+                </label>
+                <label className={"flex gap-1"}>
+                    <input
+                        type={"checkbox"}
+                        checked={withSpecialChar}
+                        onChange={handleCheckSpecialChar}
+                    />
+                    <span>With special Char</span>
+                </label>
+            </div>
         </div>
     );
 };

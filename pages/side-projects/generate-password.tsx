@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { RandomHashPassword } from "./RandomHashPassword";
+import { RandomHashPassword } from "../../lib/functions/RandomHashPassword";
 import clsx from "clsx";
 
 const MIN_PWD_LENGTH = 8;

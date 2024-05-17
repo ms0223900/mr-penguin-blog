@@ -7,6 +7,15 @@ const MIN_PWD_LENGTH = 8;
 const MAX_PWD_LENGTH = 16;
 const DEFAULT_PWD_LENGTH = 12;
 
+function copyToClipboard(text: string) {
+    const inputEL = document.createElement('input');
+    inputEL.value = text
+    document.body.appendChild(inputEL)
+    inputEL.select()
+    document.execCommand('copy')
+    document.body.removeChild(inputEL)
+}
+
 const GeneratePassword: React.FC = (props) => {
     const [pwdLength, setPwdLength] = useState(DEFAULT_PWD_LENGTH);
     const [password, setPassword] = useState('');
@@ -18,7 +27,8 @@ const GeneratePassword: React.FC = (props) => {
             withSpecialChar: withSpecialChar,
         });
         setPassword(pwd)
-        // TODO, copy
+
+        copyToClipboard(pwd);
     }
 
     function handlePwdLengthChanged(e: any) {
@@ -29,6 +39,10 @@ const GeneratePassword: React.FC = (props) => {
     function handleCheckSpecialChar(e: any) {
         const checked = e.target.checked;
         setWithSpecialChar(checked)
+    }
+
+    function handleCopy() {
+        copyToClipboard(password);
     }
 
     return (
@@ -47,9 +61,10 @@ const GeneratePassword: React.FC = (props) => {
                 <h3>
                     Random Password:
                 </h3>
-                <p className={"text-lg"}>
+                <p className={"text-lg"} onClick={handleCopy}>
                     {password}
                 </p>
+                <button className={"text-cyan-400 font-bold"} onClick={handleCopy}>Copy</button>
             </div>
             <hr />
             <div className={clsx(
@@ -57,13 +72,13 @@ const GeneratePassword: React.FC = (props) => {
             )}>
                 <button className={
                     clsx(
-                        "max-w-[400px]",
+                        "w-[400px]",
                         "px-5 py-3 bg-cyan-800 text-white",
                         "rounded-lg",
                         "font-bold"
                     )
                 } onClick={handleGenerateRandPwd}>
-                    Generate and Copy :)
+                    Generate
                 </button>
             </div>
             <div className={

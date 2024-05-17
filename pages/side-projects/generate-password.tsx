@@ -26,25 +26,37 @@ const GeneratePassword: React.FC = (props) => {
     return (
         <div className={
             clsx("pt-10 min-h-[400px]",
-                "flex flex-col items-center"
+                // "bg-gray-300",
+                "flex flex-col items-center",
             )
         }>
-            <div className={"p-4 text-center"}>
+            <div className={
+                clsx("p-4 text-center",
+                    "flex items-center gap-2",
+                    "border-solid border-b-gray-300 border-b-2"
+                )
+            }>
                 <h3>
-                    Password:
+                    Random Password:
                 </h3>
                 <p className={"text-lg"}>
                     {password}
                 </p>
-                <hr />
             </div>
-            <input
-                type="number"
-                value={pwdLength}
-                min={MIN_PWD_LENGTH}
-                max={MAX_PWD_LENGTH}
-                onChange={handlePwdLengthChanged}
-            />
+            <hr />
+            <label className={
+                clsx("p-2 py-4")
+            }>
+                <span>Password Length: </span>
+                <input
+                    className={"p-2 px-4"}
+                    type="number"
+                    value={pwdLength}
+                    min={MIN_PWD_LENGTH}
+                    max={MAX_PWD_LENGTH}
+                    onChange={handlePwdLengthChanged}
+                />
+            </label>
             <button className={
                 clsx(
                     "max-w-[400px]",

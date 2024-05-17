@@ -27,7 +27,8 @@ const GeneratePassword: React.FC = (props) => {
     }
 
     function handleCheckSpecialChar(e: any) {
-        setWithSpecialChar(e.checkbox)
+        const checked = e.target.checked;
+        setWithSpecialChar(checked)
     }
 
     return (
@@ -67,7 +68,7 @@ const GeneratePassword: React.FC = (props) => {
             </div>
             <div className={
                 clsx("py-2",
-                    "flex flex-col flex-gap-2 justify-center"
+                    "flex flex-col flex-gap-1 justify-center"
                 )
             }>
                 <label className={

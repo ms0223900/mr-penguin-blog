@@ -61,7 +61,7 @@ const GeneratePassword: React.FC = (props) => {
                     "border-solid border-b-gray-300 border-b-2"
                 )
             }>
-                <h3>
+                <h3 className={"sm:w-auto w-full"}>
                     Random Password:
                 </h3>
                 <div className={

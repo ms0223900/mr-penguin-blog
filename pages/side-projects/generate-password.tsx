@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RandomHashPassword } from "../../lib/functions/RandomHashPassword";
 import clsx from "clsx";
 
@@ -31,40 +31,49 @@ const GeneratePassword: React.FC = (props) => {
         copyToClipboard(pwd);
     }
 
-    function handlePwdLengthChanged(e: any) {
+    const handlePwdLengthChanged = (e: any) => {
         setPwdLength(e.target.value)
+    };
 
-    }
-
-    function handleCheckSpecialChar(e: any) {
+    const handleCheckSpecialChar = (e: any) => {
         const checked = e.target.checked;
         setWithSpecialChar(checked)
-    }
+    };
 
-    function handleCopy() {
+    const handleCopy = () => {
         copyToClipboard(password);
-    }
+    };
+
+    useEffect(() => {
+        handleGenerateRandPwd()
+    }, [])
 
     return (
         <div className={
-            clsx("pt-10 min-h-[400px]",
+            clsx("pt-10 min-h-[83vh]",
                 // "bg-gray-300",
                 "flex flex-col items-center",
             )
         }>
             <div className={
                 clsx("p-4 text-center",
-                    "flex items-center gap-2",
+                    "flex items-center justify-center gap-2 flex-wrap",
                     "border-solid border-b-gray-300 border-b-2"
                 )
             }>
                 <h3>
                     Random Password:
                 </h3>
-                <p className={"text-lg"} onClick={handleCopy}>
-                    {password}
-                </p>
-                <button className={"text-cyan-400 font-bold"} onClick={handleCopy}>Copy</button>
+                <div className={
+                    clsx("flex gap-2 items-center",
+                        "p-2"
+                    )
+                }>
+                    <p className={"text-lg"} onClick={handleCopy}>
+                        {password}
+                    </p>
+                    <button className={"text-cyan-400 font-bold"} onClick={handleCopy}>Copy</button>
+                </div>
             </div>
             <hr />
             <div className={clsx(

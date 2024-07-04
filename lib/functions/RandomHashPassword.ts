@@ -18,7 +18,7 @@ export class RandomHashPassword {
         return newHashed;
     }
 
-    makeOneCharacterUppercase(text = '') {
+    private makeOneCharacterUppercase(text = '') {
         let res = ''
         for (let i = 0; i < text.length; i++) {
             const currentChar = this.getCurrentChar(text[i], res);
@@ -27,13 +27,13 @@ export class RandomHashPassword {
         return res;
     }
 
-    getSpecialChar() {
+    private getSpecialChar() {
         const specialChars = ['&', '.', '_', '-'];
         const idx = getRandIdx(0, specialChars.length);
         return specialChars[idx];
     }
 
-    getCurrentChar(currentOriginChar = '', currentAllText = '') {
+    private getCurrentChar(currentOriginChar = '', currentAllText = '') {
         if (this.isNoneAlphabetUppercased(currentAllText)) {
             return currentOriginChar.toUpperCase();
         } else {
@@ -41,7 +41,7 @@ export class RandomHashPassword {
         }
     }
 
-    isNoneAlphabetUppercased(currentAllText = '') {
+    private isNoneAlphabetUppercased(currentAllText = '') {
         return currentAllText.match(/[A-Z]/) === null;
     }
 }

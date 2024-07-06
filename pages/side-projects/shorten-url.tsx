@@ -21,8 +21,7 @@ const ShortenUrl: React.FC = (props) => {
         try {
             loadingAndErr.setLoading(true)
             const shortenUrlDtoResponse = await ShortenUrlRepo.createShortenUrl(urlVal);
-            const hash = shortenUrlDtoResponse.data.hash;
-            const shortenUrl = getShortenUrl(hash);
+            const shortenUrl = getShortenUrl(shortenUrlDtoResponse.data.hash);
             setCreatedShortenUrl(shortenUrl)
             setUrlVal("")
         } catch (e) {

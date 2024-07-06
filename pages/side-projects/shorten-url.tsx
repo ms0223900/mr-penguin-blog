@@ -1,10 +1,34 @@
 "use client"
 
-import React from 'react';
-import { useRedirectToUrl } from "components/ShortenUrl/hooks/useRedirectToUrl";
+import React, { useState } from 'react';
+import { useLoadingAndErr, useRedirectToUrl } from "components/ShortenUrl/hooks/useRedirectToUrl";
+import { ShortenUrlRepo } from "components/ShortenUrl/repo/ShortenUrlRepo";
 
 const ShortenUrl: React.FC = (props) => {
     const { loading, err, urlHash } = useRedirectToUrl();
+    const loadingAndErr = useLoadingAndErr();
+    const [urlVal, setUrlVal] = useState("");
+    const [createdShortenUrl, setCreatedShortenUrl] = useState("");
+
+    async function handleCreateShortenUrl() {
+        if (!urlVal) return
+        if (loadingAndErr.loading) return
+
+        try {
+            loadingAndErr.setLoading(true)
+            console.log(urlVal);
+            // return
+            const shortenUrlDtoResponse = await ShortenUrlRepo.createShortenUrl(urlVal);
+            const hash = shortenUrlDtoResponse.data.hash;
+            const shortenUrl = window.location.origin + "/side-projects/shorten-url?hash=" + hash;
+            setCreatedShortenUrl(shortenUrl)
+        } catch (e) {
+            console.log("e: ", e);
+            loadingAndErr.setErr(e)
+        } finally {
+            loadingAndErr.setLoading(false)
+        }
+    }
 
     return (
         <div
@@ -23,10 +47,19 @@ const ShortenUrl: React.FC = (props) => {
                 <div className={"flex flex-col gap-2 justify-center p-4 px-8"}>
                     <input
                         className={"p-2 rounded-md"}
+                        value={urlVal}
+                        onChange={e => setUrlVal(e.target.value)}
                         placeholder={"Enter url for shorten :)"} />
-                    <button className={"p-1 py-2 rounded-md bg-blue-600 text-white font-bold min-w-[200px]"}>
+                    <button
+                        className={"p-1 py-2 rounded-md bg-blue-600 text-white font-bold min-w-[200px] disabled:bg-gray-400"}
+                        disabled={loadingAndErr.loading}
+                        onClick={handleCreateShortenUrl}>
                         Create
                     </button>
+                    {createdShortenUrl && <div>
+                        <h3>Created:</h3>
+                        <a href={createdShortenUrl} target={"_blank"} rel="noreferrer">{createdShortenUrl}</a>
+                    </div>}
                 </div>
             </div>
         </div>

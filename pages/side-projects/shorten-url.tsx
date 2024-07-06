@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLoadingAndErr, useRedirectToUrl } from "components/ShortenUrl/hooks/useRedirectToUrl";
 import { ShortenUrlRepo } from "components/ShortenUrl/repo/ShortenUrlRepo";
 
@@ -9,6 +9,8 @@ function getShortenUrl(hash: string) {
 }
 
 const ShortenUrl: React.FC = (props) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
     const { loading, err, urlHash } = useRedirectToUrl();
     const loadingAndErr = useLoadingAndErr();
     const [urlVal, setUrlVal] = useState("");
@@ -23,7 +25,9 @@ const ShortenUrl: React.FC = (props) => {
             const shortenUrlDtoResponse = await ShortenUrlRepo.createShortenUrl(urlVal);
             const shortenUrl = getShortenUrl(shortenUrlDtoResponse.data.hash);
             setCreatedShortenUrl(shortenUrl)
+            
             setUrlVal("")
+            handleFocusInput();
         } catch (e) {
             console.log("e: ", e);
             loadingAndErr.setErr(e)
@@ -31,6 +35,14 @@ const ShortenUrl: React.FC = (props) => {
             loadingAndErr.setLoading(false)
         }
     }
+
+    function handleFocusInput() {
+        inputRef.current?.focus()
+    }
+
+    useEffect(() => {
+        handleFocusInput();
+    }, [])
 
     return (
         <div
@@ -48,6 +60,7 @@ const ShortenUrl: React.FC = (props) => {
                 <hr />
                 <div className={"flex flex-col gap-2 justify-center p-4 px-8"}>
                     <input
+                        ref={inputRef}
                         className={"p-2 rounded-md"}
                         value={urlVal}
                         onChange={e => setUrlVal(e.target.value)}

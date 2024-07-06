@@ -14,6 +14,15 @@ const GENERATE_PASSWORD_POST = {
     },
 } as SinglePost;
 
+const SHORTEN_URL_POST = {
+    id: `${STATIC_ROUTES.sideProjects}/shorten-url`,
+    title: '縮網址服務',
+    subTitle: '縮個短網址吧！',
+    thumbnail: {
+        src: 'https://images.unsplash.com/photo-1510193806518-f731c70a35bb?q=70&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+} as SinglePost;
+
 export const getStaticProps: GetStaticProps<PostListViewProps> = async (
     ctx
 ) => {
@@ -28,7 +37,8 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
             props: {
                 postListData: [
                     ...postListData,
-                    GENERATE_PASSWORD_POST as SinglePost,
+                    GENERATE_PASSWORD_POST,
+                    SHORTEN_URL_POST,
                 ],
             },
         };
@@ -36,7 +46,8 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
         return {
             props: {
                 postListData: [
-                    GENERATE_PASSWORD_POST as SinglePost,
+                    GENERATE_PASSWORD_POST,
+                    SHORTEN_URL_POST,
                 ],
             },
         };

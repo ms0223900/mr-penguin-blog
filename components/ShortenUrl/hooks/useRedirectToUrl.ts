@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ShortenUrlRepo } from "components/ShortenUrl/repo/ShortenUrlRepo";
 
 function redirect(url: string) {
-    window.location.href = url
+    window.location.replace(url)
 }
 
 export function useLoadingAndErr() {
@@ -33,7 +33,6 @@ export function useRedirectToUrl() {
                 } catch (e: unknown) {
                     setErr(e as any)
                 } finally {
-                    setLoading(false)
                 }
             }
         )()

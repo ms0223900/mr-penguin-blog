@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import { useLoadingAndErr, useRedirectToUrl } from "components/ShortenUrl/hooks/useRedirectToUrl";
 import { ShortenUrlRepo } from "components/ShortenUrl/repo/ShortenUrlRepo";
 
+function getShortenUrl(hash: string) {
+    return `${window.location.origin}/side-projects/shorten-url?hash=${hash}`;
+}
+
 const ShortenUrl: React.FC = (props) => {
     const { loading, err, urlHash } = useRedirectToUrl();
     const loadingAndErr = useLoadingAndErr();
@@ -16,12 +20,11 @@ const ShortenUrl: React.FC = (props) => {
 
         try {
             loadingAndErr.setLoading(true)
-            console.log(urlVal);
-            // return
             const shortenUrlDtoResponse = await ShortenUrlRepo.createShortenUrl(urlVal);
             const hash = shortenUrlDtoResponse.data.hash;
-            const shortenUrl = window.location.origin + "/side-projects/shorten-url?hash=" + hash;
+            const shortenUrl = getShortenUrl(hash);
             setCreatedShortenUrl(shortenUrl)
+            setUrlVal("")
         } catch (e) {
             console.log("e: ", e);
             loadingAndErr.setErr(e)
@@ -58,7 +61,8 @@ const ShortenUrl: React.FC = (props) => {
                     </button>
                     {createdShortenUrl && <div>
                         <h3>Created:</h3>
-                        <a href={createdShortenUrl} target={"_blank"} rel="noreferrer">{createdShortenUrl}</a>
+                        <a className={"underline text-blue-600"} href={createdShortenUrl} target={"_blank"}
+                           rel="noreferrer">{createdShortenUrl}</a>
                     </div>}
                 </div>
             </div>

@@ -26,6 +26,12 @@ const ACCOUNTING_APP_POST = SinglePostVO.makeSideProjectPost({
     thumbnailUrl: 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f?q=70&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 }).value;
 
+const sideProjectPosts = [
+    GENERATE_PASSWORD_POST,
+    SHORTEN_URL_POST,
+    ACCOUNTING_APP_POST,
+];
+
 export const getStaticProps: GetStaticProps<PostListViewProps> = async (
     ctx
 ) => {
@@ -40,20 +46,14 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
             props: {
                 postListData: [
                     ...postListData,
-                    GENERATE_PASSWORD_POST,
-                    SHORTEN_URL_POST,
-                    ACCOUNTING_APP_POST,
+                    ...sideProjectPosts
                 ],
             },
         };
     } catch (error) {
         return {
             props: {
-                postListData: [
-                    GENERATE_PASSWORD_POST,
-                    SHORTEN_URL_POST,
-                    ACCOUNTING_APP_POST,
-                ],
+                postListData: sideProjectPosts,
             },
         };
     }

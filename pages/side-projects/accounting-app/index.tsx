@@ -38,7 +38,7 @@ function CalculatorMain() {
             <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">
                 <div className="text-right text-3xl mb-4">${inputValue}</div>
                 <div className="grid grid-cols-4 gap-2">
-                    {[7, 8, 9, 4, 5, 6, 1, 2, 3, '.', 0, '+'].map((btn) => (
+                    {[7, 8, 9,].map((btn) => (
                         <button
                             key={btn}
                             onClick={() => handleNumberClick(btn)}
@@ -50,12 +50,39 @@ function CalculatorMain() {
                     <button onClick={handleClear} className="bg-orange-500 text-white p-3 rounded">
                         AC
                     </button>
+                    {[4, 5, 6].map((btn) => (
+                        <button
+                            key={btn}
+                            onClick={() => handleNumberClick(btn)}
+                            className="bg-gray-700 text-white p-3 rounded"
+                        >
+                            {btn}
+                        </button>
+                    ))}
                     <button onClick={handleBackspace} className="bg-gray-600 text-white p-3 rounded">
                         {"X"}
                     </button>
-                    <button onClick={handleOk} className="bg-blue-500 text-white p-3 rounded col-span-2">
+                    {[1, 2, 3].map((btn) => (
+                        <button
+                            key={btn}
+                            onClick={() => handleNumberClick(btn)}
+                            className="bg-gray-700 text-white p-3 rounded"
+                        >
+                            {btn}
+                        </button>
+                    ))}
+                    <button onClick={handleOk} className="bg-blue-500 text-white p-3 rounded row-span-2">
                         OK
                     </button>
+                    {['.', 0, '+'].map((btn) => (
+                        <button
+                            key={btn}
+                            onClick={() => handleNumberClick(btn)}
+                            className="bg-gray-700 text-white p-3 rounded"
+                        >
+                            {btn}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>

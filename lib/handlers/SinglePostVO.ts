@@ -10,4 +10,24 @@ export class SinglePostVO {
     get value(): SinglePost {
         return this._post;
     }
+
+    static makeSideProjectPost(param: {
+        thumbnailUrl: string;
+        subTitle: string;
+        id: string;
+        title: string
+    } & Partial<SinglePost>): SinglePostVO {
+        return new SinglePostVO({
+            ...param,
+            thumbnail: {
+                src: param.thumbnailUrl,
+            },
+            uid: "",
+            description: "",
+            content: "",
+            tagList: [],
+            createdAt: "",
+            relatedArticleList: [],
+        });
+    }
 }

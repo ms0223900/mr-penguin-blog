@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLoadingAndErr, useRedirectToUrl } from "components/ShortenUrl/hooks/useRedirectToUrl";
 import { ShortenUrlRepo } from "components/ShortenUrl/repo/ShortenUrlRepo";
+import Head from "next/head";
+import { WEB_TITLE } from "config";
 
 function getShortenUrl(hash: string) {
     return `${window.location.origin}/side-projects/shorten-url?hash=${hash}`;
@@ -25,7 +27,7 @@ const ShortenUrl: React.FC = (props) => {
             const shortenUrlDtoResponse = await ShortenUrlRepo.createShortenUrl(urlVal);
             const shortenUrl = getShortenUrl(shortenUrlDtoResponse.data.hash);
             setCreatedShortenUrl(shortenUrl)
-            
+
             setUrlVal("")
             handleFocusInput();
         } catch (e) {
@@ -52,6 +54,10 @@ const ShortenUrl: React.FC = (props) => {
                     <h2>Redirecting...</h2>
                 </div>
             )}
+            <Head>
+                <title>{`縮個短網址吧！ | ${WEB_TITLE}`}</title>
+                <meta name="description" content="自製的短網址服務 :) 無廣告、無埋碼" />
+            </Head>
             {err && (
                 <p>{err?.message}</p>
             )}

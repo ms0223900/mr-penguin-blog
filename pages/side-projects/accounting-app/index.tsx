@@ -1,8 +1,9 @@
+"use client"
 import React, { useState } from 'react';
 
 
 function CalculatorMain() {
-    const [inputValue, setInputValue] = useState('3134111');
+    const [inputValue, setInputValue] = useState('0');
     const [records, setRecords] = useState([123, 111, 10, 1]);
 
     const handleNumberClick = (numPad: number | string) => {

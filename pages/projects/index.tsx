@@ -19,6 +19,13 @@ const SHORTEN_URL_POST = SinglePostVO.makeSideProjectPost({
     thumbnailUrl: 'https://images.unsplash.com/photo-1510193806518-f731c70a35bb?q=70&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 }).value;
 
+const ACCOUNTING_APP_POST = SinglePostVO.makeSideProjectPost({
+    id: `${STATIC_ROUTES.sideProjects}/accounting-app`,
+    title: '記帳吧',
+    subTitle: '簡單記帳',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f?q=70&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+}).value;
+
 export const getStaticProps: GetStaticProps<PostListViewProps> = async (
     ctx
 ) => {
@@ -35,6 +42,7 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
                     ...postListData,
                     GENERATE_PASSWORD_POST,
                     SHORTEN_URL_POST,
+                    ACCOUNTING_APP_POST,
                 ],
             },
         };
@@ -44,6 +52,7 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
                 postListData: [
                     GENERATE_PASSWORD_POST,
                     SHORTEN_URL_POST,
+                    ACCOUNTING_APP_POST,
                 ],
             },
         };

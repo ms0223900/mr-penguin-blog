@@ -35,7 +35,6 @@ function useCalculator() {
     };
 }
 
-// 开闭原则：将 UI 组件分离，便于未来扩展
 function Display({ value }: { value: string }) {
     return <div className="text-right text-3xl mb-4">${value}</div>;
 }

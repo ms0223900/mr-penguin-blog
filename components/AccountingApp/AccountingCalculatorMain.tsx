@@ -13,26 +13,21 @@ function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
     const [records, setRecords] = useState<number[]>([]);
 
-    function handleOkWithSum(sum: number) {
-        setRecords(prev => [sum, ...prev]);
-        setInputValue('0');
-    }
-
-    const handleOk = () => {
-        if (inputValue.includes('+')) {
-            const values = inputValue.split('+').map(v => parseFloat(v.trim()));
-            const sum = values.reduce((acc, curr) => acc + curr, 0);
-            if (!isNaN(sum)) {
-                handleOkWithSum(sum);
-            }
-        } else {
-            const newValue = parseFloat(inputValue);
-            if (!isNaN(newValue)) {
-                handleOkWithSum(newValue);
-            }
-        }
+    const calculateSum = (input: string): number => {
+        const values = input.split('+').map(v => parseFloat(v.trim()));
+        return values.reduce((acc, curr) => acc + curr, 0);
     };
 
+    const handleOk = () => {
+        const sum = inputValue.includes('+')
+            ? calculateSum(inputValue)
+            : parseFloat(inputValue);
+
+        if (!isNaN(sum)) {
+            setRecords(prev => [sum, ...prev]);
+            setInputValue('0');
+        }
+    };
 
     const handleNumberClick = (numPad: number | string) => {
         setInputValue(prev =>

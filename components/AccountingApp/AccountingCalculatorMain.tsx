@@ -108,13 +108,13 @@ function CalculatorMain() {
                 <Display value={inputValue} />
                 <div className="grid grid-cols-4 gap-2">
                     <div className="col-span-3 grid grid-cols-3 gap-2">
-                        {[7, 8, 9, 4, 5, 6, 1, 2, 3, '.', 0, '+'].map((btn, index) => (
+                        {[7, 8, 9, 4, 5, 6, 1, 2, 3, '.', 0, '+'].map((button) => (
                             <Button
-                                key={index}
-                                onClick={() => handleNumberClick(btn)}
+                                key={button}
+                                onClick={() => handleNumberClick(button)}
                                 className="bg-gray-700"
                             >
-                                {btn}
+                                {button}
                             </Button>
                         ))}
                     </div>

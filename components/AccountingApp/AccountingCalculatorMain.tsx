@@ -55,8 +55,8 @@ function useCalculator(): CalculatorHook {
 
 function Display({ value }: { value: string }) {
     return (
-        <div className="text-right text-3xl mb-4 flex justify-end items-baseline gap-[10px]">
-            <span className="text-xl">$</span>
+        <div className="text-right text-3xl mb-4 flex justify-end items-center gap-1">
+            <span className="text-xl opacity-70">$</span>
             <span>{value}</span>
         </div>
     );

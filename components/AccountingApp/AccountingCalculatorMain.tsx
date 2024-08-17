@@ -54,7 +54,12 @@ function useCalculator(): CalculatorHook {
 }
 
 function Display({ value }: { value: string }) {
-    return <div className="text-right text-3xl mb-4">${value}</div>;
+    return (
+        <div className="text-right text-3xl mb-4 flex justify-end items-baseline gap-[10px]">
+            <span className="text-xl">$</span>
+            <span>{value}</span>
+        </div>
+    );
 }
 
 function RecordsList({ records }: { records: number[] }) {
@@ -81,7 +86,7 @@ function Button({ onClick, className, children }: ButtonProps) {
     return (
         <button
             onClick={onClick}
-            className={`text-white p-3 rounded text-xl ${className}`}
+            className={`text-white p-3 rounded text-xl flex items-center justify-center ${className}`}
         >
             {children}
         </button>
@@ -109,7 +114,7 @@ function CalculatorMain() {
         { value: 4 }, { value: 5 }, { value: 6 },
         { value: 1 }, { value: 2 }, { value: 3 },
         { value: '.' }, { value: 0 },
-        { value: '+', className: 'text-orange-500' }
+        { value: '+', className: 'text-orange-500 text-2xl' }
     ];
 
     return (

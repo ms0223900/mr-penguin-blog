@@ -9,22 +9,22 @@ type CalculatorHook = {
     handleOk: () => void;
 };
 
+const calculateSum = (input: string): number => {
+    const values = input.split('+').map(v => parseFloat(v.trim()));
+    return values.reduce((acc, curr) => acc + curr, 0);
+};
+
 function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
     const [records, setRecords] = useState<number[]>([]);
 
-    const calculateSum = (input: string): number => {
-        const values = input.split('+').map(v => parseFloat(v.trim()));
-        return values.reduce((acc, curr) => acc + curr, 0);
-    };
-
     const handleOk = () => {
-        const sum = inputValue.includes('+')
+        const handledInputValue = inputValue.includes('+')
             ? calculateSum(inputValue)
             : parseFloat(inputValue);
 
-        if (!isNaN(sum)) {
-            setRecords(prev => [sum, ...prev]);
+        if (!isNaN(handledInputValue)) {
+            setRecords(prev => [handledInputValue, ...prev]);
             setInputValue('0');
         }
     };

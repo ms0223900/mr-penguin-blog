@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-function useCalculator() {
+type CalculatorHook = {
+    inputValue: string;
+    records: number[];
+    handleNumberClick: (numPad: number | string) => void;
+    handleBackspace: () => void;
+    handleClear: () => void;
+    handleOk: () => void;
+};
+
+function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
-    const [records, setRecords] = useState([123, 111, 10, 1]);
+    const [records, setRecords] = useState<number[]>([]);
 
     const handleNumberClick = (numPad: number | string) => {
         setInputValue(prev =>
@@ -11,7 +20,7 @@ function useCalculator() {
     };
 
     const handleBackspace = () => {
-        setInputValue(prev => prev.slice(0, -1));
+        setInputValue(prev => prev.length > 1 ? prev.slice(0, -1) : '0');
     };
 
     const handleClear = () => {
@@ -20,8 +29,10 @@ function useCalculator() {
 
     const handleOk = () => {
         const newValue = parseFloat(inputValue);
-        setRecords(prev => [newValue, ...prev]);
-        setInputValue('0');
+        if (!isNaN(newValue)) {
+            setRecords(prev => [newValue, ...prev].slice(0, 4));
+            setInputValue('0');
+        }
     };
 
     return {
@@ -41,20 +52,28 @@ function Display({ value }: { value: string }) {
 function RecordsList({ records }: { records: number[] }) {
     return (
         <div className="w-full bg-white rounded-lg p-4 mb-4">
-            {records.slice(0, 4).map((record, index) => (
-                <div key={index} className="text-right text-xl mb-2">
-                    ${record}
-                </div>
-            ))}
+            {records.length > 0 ? (
+                records.map((record, index) => (
+                    <div key={index} className="text-right text-xl mb-2">
+                        ${record}
+                    </div>
+                ))
+            ) : (
+                <div className="text-right text-xl text-gray-400">No records</div>
+            )}
         </div>
     );
 }
 
-function Button({ onClick, className, children }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    className?: string;
+}
+
+function Button({ onClick, className, children }: ButtonProps) {
     return (
         <button
             onClick={onClick}
-            className={`text-white p-3 rounded ${className}`}
+            className={`text-white p-3 rounded text-xl ${className}`}
         >
             {children}
         </button>
@@ -93,7 +112,9 @@ export function CalculatorMain() {
                     </div>
                     <div className="grid grid-rows-4 gap-2">
                         <Button onClick={handleClear} className="bg-orange-500">AC</Button>
-                        <Button onClick={handleBackspace} className="bg-gray-600">X</Button>
+                        <Button onClick={handleBackspace} className="bg-gray-600 flex items-center justify-center">
+                            {"X"}
+                        </Button>
                         <Button onClick={handleOk} className="bg-blue-500 row-span-2">OK</Button>
                     </div>
                 </div>
@@ -101,3 +122,5 @@ export function CalculatorMain() {
         </div>
     );
 }
+
+export default CalculatorMain;

@@ -12,19 +12,23 @@ type CalculatorHook = {
 function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
     const [records, setRecords] = useState<number[]>([]);
+
+    function handleOkWithSum(sum: number) {
+        setRecords(prev => [sum, ...prev]);
+        setInputValue('0');
+    }
+
     const handleOk = () => {
         if (inputValue.includes('+')) {
             const values = inputValue.split('+').map(v => parseFloat(v.trim()));
             const sum = values.reduce((acc, curr) => acc + curr, 0);
             if (!isNaN(sum)) {
-                setRecords(prev => [sum, ...prev]);
-                setInputValue('0');
+                handleOkWithSum(sum);
             }
         } else {
             const newValue = parseFloat(inputValue);
             if (!isNaN(newValue)) {
-                setRecords(prev => [newValue, ...prev]);
-                setInputValue('0');
+                handleOkWithSum(newValue);
             }
         }
     };

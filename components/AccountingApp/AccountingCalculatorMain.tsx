@@ -108,13 +108,19 @@ function CalculatorMain() {
                 <Display value={inputValue} />
                 <div className="grid grid-cols-4 gap-2">
                     <div className="col-span-3 grid grid-cols-3 gap-2">
-                        {[7, 8, 9, 4, 5, 6, 1, 2, 3, '.', 0, '+'].map((button) => (
+                        {[
+                            { value: 7 }, { value: 8 }, { value: 9 },
+                            { value: 4 }, { value: 5 }, { value: 6 },
+                            { value: 1 }, { value: 2 }, { value: 3 },
+                            { value: '.' }, { value: 0 },
+                            { value: '+', className: 'text-orange-500' }
+                        ].map((button) => (
                             <Button
-                                key={button}
-                                onClick={() => handleNumberClick(button)}
-                                className="bg-gray-700"
+                                key={button.value}
+                                onClick={() => handleNumberClick(button.value)}
+                                className={`bg-gray-700 ${button.className || ''}`}
                             >
-                                {button}
+                                {button.value}
                             </Button>
                         ))}
                     </div>

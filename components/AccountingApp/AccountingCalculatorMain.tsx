@@ -88,6 +88,12 @@ function Button({ onClick, className, children }: ButtonProps) {
     );
 }
 
+
+interface ButtonConfig {
+    value: number | string;
+    className?: string;
+}
+
 function CalculatorMain() {
     const {
         inputValue,
@@ -97,6 +103,14 @@ function CalculatorMain() {
         handleClear,
         handleOk
     } = useCalculator();
+
+    const buttonConfigs: ButtonConfig[] = [
+        { value: 7 }, { value: 8 }, { value: 9 },
+        { value: 4 }, { value: 5 }, { value: 6 },
+        { value: 1 }, { value: 2 }, { value: 3 },
+        { value: '.' }, { value: 0 },
+        { value: '+', className: 'text-orange-500' }
+    ];
 
     return (
         <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto">
@@ -108,13 +122,7 @@ function CalculatorMain() {
                 <Display value={inputValue} />
                 <div className="grid grid-cols-4 gap-2">
                     <div className="col-span-3 grid grid-cols-3 gap-2">
-                        {[
-                            { value: 7 }, { value: 8 }, { value: 9 },
-                            { value: 4 }, { value: 5 }, { value: 6 },
-                            { value: 1 }, { value: 2 }, { value: 3 },
-                            { value: '.' }, { value: 0 },
-                            { value: '+', className: 'text-orange-500' }
-                        ].map((button) => (
+                        {buttonConfigs.map((button) => (
                             <Button
                                 key={button.value}
                                 onClick={() => handleNumberClick(button.value)}

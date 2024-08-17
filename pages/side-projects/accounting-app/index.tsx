@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { CalculatorMain } from "components/AccountingApp/AccountingCalculatorMain";
+import CalculatorMain from "components/AccountingApp/AccountingCalculatorMain";
 
 const AccountingAppIndex: React.FC = (props) => {
     return (

@@ -30,7 +30,7 @@ function useCalculator(): CalculatorHook {
     const handleOk = () => {
         const newValue = parseFloat(inputValue);
         if (!isNaN(newValue)) {
-            setRecords(prev => [newValue, ...prev].slice(0, 4));
+            setRecords(prev => [newValue, ...prev]);
             setInputValue('0');
         }
     };
@@ -51,7 +51,7 @@ function Display({ value }: { value: string }) {
 
 function RecordsList({ records }: { records: number[] }) {
     return (
-        <div className="w-full bg-white rounded-lg p-4 mb-4">
+        <div className="w-full bg-white rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
             {records.length > 0 ? (
                 records.map((record, index) => (
                     <div key={index} className="text-right text-xl mb-2">
@@ -80,7 +80,7 @@ function Button({ onClick, className, children }: ButtonProps) {
     );
 }
 
-export function CalculatorMain() {
+function CalculatorMain() {
     const {
         inputValue,
         records,
@@ -93,7 +93,7 @@ export function CalculatorMain() {
     return (
         <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto">
             <div className="w-full text-right text-4xl font-bold mb-4">
-                ${records[0] || 0}
+                ${records.reduce((sum, record) => sum + record, 0)}
             </div>
             <RecordsList records={records} />
             <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">
@@ -112,9 +112,7 @@ export function CalculatorMain() {
                     </div>
                     <div className="grid grid-rows-4 gap-2">
                         <Button onClick={handleClear} className="bg-orange-500">AC</Button>
-                        <Button onClick={handleBackspace} className="bg-gray-600 flex items-center justify-center">
-                            {"X"}
-                        </Button>
+                        <Button onClick={handleBackspace} className="bg-gray-600">X</Button>
                         <Button onClick={handleOk} className="bg-blue-500 row-span-2">OK</Button>
                     </div>
                 </div>

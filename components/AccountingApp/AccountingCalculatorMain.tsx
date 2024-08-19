@@ -120,7 +120,10 @@ function CalculatorMain() {
     return (
         <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto">
             <div className="w-full text-right text-4xl font-bold mb-4">
-                ${records.reduce((sum, record) => sum + record, 0)}
+                <span className="text-gray-400 mr-1">$</span>
+                <span className="text-black">
+                    {records.reduce((sum, record) => sum + record, 0).toFixed(2)}
+                </span>
             </div>
             <RecordsList records={records} />
             <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">

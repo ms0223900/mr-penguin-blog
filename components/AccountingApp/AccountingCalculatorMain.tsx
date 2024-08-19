@@ -8,6 +8,7 @@ type CalculatorHook = {
     handleBackspace: () => void;
     handleClear: () => void;
     handleOk: () => void;
+    handleDeleteRecord: (index: number) => void;
 };
 
 const calculateSum = (input: string): number => {
@@ -44,13 +45,18 @@ function useCalculator(): CalculatorHook {
         setInputValue('0');
     };
 
+    const handleDeleteRecord = (index: number) => {
+        setRecords(prev => prev.filter((_, i) => i !== index));
+    };
+
     return {
         inputValue,
         records,
         handleNumberClick,
         handleBackspace,
         handleClear,
-        handleOk
+        handleOk,
+        handleDeleteRecord
     };
 }
 
@@ -63,13 +69,14 @@ function Display({ value }: { value: string }) {
     );
 }
 
-function RecordsList({ records }: { records: number[] }) {
+function RecordsList({ records, onDelete }: { records: number[], onDelete: (index: number) => void }) {
     return (
         <div className="w-full bg-white rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
             {records.length > 0 ? (
                 records.map((record, index) => (
-                    <div key={index} className="text-right text-xl mb-2">
+                    <div key={index} className="text-right text-xl mb-2 flex justify-end items-center gap-2">
                         ${record}
+                        <button onClick={() => onDelete(index)} className="opacity-50 text-sm">X</button>
                     </div>
                 ))
             ) : (
@@ -107,7 +114,8 @@ function CalculatorMain() {
         handleNumberClick,
         handleBackspace,
         handleClear,
-        handleOk
+        handleOk,
+        handleDeleteRecord
     } = useCalculator();
 
     const buttonConfigs: ButtonConfig[] = [
@@ -126,7 +134,7 @@ function CalculatorMain() {
                     {records.reduce((sum, record) => sum + record, 0)}
                 </span>
             </div>
-            <RecordsList records={records} />
+            <RecordsList records={records} onDelete={handleDeleteRecord} />
             <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">
                 <Display value={inputValue} />
                 <div className="grid grid-cols-4 gap-2">

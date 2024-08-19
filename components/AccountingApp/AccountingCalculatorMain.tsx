@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BackspaceIcon from '@/public/assets/icons/backspace_icon.svg';
 
 type CalculatorHook = {
     inputValue: string;
@@ -141,8 +142,16 @@ function CalculatorMain() {
                         ))}
                     </div>
                     <div className="grid grid-rows-4 gap-2">
+
                         <Button onClick={handleClear} className="bg-orange-500">AC</Button>
-                        <Button onClick={handleBackspace} className="bg-gray-600">X</Button>
+                        <Button onClick={handleBackspace} className="bg-gray-600">
+                            <div>
+                                <div className="w-7 h-7 flex items-center justify-center">
+                                    <BackspaceIcon width={42} height={29} className="w-full h-full"
+                                                   viewBox={"0 0 48 34"} />
+                                </div>
+                            </div>
+                        </Button>
                         <Button onClick={handleOk} className="bg-blue-500 row-span-2">OK</Button>
                     </div>
                 </div>

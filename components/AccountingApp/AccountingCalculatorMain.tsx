@@ -80,9 +80,12 @@ function RecordsList({ records, onDelete }: { records: RecordItem[], onDelete: (
         <div className="w-full bg-white rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
             {records.length > 0 ? (
                 records.map((record, index) => (
-                    <div key={index} className="text-right text-xl mb-2 flex justify-end items-center gap-2">
-                        ${record.amount} ({record.category})
-                        <button onClick={() => onDelete(index)} className="opacity-50 text-sm">X</button>
+                    <div key={index} className="text-xl mb-2 flex justify-between items-center gap-2">
+                        <span>{record.category}</span>
+                        <div className="flex items-center gap-2 ml-auto">
+                            <span className="text-right">${record.amount}</span>
+                            <button onClick={() => onDelete(index)} className="opacity-50 text-sm">X</button>
+                        </div>
                     </div>
                 ))
             ) : (

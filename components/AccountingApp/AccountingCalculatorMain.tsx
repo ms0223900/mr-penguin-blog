@@ -108,6 +108,17 @@ interface ButtonConfig {
     className?: string;
 }
 
+function TotalAmount({ records }: { records: number[] }) {
+    return (
+        <div className="w-full text-right text-4xl font-bold mb-4 flex items-center justify-end">
+            <span className="text-gray-400 mr-1 text-2xl">$</span>
+            <span className="text-black">
+                {records.reduce((sum, record) => sum + record, 0)}
+            </span>
+        </div>
+    );
+}
+
 function CalculatorMain() {
     const {
         inputValue,
@@ -140,12 +151,7 @@ function CalculatorMain() {
 
     return (
         <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto min-h-[500px]">
-            <div className="w-full text-right text-4xl font-bold mb-4 flex items-center justify-end">
-                <span className="text-gray-400 mr-1 text-2xl">$</span>
-                <span className="text-black">
-                    {records.reduce((sum, record) => sum + record, 0)}
-                </span>
-            </div>
+            <TotalAmount records={records} />
             <RecordsList records={records} onDelete={handleDeleteRecord} />
             <div className="flex-grow" />
             {!isCategorySelectorVisible && (

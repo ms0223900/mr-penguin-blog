@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import BackspaceIcon from '@/public/assets/icons/backspace_icon.svg';
+import CategorySelector from "@/components/AccountingApp/CategorySelector";
 
 type CalculatorHook = {
     inputValue: string;
@@ -118,6 +119,8 @@ function CalculatorMain() {
         handleDeleteRecord
     } = useCalculator();
 
+    const [isCategorySelectorVisible, setCategorySelectorVisible] = React.useState(false);
+
     const buttonConfigs: ButtonConfig[] = [
         { value: 7 }, { value: 8 }, { value: 9 },
         { value: 4 }, { value: 5 }, { value: 6 },
@@ -126,8 +129,17 @@ function CalculatorMain() {
         { value: '+', className: 'text-orange-500 text-2xl' }
     ];
 
+    const handleOkWithCategory = () => {
+        handleOk();
+        setCategorySelectorVisible(false);
+    };
+
+    function handleNext(): void {
+        setCategorySelectorVisible(true);
+    }
+
     return (
-        <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto">
+        <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto min-h-[500px]">
             <div className="w-full text-right text-4xl font-bold mb-4 flex items-center justify-end">
                 <span className="text-gray-400 mr-1 text-2xl">$</span>
                 <span className="text-black">
@@ -135,35 +147,38 @@ function CalculatorMain() {
                 </span>
             </div>
             <RecordsList records={records} onDelete={handleDeleteRecord} />
-            <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">
-                <Display value={inputValue} />
-                <div className="grid grid-cols-4 gap-2">
-                    <div className="col-span-3 grid grid-cols-3 gap-2">
-                        {buttonConfigs.map((button) => (
-                            <Button
-                                key={button.value}
-                                onClick={() => handleNumberClick(button.value)}
-                                className={`bg-gray-700 ${button.className || ''}`}
-                            >
-                                {button.value}
-                            </Button>
-                        ))}
-                    </div>
-                    <div className="grid grid-rows-4 gap-2">
-
-                        <Button onClick={handleClear} className="bg-orange-500">AC</Button>
-                        <Button onClick={handleBackspace} className="bg-gray-600">
-                            <div>
-                                <div className="w-7 h-7 flex items-center justify-center">
-                                    <BackspaceIcon width={42} height={29} className="w-full h-full"
-                                                   viewBox={"0 0 48 34"} />
+            <div className="flex-grow" />
+            {!isCategorySelectorVisible && (
+                <div className="w-full bg-gray-800 text-white p-4 rounded-t-lg">
+                    <Display value={inputValue} />
+                    <div className="grid grid-cols-4 gap-2">
+                        <div className="col-span-3 grid grid-cols-3 gap-2">
+                            {buttonConfigs.map((button) => (
+                                <Button
+                                    key={button.value}
+                                    onClick={() => handleNumberClick(button.value)}
+                                    className={`bg-gray-700 ${button.className || ''}`}
+                                >
+                                    {button.value}
+                                </Button>
+                            ))}
+                        </div>
+                        <div className="grid grid-rows-4 gap-2">
+                            <Button onClick={handleClear} className="bg-orange-500">AC</Button>
+                            <Button onClick={handleBackspace} className="bg-gray-600">
+                                <div>
+                                    <div className="w-7 h-7 flex items-center justify-center">
+                                        <BackspaceIcon width={42} height={29} className="w-full h-full"
+                                                       viewBox={"0 0 48 34"} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Button>
-                        <Button onClick={handleOk} className="bg-blue-500 row-span-2">OK</Button>
+                            </Button>
+                            <Button onClick={handleNext} className="bg-blue-500 row-span-2">OK</Button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
+            {isCategorySelectorVisible && <CategorySelector onSaveCategory={handleOkWithCategory} />}
         </div>
     );
 }

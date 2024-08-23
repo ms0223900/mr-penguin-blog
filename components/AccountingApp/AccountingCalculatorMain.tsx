@@ -145,12 +145,12 @@ function CalculatorMain() {
         setCategorySelectorVisible(false);
     };
 
-    function handleNext(): void {
+    function handleNextStep(): void {
         setCategorySelectorVisible(true);
     }
 
     return (
-        <div className="flex flex-col items-center bg-gray-100 p-4 rounded-lg max-w-xs mx-auto min-h-[500px]">
+        <div className="flex flex-col items-center bg-gray-100 p-2 rounded-lg max-w-xs mx-auto min-h-[500px]">
             <TotalAmount records={records} />
             <RecordsList records={records} onDelete={handleDeleteRecord} />
             <div className="flex-grow" />
@@ -179,7 +179,7 @@ function CalculatorMain() {
                                     </div>
                                 </div>
                             </Button>
-                            <Button onClick={handleNext} className="bg-blue-500 row-span-2">OK</Button>
+                            <Button onClick={handleNextStep} className="bg-blue-500 row-span-2">OK</Button>
                         </div>
                     </div>
                 </div>

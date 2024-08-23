@@ -4,12 +4,17 @@ import CategorySelector from "@/components/AccountingApp/CategorySelector";
 
 type CalculatorHook = {
     inputValue: string;
-    records: number[];
+    records: RecordType[];
     handleNumberClick: (numPad: number | string) => void;
     handleBackspace: () => void;
     handleClear: () => void;
-    handleOk: () => void;
+    handleOk: (category: string) => void;
     handleDeleteRecord: (index: number) => void;
+};
+
+type RecordType = {
+    amount: number;
+    category: string;
 };
 
 const calculateSum = (input: string): number => {
@@ -19,15 +24,15 @@ const calculateSum = (input: string): number => {
 
 function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
-    const [records, setRecords] = useState<number[]>([]);
+    const [records, setRecords] = useState<RecordType[]>([]);
 
-    const handleOk = () => {
+    const handleOk = (category: string) => {
         const handledInputValue = inputValue.includes('+')
             ? calculateSum(inputValue)
             : parseFloat(inputValue);
 
         if (!isNaN(handledInputValue)) {
-            setRecords(prev => [handledInputValue, ...prev]);
+            setRecords(prev => [{ amount: handledInputValue, category }, ...prev]);
             setInputValue('0');
         }
     };
@@ -70,13 +75,13 @@ function Display({ value }: { value: string }) {
     );
 }
 
-function RecordsList({ records, onDelete }: { records: number[], onDelete: (index: number) => void }) {
+function RecordsList({ records, onDelete }: { records: RecordType[], onDelete: (index: number) => void }) {
     return (
         <div className="w-full bg-white rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
             {records.length > 0 ? (
                 records.map((record, index) => (
                     <div key={index} className="text-right text-xl mb-2 flex justify-end items-center gap-2">
-                        ${record}
+                        ${record.amount} ({record.category})
                         <button onClick={() => onDelete(index)} className="opacity-50 text-sm">X</button>
                     </div>
                 ))
@@ -108,12 +113,12 @@ interface ButtonConfig {
     className?: string;
 }
 
-function TotalAmount({ records }: { records: number[] }) {
+function TotalAmount({ records }: { records: RecordType[] }) {
     return (
         <div className="w-full text-right text-4xl font-bold mb-4 flex items-center justify-end">
             <span className="text-gray-400 mr-1 text-2xl">$</span>
             <span className="text-black">
-                {records.reduce((sum, record) => sum + record, 0)}
+                {records.reduce((sum, record) => sum + record.amount, 0)}
             </span>
         </div>
     );
@@ -140,8 +145,9 @@ function CalculatorMain() {
         { value: '+', className: 'text-orange-500 text-2xl' }
     ];
 
-    const handleOkWithCategory = () => {
-        handleOk();
+    const handleOkWithCategory = (category: string) => {
+        handleOk(category);
+        console.log(`Selected category: ${category}`);
         setCategorySelectorVisible(false);
     };
 

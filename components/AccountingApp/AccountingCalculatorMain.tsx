@@ -4,7 +4,7 @@ import CategorySelector from "@/components/AccountingApp/CategorySelector";
 
 type CalculatorHook = {
     inputValue: string;
-    records: RecordType[];
+    records: RecordItem[];
     handleNumberClick: (numPad: number | string) => void;
     handleBackspace: () => void;
     handleClear: () => void;
@@ -12,7 +12,7 @@ type CalculatorHook = {
     handleDeleteRecord: (index: number) => void;
 };
 
-type RecordType = {
+type RecordItem = {
     amount: number;
     category: string;
 };
@@ -24,7 +24,7 @@ const calculateSum = (input: string): number => {
 
 function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
-    const [records, setRecords] = useState<RecordType[]>([]);
+    const [records, setRecords] = useState<RecordItem[]>([]);
 
     const handleOk = (category: string) => {
         const handledInputValue = inputValue.includes('+')
@@ -75,7 +75,7 @@ function Display({ value }: { value: string }) {
     );
 }
 
-function RecordsList({ records, onDelete }: { records: RecordType[], onDelete: (index: number) => void }) {
+function RecordsList({ records, onDelete }: { records: RecordItem[], onDelete: (index: number) => void }) {
     return (
         <div className="w-full bg-white rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
             {records.length > 0 ? (
@@ -113,7 +113,7 @@ interface ButtonConfig {
     className?: string;
 }
 
-function TotalAmount({ records }: { records: RecordType[] }) {
+function TotalAmount({ records }: { records: RecordItem[] }) {
     return (
         <div className="w-full text-right text-4xl font-bold mb-4 flex items-center justify-end">
             <span className="text-gray-400 mr-1 text-2xl">$</span>

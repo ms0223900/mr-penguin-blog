@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 
-const categories = ['飲食', '日用品', '娛樂', '交通'];
+export const categories = [
+    { value: 'breakfast', label: '早餐' },
+    { value: 'lunch', label: '午餐' },
+    { value: 'dinner', label: '晚餐' },
+    { value: 'dailyNecessities', label: '日用品' },
+    { value: 'entertainment', label: '娛樂' },
+    { value: 'transportation', label: '交通' },
+    { value: 'filialPiety', label: '孝親123' },
+    { value: 'clothing', label: '衣物' },
+    { value: 'snacks', label: '零食' },
+];
 
 interface BudgetTrackerProps {
     onSaveCategory: (category: string) => void;
@@ -24,13 +34,13 @@ const CategorySelector: React.FC<BudgetTrackerProps> = ({ onSaveCategory }) => {
             <div className="grid grid-cols-4 gap-1 w-full">
                 {categories.map((category) => (
                     <button
-                        key={category}
-                        onClick={() => handleCategorySelect(category)}
+                        key={category.value}
+                        onClick={() => handleCategorySelect(category.value)}
                         className={`py-1 px-2 rounded-full bg-gray-400 text-white text-sm ${
-                            selectedCategory === category ? 'border-[3px] border-orange-500' : ''
+                            selectedCategory === category.value ? 'border-[3px] border-orange-500' : ''
                         }`}
                     >
-                        {category}
+                        {category.label}
                     </button>
                 ))}
             </div>

@@ -7,7 +7,7 @@ export const categories = [
     { value: 'dailyNecessities', label: '日用品' },
     { value: 'entertainment', label: '娛樂' },
     { value: 'transportation', label: '交通' },
-    { value: 'filialPiety', label: '孝親123' },
+    { value: 'filialPiety', label: '孝親' },
     { value: 'clothing', label: '衣物' },
     { value: 'snacks', label: '零食' },
 ];

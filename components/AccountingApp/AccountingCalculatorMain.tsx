@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import BackspaceIcon from '@/public/assets/icons/backspace_icon.svg';
 import CategorySelector from "@/components/AccountingApp/CategorySelector";
 import { categories } from "@/components/AccountingApp/CategorySelector"; // Import categories from CategorySelector
+import { useQuery } from '@apollo/client';
 
 type CalculatorHook = {
     inputValue: string;
@@ -23,6 +25,18 @@ const calculateSum = (input: string): number => {
     return values.reduce((acc, curr) => acc + curr, 0);
 };
 
+// 新增 AccountingRepository
+const AccountingRepository = {
+    save: (records: RecordItem[]) => {
+        localStorage.setItem('accountingRecords', JSON.stringify(records));
+    },
+    get: (): RecordItem[] => {
+        if(!localStorage) return [];
+        const records = localStorage?.getItem('accountingRecords');
+        return records ? JSON.parse(records) : [];
+    }
+};
+
 function useCalculator(): CalculatorHook {
     const [inputValue, setInputValue] = useState('0');
     const [records, setRecords] = useState<RecordItem[]>([]);
@@ -33,7 +47,9 @@ function useCalculator(): CalculatorHook {
             : parseFloat(inputValue);
 
         if (!isNaN(handledInputValue)) {
-            setRecords(prev => [{ amount: handledInputValue, category }, ...prev]);
+            const newRecords = [{ amount: handledInputValue, category }, ...records];
+            setRecords(newRecords);
+            AccountingRepository.save(newRecords);
             setInputValue('0');
         }
     };
@@ -55,6 +71,11 @@ function useCalculator(): CalculatorHook {
     const handleDeleteRecord = (index: number) => {
         setRecords(prev => prev.filter((_, i) => i !== index));
     };
+
+    useEffect(()=>{
+        setRecords(AccountingRepository.get())
+    }, [])
+
 
     return {
         inputValue,

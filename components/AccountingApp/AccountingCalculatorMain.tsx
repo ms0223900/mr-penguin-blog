@@ -1,9 +1,7 @@
-"use client"
 import React, { useEffect, useState } from 'react';
 import BackspaceIcon from '@/public/assets/icons/backspace_icon.svg';
 import CategorySelector from "@/components/AccountingApp/CategorySelector";
 import { categories } from "@/components/AccountingApp/CategorySelector"; // Import categories from CategorySelector
-import { useQuery } from '@apollo/client';
 
 type CalculatorHook = {
     inputValue: string;

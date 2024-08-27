@@ -32,7 +32,7 @@ export class AccountingRepository {
         this.accountingMapper.save(records);
     }
 
-    get() {
+    get(): RecordItem[] {
         const records = this.accountingMapper.get();
         return records ? records : [];
     }

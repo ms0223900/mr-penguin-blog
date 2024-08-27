@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import BackspaceIcon from '@/public/assets/icons/backspace_icon.svg';
-import CategorySelector from "@/components/AccountingApp/CategorySelector";
-import { categories } from "@/components/AccountingApp/CategorySelector"; // Import categories from CategorySelector
+import CategorySelector, { categories } from "@/components/AccountingApp/CategorySelector";
+import {
+    AccountingMapperLocalStorageImpl,
+    AccountingRepository
+} from "@/components/AccountingApp/AccountingRepository"; // Import categories from CategorySelector
 
 type CalculatorHook = {
     inputValue: string;
@@ -13,26 +16,16 @@ type CalculatorHook = {
     handleDeleteRecord: (index: number) => void;
 };
 
-type RecordItem = {
+export type RecordItem = {
     amount: number;
     category: string;
 };
 
+const accountingRepository = new AccountingRepository(new AccountingMapperLocalStorageImpl());
+
 const calculateSum = (input: string): number => {
     const values = input.split('+').map(v => parseFloat(v.trim()));
     return values.reduce((acc, curr) => acc + curr, 0);
-};
-
-// 新增 AccountingRepository
-const AccountingRepository = {
-    save: (records: RecordItem[]) => {
-        localStorage.setItem('accountingRecords', JSON.stringify(records));
-    },
-    get: (): RecordItem[] => {
-        if(!localStorage) return [];
-        const records = localStorage?.getItem('accountingRecords');
-        return records ? JSON.parse(records) : [];
-    }
 };
 
 function useCalculator(): CalculatorHook {
@@ -47,7 +40,7 @@ function useCalculator(): CalculatorHook {
         if (!isNaN(handledInputValue)) {
             const newRecords = [{ amount: handledInputValue, category }, ...records];
             setRecords(newRecords);
-            AccountingRepository.save(newRecords);
+            accountingRepository.save(newRecords);
             setInputValue('0');
         }
     };
@@ -70,8 +63,8 @@ function useCalculator(): CalculatorHook {
         setRecords(prev => prev.filter((_, i) => i !== index));
     };
 
-    useEffect(()=>{
-        setRecords(AccountingRepository.get())
+    useEffect(() => {
+        setRecords(accountingRepository.get())
     }, [])
 
 

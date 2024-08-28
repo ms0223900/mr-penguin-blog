@@ -115,11 +115,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
 }
 
-function Button({ onClick, className, children }: ButtonProps) {
+function Button({ onClick, className, children, ...props }: ButtonProps) {
     return (
         <button
             onClick={onClick}
             className={`text-white p-3 rounded text-xl flex items-center justify-center ${className}`}
+            {...props}
         >
             {children}
         </button>
@@ -196,7 +197,7 @@ function CalculatorMain() {
                         </div>
                         <div className="grid grid-rows-4 gap-2">
                             <Button onClick={handleClear} className="bg-orange-500">AC</Button>
-                            <Button onClick={handleBackspace} className="bg-gray-600">
+                            <Button onClick={handleBackspace} role="backspaceButton" className="bg-gray-600">
                                 <div>
                                     <div className="w-7 h-7 flex items-center justify-center">
                                         <BackspaceIcon width={42} height={29} className="w-full h-full"
@@ -204,7 +205,7 @@ function CalculatorMain() {
                                     </div>
                                 </div>
                             </Button>
-                            <Button onClick={handleNextStep} className="bg-blue-500 row-span-2">OK</Button>
+                            <Button onClick={handleNextStep} role="button" name="ok" className="bg-blue-500 row-span-2">OK</Button>
                         </div>
                     </div>
                 </div>

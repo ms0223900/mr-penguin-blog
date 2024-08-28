@@ -46,6 +46,7 @@ const CategorySelector: React.FC<BudgetTrackerProps> = ({ onSaveCategory }) => {
             </div>
             <button
                 onClick={handleSave}
+                data-testid="categoryOkButton"
                 className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full w-full"
             >
                 OK

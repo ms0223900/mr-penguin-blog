@@ -19,7 +19,7 @@ describe('CalculatorMain', () => {
         render(<CalculatorMain />);
         const button = screen.getByText('7');
         fireEvent.click(button);
-        expect(screen.queryAllByText('7')).toHaveLength(2);
+        expect(screen.getByText('7')).toHaveLength(2);
     });
 
     it('handles backspace', () => {
@@ -30,7 +30,7 @@ describe('CalculatorMain', () => {
 
         const backspaceButton = screen.getByRole('backspaceButton');
         fireEvent.click(backspaceButton);
-        expect(screen.queryAllByText('0')).toHaveLength(3)
+        expect(screen.getByText('0')).toHaveLength(3)
     });
 
     it('handles clear', () => {
@@ -42,7 +42,7 @@ describe('CalculatorMain', () => {
         expect(screen.queryAllByText('0')).toHaveLength(2)
 
         fireEvent.click(clearButton);
-        expect(screen.queryAllByText('0')).toHaveLength(3)
+        expect(screen.getByText('0')).toHaveLength(3)
     });
 
     it('handles adding records', () => {
@@ -60,6 +60,6 @@ describe('CalculatorMain', () => {
         const categoryOkButton = screen.getByTestId("categoryOkButton");
         fireEvent.click(categoryOkButton);
         
-        expect(screen.getAllByText(/7/)).toHaveLength(3);
+        expect(screen.getByText(/7/)).toHaveLength(3);
     });
 });

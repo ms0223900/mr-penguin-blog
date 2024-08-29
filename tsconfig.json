@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": "./",
     "rootDir": ".",
     "allowJs": true,
@@ -16,13 +20,27 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["./@types"],
-    "types": ["@types/gtag.js", "@testing-library/jest-dom", "@types/jest"],
+    "typeRoots": [
+      "./@types",
+      "node_modules"
+    ],
+    "types": [
+      "@types/gtag.js",
+      "@types/jest"
+    ],
     "downlevelIteration": true,
     "paths": {
-      "@/*": ["./*"]
-    },
+      "@/*": [
+        "./*"
+      ]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

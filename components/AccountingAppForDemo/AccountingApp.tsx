@@ -72,17 +72,17 @@ const Keypad: React.FC<KeypadProps & { currentAmount: string }> = ({
 };
 
 interface HistoryListProps {
-    history: number[];
+    history: Array<{ amount: number; category: string }>;
 }
 
 const HistoryList: React.FC<HistoryListProps> = ({ history }) => {
     return (
         <div className="rounded-lg my-2 overflow-hidden">
             <ul className="flex flex-col gap-[10px]">
-                {history.map((amount, index) => (
-                    <li key={index} className="bg-[#ffffff10] rounded-lg text-white py-3 px-4 flex items-center justify-end">
-                        <span className="pr-1.5 text-xl">$</span>
-                        <span className="text-3xl font-light">{amount}</span>
+                {history.map((item, index) => (
+                    <li key={index} className="bg-[#ffffff10] rounded-lg text-white py-3 px-4 flex items-center justify-between">
+                        <span className="text-xl">{item.category}</span>
+                        <span className="text-3xl font-light">${item.amount}</span>
                     </li>
                 ))}
             </ul>
@@ -90,10 +90,71 @@ const HistoryList: React.FC<HistoryListProps> = ({ history }) => {
     );
 };
 
+interface CategorySelectorProps {
+    onSelectCategory: (category: string) => void;
+    onCancel: () => void;
+    pendingAmount: number;
+}
+
+const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory, onCancel, pendingAmount }) => {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const categories = ["飲食", "日用品", "娛樂", "交通", "服飾", "醫療", "教育", "其他"];
+
+    const handleCategorySelect = (category: string) => {
+        setSelectedCategory(category);
+    };
+
+    const handleConfirm = () => {
+        if (selectedCategory) {
+            onSelectCategory(selectedCategory);
+        }
+    };
+
+    return (
+        <div className="bg-gray-800 p-4 rounded-lg">
+            <div className="text-white text-2xl mb-4 text-center">
+                ${pendingAmount}
+            </div>
+            <div className="grid grid-cols-4 gap-2 mb-4">
+                {categories.map((category) => (
+                    <button
+                        key={category}
+                        className={`p-2 rounded text-white ${
+                            selectedCategory === category
+                                ? "bg-gray-600 border-2 border-orange-500"
+                                : "bg-gray-700"
+                        }`}
+                        onClick={() => handleCategorySelect(category)}
+                    >
+                        {category}
+                    </button>
+                ))}
+            </div>
+            <div className="flex justify-between">
+                <button
+                    className="w-1/2 bg-red-500 text-white p-2 rounded mr-2"
+                    onClick={onCancel}
+                >
+                    取消
+                </button>
+                <button
+                    className="w-1/2 bg-blue-500 text-white p-2 rounded ml-2"
+                    onClick={handleConfirm}
+                    disabled={!selectedCategory}
+                >
+                    OK
+                </button>
+            </div>
+        </div>
+    );
+};
+
 const App: React.FC = () => {
     const [currentAmount, setCurrentAmount] = useState<string>("0");
     const [total, setTotal] = useState<number>(0);
-    const [history, setHistory] = useState<number[]>([]);
+    const [history, setHistory] = useState<Array<{ amount: number; category: string }>>([]);
+    const [showCategorySelector, setShowCategorySelector] = useState<boolean>(false);
+    const [pendingAmount, setPendingAmount] = useState<number | null>(null);
 
     const handleInput = (value: string) => {
         if (currentAmount === "0") {
@@ -117,24 +178,48 @@ const App: React.FC = () => {
 
     const handleOk = () => {
         const amount = parseFloat(currentAmount);
-        setTotal(total + amount);
-        setHistory([...history, amount]);
+        if (!isNaN(amount)) {
+            setPendingAmount(amount);
+            setShowCategorySelector(true);
+        }
         setCurrentAmount("0");
+    };
+
+    const handleSelectCategory = (category: string) => {
+        if (pendingAmount !== null) {
+            setTotal(total + pendingAmount);
+            setHistory([...history, { amount: pendingAmount, category }]);
+            setPendingAmount(null);
+        }
+        setShowCategorySelector(false);
+    };
+
+    const handleCancelCategorySelection = () => {
+        setPendingAmount(null);
+        setShowCategorySelector(false);
     };
 
     return (
         <div className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
             <Display total={total} />
-            <div className="p-2 bg-[#5E86A2]">
-            <HistoryList history={history} />
+            <div className="p-2 bg-blue-500">
+                <HistoryList history={history} />
             </div>
-            <Keypad
-                onInput={handleInput}
-                onClear={handleClear}
-                onBackspace={handleBackspace}
-                onOk={handleOk}
-                currentAmount={currentAmount}
-            />
+            {showCategorySelector ? (
+                <CategorySelector
+                    onSelectCategory={handleSelectCategory}
+                    onCancel={handleCancelCategorySelection}
+                    pendingAmount={pendingAmount || 0}
+                />
+            ) : (
+                <Keypad
+                    onInput={handleInput}
+                    onClear={handleClear}
+                    onBackspace={handleBackspace}
+                    onOk={handleOk}
+                    currentAmount={currentAmount}
+                />
+            )}
         </div>
     );
 };

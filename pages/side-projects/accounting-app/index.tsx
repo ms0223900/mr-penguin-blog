@@ -4,7 +4,7 @@ import CalculatorMain from "components/AccountingApp/AccountingCalculatorMain";
 
 const AccountingAppIndex: React.FC = (props) => {
     return (
-        <div>
+        <div className='min-h-screen'>
             <h1>Accounting :)</h1>
 
             <CalculatorMain />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface DisplayProps {
     total: number;
@@ -72,17 +72,27 @@ const Keypad: React.FC<KeypadProps & { currentAmount: string }> = ({
 };
 
 interface HistoryListProps {
-    history: Array<{ amount: number; category: string }>;
+    history: Array<{ amount: number; category: string; id: number }>;
+    onEdit: (id: number, amount: number, category: string) => void;
+    onDelete: (id: number) => void;
 }
 
-const HistoryList: React.FC<HistoryListProps> = ({ history }) => {
+const HistoryList: React.FC<HistoryListProps> = ({ history, onEdit, onDelete }) => {
     return (
         <div className="rounded-lg my-2 overflow-hidden">
             <ul className="flex flex-col gap-[10px]">
-                {history.map((item, index) => (
-                    <li key={index} className="bg-[#ffffff10] rounded-lg text-white py-3 px-4 flex items-center justify-between">
-                        <span className="text-xl">{item.category}</span>
-                        <span className="text-3xl font-light">${item.amount}</span>
+                {history.map((item) => (
+                    <li key={item.id} className="bg-[#ffffff10] rounded-lg text-white py-3 px-4 flex items-center justify-between">
+                        <div onDoubleClick={() => onEdit(item.id, item.amount, item.category)}>
+                            <span className="text-xl">{item.category}</span>
+                            <span className="text-3xl font-light ml-4">${item.amount}</span>
+                        </div>
+                        <button 
+                            onClick={() => onDelete(item.id)}
+                            className="bg-red-500 text-white px-2 py-1 rounded"
+                        >
+                            刪除
+                        </button>
                     </li>
                 ))}
             </ul>
@@ -96,8 +106,13 @@ interface CategorySelectorProps {
     pendingAmount: number;
 }
 
-const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory, onCancel, pendingAmount }) => {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: string | null }> = ({ 
+    onSelectCategory, 
+    onCancel, 
+    pendingAmount, 
+    initialCategory 
+}) => {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
     const categories = ["飲食", "日用品", "娛樂", "交通", "服飾", "醫療", "教育", "其他"];
 
     const handleCategorySelect = (category: string) => {
@@ -152,9 +167,11 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory, o
 const App: React.FC = () => {
     const [currentAmount, setCurrentAmount] = useState<string>("0");
     const [total, setTotal] = useState<number>(0);
-    const [history, setHistory] = useState<Array<{ amount: number; category: string }>>([]);
+    const [history, setHistory] = useState<Array<{ amount: number; category: string; id: number }>>([]);
     const [showCategorySelector, setShowCategorySelector] = useState<boolean>(false);
     const [pendingAmount, setPendingAmount] = useState<number | null>(null);
+    const [editingItem, setEditingItem] = useState<{ id: number; amount: number; category: string } | null>(null);
+    const [isEditingAmount, setIsEditingAmount] = useState<boolean>(false);
 
     const handleInput = (value: string) => {
         if (currentAmount === "0") {
@@ -179,19 +196,48 @@ const App: React.FC = () => {
     const handleOk = () => {
         const amount = parseFloat(currentAmount);
         if (!isNaN(amount)) {
-            setPendingAmount(amount);
-            setShowCategorySelector(true);
+            if (isEditingAmount) {
+                setPendingAmount(amount);
+                setIsEditingAmount(false);
+                setShowCategorySelector(true);
+            } else {
+                setPendingAmount(amount);
+                setShowCategorySelector(true);
+            }
         }
         setCurrentAmount("0");
     };
 
     const handleSelectCategory = (category: string) => {
         if (pendingAmount !== null) {
-            setTotal(total + pendingAmount);
-            setHistory([...history, { amount: pendingAmount, category }]);
+            if (editingItem) {
+                // Edit existing item
+                setHistory(history.map(item => 
+                    item.id === editingItem.id ? { ...item, amount: pendingAmount, category } : item
+                ));
+                setEditingItem(null);
+            } else {
+                // Add new item
+                const newItem = { amount: pendingAmount, category, id: Date.now() };
+                setHistory([...history, newItem]);
+            }
             setPendingAmount(null);
         }
         setShowCategorySelector(false);
+    };
+
+    const handleEdit = (id: number, amount: number, category: string) => {
+        setEditingItem({ id, amount, category });
+        setPendingAmount(amount);
+        setCurrentAmount(amount.toString());
+        setIsEditingAmount(true);
+    };
+
+    const handleDelete = (id: number) => {
+        const itemToDelete = history.find(item => item.id === id);
+        if (itemToDelete) {
+            setHistory(history.filter(item => item.id !== id));
+        }
     };
 
     const handleCancelCategorySelection = () => {
@@ -199,17 +245,23 @@ const App: React.FC = () => {
         setShowCategorySelector(false);
     };
 
+    useEffect(() => {
+        const newTotal = history.reduce((sum, item) => sum + item.amount, 0);
+        setTotal(newTotal);
+    }, [history]);
+
     return (
         <div className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
             <Display total={total} />
             <div className="p-2 bg-blue-500">
-                <HistoryList history={history} />
+                <HistoryList history={history} onEdit={handleEdit} onDelete={handleDelete} />
             </div>
             {showCategorySelector ? (
                 <CategorySelector
                     onSelectCategory={handleSelectCategory}
                     onCancel={handleCancelCategorySelection}
                     pendingAmount={pendingAmount || 0}
+                    initialCategory={editingItem ? editingItem.category : null} // Pass initial category
                 />
             ) : (
                 <Keypad

@@ -4,6 +4,10 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from './AccountingApp';
 
+function whenRender() {
+  render(<App />);
+}
+
 describe('AccountingApp', () => {
   it('renders two components with total amount as $0', () => {
     render(<App />);
@@ -46,30 +50,66 @@ describe('AccountingApp', () => {
     expect(screen.getByText('日用品')).toBeInTheDocument();
   });
 
-  it('adds new item to history when category is selected', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('0'));
+  function whenInputNumber(number: number) {
+    number.toString().split('').forEach(digit => {
+      fireEvent.click(screen.getByText(digit));
+    });
+  }
+
+  function whenClickOK() {
     fireEvent.click(screen.getByText('OK'));
-    fireEvent.click(screen.getByText('飲食'));
-    expect(screen.getByText('飲食')).toBeInTheDocument();
-    expect(screen.getByText('$10')).toBeInTheDocument();
+  }
+
+  function whenSelectCategory(category: string) {
+    fireEvent.click(screen.getByText(category));
+  }
+
+  function thenCategoryShouldHave(category: string) {
+    expect(screen.getByText(category)).toBeInTheDocument();
+  }
+
+  function thenAmountShouldBe(amount: string) {
+    expect(screen.getAllByText(amount)).toHaveLength(2);
+  }
+
+  it('adds new item to history when category is selected and confirms', () => {
+    whenRender()
+
+    whenInputNumber(10);
+    whenClickOK();
+    
+    whenSelectCategory('飲食');
+    whenClickOK();
+    
+    thenCategoryShouldHave('飲食');
+    thenAmountShouldBe('$10');
   });
 
-  it('deletes item from history when delete button is clicked', async () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-    
-    fireEvent.click(screen.getByText('飲食'));
-    fireEvent.click(screen.getByText('OK'));
-    
+  function whenDeleteItem() {
     const deleteButton = screen.getByText('刪除');
     fireEvent.click(deleteButton);
+  }
+
+  function thenItemShouldBeDeleted(item: string, amount: string) {
+    expect(screen.queryByText(item)).not.toBeInTheDocument();
+    expect(screen.queryByText(amount)).not.toBeInTheDocument();
+  }
+
+  it('deletes item from history when delete button is clicked', async () => {
+    whenRender();
+
+    whenInputNumber(10);
+    whenClickOK();
     
-    expect(screen.queryByText('飲食')).not.toBeInTheDocument();
-    expect(screen.queryByText('$10')).not.toBeInTheDocument();
+    whenSelectCategory('飲食');
+    whenClickOK();
+    
+    thenCategoryShouldHave('飲食');
+    thenAmountShouldBe('$10');
+
+    whenDeleteItem();
+    
+    thenItemShouldBeDeleted('飲食', '$10');
   });
 
   it('renders multiple account amounts correctly', () => {
@@ -138,3 +178,4 @@ describe('AccountingApp', () => {
     expect(screen.queryByText('$10')).not.toBeInTheDocument();
   });
 });
+

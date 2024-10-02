@@ -8,174 +8,150 @@ function whenRender() {
   render(<App />);
 }
 
+function whenInputNumber(number: number) {
+  number.toString().split('').forEach(digit => {
+    fireEvent.click(screen.getByText(digit));
+  });
+}
+
+function whenClickOK() {
+  fireEvent.click(screen.getByText('OK'));
+}
+
+function whenSelectCategory(category: string) {
+  fireEvent.click(screen.getByText(category));
+}
+
+function whenClickButton(buttonText: string) {
+  fireEvent.click(screen.getByText(buttonText));
+}
+
+function whenDoubleClickRecord(recordText: string) {
+  const recordElement = screen.getByText(recordText).parentElement;
+  if (recordElement) {
+    userEvent.dblClick(recordElement);
+  } else {
+    throw new Error('Record element not found');
+  }
+}
+
+function thenCategoryShouldHave(category: string) {
+  expect(screen.getByText(category)).toBeInTheDocument();
+}
+
+function thenAmountShouldBe(amount: string) {
+  expect(screen.getAllByText(amount)).toHaveLength(2);
+}
+
+function thenTotalAmountShouldBe(amount: string) {
+  expect(screen.getByText(amount)).toBeInTheDocument();
+}
+
+function thenElementShouldExist(text: string) {
+  expect(screen.getByText(text)).toBeInTheDocument();
+}
+
+function thenElementShouldNotExist(text: string) {
+  expect(screen.queryByText(text)).not.toBeInTheDocument();
+}
+
 describe('AccountingApp', () => {
   it('renders two components with total amount as $0', () => {
-    render(<App />);
-    const totalElements = screen.getAllByText('$0');
-    expect(totalElements).toHaveLength(2);
+    whenRender();
+
+    thenAmountShouldBe('$0');
   });
 
   it('allows input of numbers and updates the display', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('3'));
-    expect(screen.getByText('$123')).toBeInTheDocument();
+    whenRender();
+
+    whenInputNumber(123);
+
+    thenElementShouldExist('$123');
   });
 
   it('clears the input when AC button is clicked', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('AC'));
-    const totalElements = screen.getAllByText('$0');
-    expect(totalElements).toHaveLength(2);
+    whenRender();
+
+    whenInputNumber(12);
+    whenClickButton('AC');
+
+    thenAmountShouldBe('$0');
   });
 
   it('removes last digit when backspace button is clicked', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('3'));
-    fireEvent.click(screen.getByText('⌫'));
-    expect(screen.getByText('$12')).toBeInTheDocument();
+    whenRender();
+
+    whenInputNumber(123);
+    whenClickButton('⌫');
+
+    thenElementShouldExist('$12');
   });
 
   it('shows category selector when OK is clicked', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-    expect(screen.getByText('飲食')).toBeInTheDocument();
-    expect(screen.getByText('日用品')).toBeInTheDocument();
+    whenRender();
+    whenInputNumber(10);
+    whenClickOK();
+    thenElementShouldExist('飲食');
+    thenElementShouldExist('日用品');
   });
-
-  function whenInputNumber(number: number) {
-    number.toString().split('').forEach(digit => {
-      fireEvent.click(screen.getByText(digit));
-    });
-  }
-
-  function whenClickOK() {
-    fireEvent.click(screen.getByText('OK'));
-  }
-
-  function whenSelectCategory(category: string) {
-    fireEvent.click(screen.getByText(category));
-  }
-
-  function thenCategoryShouldHave(category: string) {
-    expect(screen.getByText(category)).toBeInTheDocument();
-  }
-
-  function thenAmountShouldBe(amount: string) {
-    expect(screen.getAllByText(amount)).toHaveLength(2);
-  }
 
   it('adds new item to history when category is selected and confirms', () => {
-    whenRender()
-
+    whenRender();
     whenInputNumber(10);
     whenClickOK();
-    
     whenSelectCategory('飲食');
     whenClickOK();
-    
     thenCategoryShouldHave('飲食');
     thenAmountShouldBe('$10');
   });
 
-  function whenDeleteItem() {
-    const deleteButton = screen.getByText('刪除');
-    fireEvent.click(deleteButton);
-  }
-
-  function thenItemShouldBeDeleted(item: string, amount: string) {
-    expect(screen.queryByText(item)).not.toBeInTheDocument();
-    expect(screen.queryByText(amount)).not.toBeInTheDocument();
-  }
-
-  it('deletes item from history when delete button is clicked', async () => {
+  it('deletes item from history when delete button is clicked', () => {
     whenRender();
-
     whenInputNumber(10);
     whenClickOK();
-    
     whenSelectCategory('飲食');
     whenClickOK();
-    
     thenCategoryShouldHave('飲食');
     thenAmountShouldBe('$10');
-
-    whenDeleteItem();
-    
-    thenItemShouldBeDeleted('飲食', '$10');
+    whenClickButton('刪除');
+    thenElementShouldNotExist('飲食');
+    thenElementShouldNotExist('$10');
   });
 
   it('renders multiple account amounts correctly', () => {
-    render(<App />);
-
-    // Add first amount
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-    fireEvent.click(screen.getByText('飲食'));
-    fireEvent.click(screen.getByText('OK')); // 按下 OK 確認第一筆
-
-    // Add second amount
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-    fireEvent.click(screen.getByText('日用品'));
-    fireEvent.click(screen.getByText('OK')); // 按下 OK 確認第二筆
-
-    // Check if both amounts are rendered
-    expect(screen.getByText('$10')).toBeInTheDocument();
-    expect(screen.getByText('$20')).toBeInTheDocument();
-
-    // Check if the total amount is correct
-    expect(screen.getByText('$30')).toBeInTheDocument();
+    whenRender();
+    whenInputNumber(10);
+    whenClickOK();
+    whenSelectCategory('飲食');
+    whenClickOK();
+    whenInputNumber(20);
+    whenClickOK();
+    whenSelectCategory('日用品');
+    whenClickOK();
+    thenElementShouldExist('$10');
+    thenElementShouldExist('$20');
+    thenTotalAmountShouldBe('$30');
   });
 
   it('allows editing of an existing record by double-clicking', async () => {
-    render(<App />);
-
-    // Add initial record: $10 for entertainment
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-    fireEvent.click(screen.getByText('娛樂'));
-    fireEvent.click(screen.getByText('OK'));
-
-    // Verify initial record
-    expect(screen.getByText('娛樂')).toBeInTheDocument();
-    expect(screen.getAllByText('$10')).toHaveLength(2); // Check for two instances of $10
-
-    // Double-click to edit
-    const recordElement = screen.getByText('娛樂').parentElement;
-    if (recordElement) {
-      await userEvent.dblClick(recordElement);
-    } else {
-      throw new Error('Record element not found');
-    }
-
-    // 先歸零
-    fireEvent.click(screen.getByText('AC')); // 清除當前金額
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('OK'));
-
-    // Change category to food
-    fireEvent.click(screen.getByText('飲食'));
-    fireEvent.click(screen.getByText('OK'));
-
-    // Verify edited record
-    expect(screen.getByText('飲食')).toBeInTheDocument();
-    expect(screen.getAllByText('$20')).toHaveLength(2); // Check for two instances of $20
-
-    // Verify old record is gone
-    expect(screen.queryByText('娛樂')).not.toBeInTheDocument();
-    expect(screen.queryByText('$10')).not.toBeInTheDocument();
+    whenRender();
+    whenInputNumber(10);
+    whenClickOK();
+    whenSelectCategory('娛樂');
+    whenClickOK();
+    thenCategoryShouldHave('娛樂');
+    thenAmountShouldBe('$10');
+    await whenDoubleClickRecord('娛樂');
+    whenClickButton('AC');
+    whenInputNumber(20);
+    whenClickOK();
+    whenSelectCategory('飲食');
+    whenClickOK();
+    thenCategoryShouldHave('飲食');
+    thenAmountShouldBe('$20');
+    thenElementShouldNotExist('娛樂');
+    thenElementShouldNotExist('$10');
   });
 });
 

@@ -223,21 +223,20 @@ const App: React.FC = () => {
     };
 
     const handleSelectCategory = (category: string) => {
-        if (pendingAmount !== null) {
-            if (editingItem) {
-                // Edit existing item
-                setHistory(history.map(item =>
-                    item.id === editingItem.id ? { ...item, amount: pendingAmount, category } : item
-                ));
-                setEditingItem(null);
-            } else {
-                // Add new item
-                const newItem = { amount: pendingAmount, category, id: Date.now() };
-                setHistory([...history, newItem]);
-            }
-            setPendingAmount(null);
-        }
         setShowCategorySelector(false);
+
+        if (pendingAmount === null) return;
+
+        if (editingItem) {
+            setHistory(history.map(item =>
+                item.id === editingItem.id ? { ...item, amount: pendingAmount, category } : item
+            ));
+            setEditingItem(null);
+        } else {
+            const newItem = { amount: pendingAmount, category, id: Date.now() };
+            setHistory([...history, newItem]);
+        }
+        setPendingAmount(null);
     };
 
     const handleEdit = (id: number, amount: number, category: string) => {

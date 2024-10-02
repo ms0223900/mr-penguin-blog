@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { HistoryItem } from "./types";
 
 interface DisplayProps {
     total: number;
@@ -19,6 +20,21 @@ interface KeypadProps {
     onOk: () => void;
 }
 
+interface ButtonProps {
+    label: string;
+    onClick: () => void;
+    className?: string;
+}
+
+const Button: React.FC<ButtonProps> = ({ label, onClick, className }) => {
+    const buttonClass = `p-4 text-xl font-bold rounded ${className}`;
+    return (
+        <button className={buttonClass} onClick={onClick}>
+            {label}
+        </button>
+    );
+};
+
 const Keypad: React.FC<KeypadProps & { currentAmount: string }> = ({
     onInput,
     onClear,
@@ -26,11 +42,21 @@ const Keypad: React.FC<KeypadProps & { currentAmount: string }> = ({
     onOk,
     currentAmount
 }) => {
-    const buttons = [
-        "7", "8", "9", "AC",
-        "4", "5", "6", "⌫",
-        "1", "2", "3", 
-        ".", "0", "+"
+    const buttons: ButtonProps[] = [
+        { label: "7", onClick: () => onInput("7") },
+        { label: "8", onClick: () => onInput("8") },
+        { label: "9", onClick: () => onInput("9") },
+        { label: "AC", onClick: onClear, className: "bg-orange-500 text-white" },
+        { label: "4", onClick: () => onInput("4") },
+        { label: "5", onClick: () => onInput("5") },
+        { label: "6", onClick: () => onInput("6") },
+        { label: "⌫", onClick: onBackspace, className: "bg-yellow-500 text-white" },
+        { label: "1", onClick: () => onInput("1") },
+        { label: "2", onClick: () => onInput("2") },
+        { label: "3", onClick: () => onInput("3") },
+        { label: ".", onClick: () => onInput(".") },
+        { label: "0", onClick: () => onInput("0") },
+        { label: "+", onClick: () => onInput("+"), className: "bg-gray-600 text-white" },
     ];
 
     return (
@@ -40,32 +66,18 @@ const Keypad: React.FC<KeypadProps & { currentAmount: string }> = ({
             </div>
             <div className="grid grid-cols-4 gap-2 bg-gray-800 p-4 rounded-b-lg">
                 {buttons.map((btn, index) => (
-                    <button
+                    <Button
                         key={index}
-                        className={`p-4 text-xl font-bold rounded ${
-                            btn === "AC"
-                                ? "bg-orange-500 text-white"
-                                : btn === "⌫"
-                                    ? "bg-yellow-500 text-white"
-                                    : btn === "+"
-                                        ? "bg-gray-600 text-white"
-                                        : "bg-gray-700 text-white"
-                        }`}
-                        onClick={() => {
-                            if (btn === "AC") onClear();
-                            else if (btn === "⌫") onBackspace();
-                            else onInput(btn);
-                        }}
-                    >
-                        {btn}
-                    </button>
+                        label={btn.label}
+                        onClick={btn.onClick}
+                        className={btn.className || "bg-gray-700 text-white"}
+                    />
                 ))}
-                <button
-                    className="p-4 text-xl font-bold rounded bg-blue-500 text-white row-span-2 col-start-4 row-start-3"
+                <Button
+                    label="OK"
                     onClick={onOk}
-                >
-                    OK
-                </button>
+                    className="bg-blue-500 text-white row-span-2 col-start-4 row-start-3"
+                />
             </div>
         </div>
     );
@@ -87,7 +99,7 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onEdit, onDelete }) 
                             <span className="text-xl">{item.category}</span>
                             <span className="text-3xl font-light ml-4">${item.amount}</span>
                         </div>
-                        <button 
+                        <button
                             onClick={() => onDelete(item.id)}
                             className="bg-red-500 text-white px-2 py-1 rounded"
                         >
@@ -106,11 +118,11 @@ interface CategorySelectorProps {
     pendingAmount: number;
 }
 
-const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: string | null }> = ({ 
-    onSelectCategory, 
-    onCancel, 
-    pendingAmount, 
-    initialCategory 
+const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: string | null }> = ({
+    onSelectCategory,
+    onCancel,
+    pendingAmount,
+    initialCategory
 }) => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
     const categories = ["飲食", "日用品", "娛樂", "交通", "服飾", "醫療", "教育", "其他"];
@@ -134,11 +146,10 @@ const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: stri
                 {categories.map((category) => (
                     <button
                         key={category}
-                        className={`p-2 rounded text-white ${
-                            selectedCategory === category
-                                ? "bg-gray-600 border-2 border-orange-500"
-                                : "bg-gray-700"
-                        }`}
+                        className={`p-2 rounded text-white ${selectedCategory === category
+                            ? "bg-gray-600 border-2 border-orange-500"
+                            : "bg-gray-700"
+                            }`}
                         onClick={() => handleCategorySelect(category)}
                     >
                         {category}
@@ -167,11 +178,20 @@ const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: stri
 const App: React.FC = () => {
     const [currentAmount, setCurrentAmount] = useState<string>("0");
     const [total, setTotal] = useState<number>(0);
-    const [history, setHistory] = useState<Array<{ amount: number; category: string; id: number }>>([]);
+    const [history, setHistory] = useState<Array<HistoryItem>>([]);
     const [showCategorySelector, setShowCategorySelector] = useState<boolean>(false);
     const [pendingAmount, setPendingAmount] = useState<number | null>(null);
     const [editingItem, setEditingItem] = useState<{ id: number; amount: number; category: string } | null>(null);
-    const [isEditingAmount, setIsEditingAmount] = useState<boolean>(false);
+
+    function calculateFoodCatogoryCount(historyList: HistoryItem[]) {
+        let foodCategoryCount = 0;
+        for (const item of historyList) {
+            if (item.category === "飲食") {
+                foodCategoryCount += item.amount;
+            }
+        }
+        return foodCategoryCount;
+    }
 
     const handleInput = (value: string) => {
         if (currentAmount === "0") {
@@ -195,16 +215,10 @@ const App: React.FC = () => {
 
     const handleOk = () => {
         const amount = parseFloat(currentAmount);
-        if (!isNaN(amount)) {
-            if (isEditingAmount) {
-                setPendingAmount(amount);
-                setIsEditingAmount(false);
-                setShowCategorySelector(true);
-            } else {
-                setPendingAmount(amount);
-                setShowCategorySelector(true);
-            }
-        }
+        if (isNaN(amount)) return;
+
+        setPendingAmount(amount);
+        setShowCategorySelector(true);
         setCurrentAmount("0");
     };
 
@@ -212,7 +226,7 @@ const App: React.FC = () => {
         if (pendingAmount !== null) {
             if (editingItem) {
                 // Edit existing item
-                setHistory(history.map(item => 
+                setHistory(history.map(item =>
                     item.id === editingItem.id ? { ...item, amount: pendingAmount, category } : item
                 ));
                 setEditingItem(null);
@@ -230,7 +244,6 @@ const App: React.FC = () => {
         setEditingItem({ id, amount, category });
         setPendingAmount(amount);
         setCurrentAmount(amount.toString());
-        setIsEditingAmount(true);
     };
 
     const handleDelete = (id: number) => {

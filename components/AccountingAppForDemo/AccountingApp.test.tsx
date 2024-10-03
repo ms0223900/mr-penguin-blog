@@ -153,5 +153,24 @@ describe('AccountingApp', () => {
     thenElementShouldNotExist('娛樂');
     thenElementShouldNotExist('$10');
   });
+
+  it('only displays one decimal point when multiple are input', () => {
+    whenRender();
+    whenInputNumber(1);
+    whenClickButton('.');
+    whenClickButton('.');
+    whenClickButton('.');
+    whenClickButton('.');
+    whenInputNumber(1);
+    thenElementShouldExist('$1.1');
+  });
+
+  it('allows input of decimal numbers starting with 0', () => {
+    whenRender();
+    whenInputNumber(0);
+    whenClickButton('.');
+    whenInputNumber(1);
+    thenElementShouldExist('$0.1');
+  });
 });
 

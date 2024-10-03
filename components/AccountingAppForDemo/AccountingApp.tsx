@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { HistoryItem } from "./types";
 
 interface DisplayProps {
@@ -175,13 +175,20 @@ const CategorySelector: React.FC<CategorySelectorProps & { initialCategory: stri
     );
 };
 
+enum PadState {
+    Keypad,
+    CategorySelector,
+}
+
 const App: React.FC = () => {
-    const [currentAmount, setCurrentAmount] = useState<string>("0");
-    const [total, setTotal] = useState<number>(0);
+    const [amount, setAmount] = useState<string>("0");
     const [history, setHistory] = useState<Array<HistoryItem>>([]);
-    const [showCategorySelector, setShowCategorySelector] = useState<boolean>(false);
-    const [pendingAmount, setPendingAmount] = useState<number | null>(null);
+    const [currentPad, setCurrentPad] = useState<PadState>(PadState.Keypad);
     const [editingItem, setEditingItem] = useState<{ id: number; amount: number; category: string } | null>(null);
+
+    const total = useMemo(() => {
+        return history.reduce((sum, item) => sum + item.amount, 0);
+    }, [history]);
 
     function calculateFoodCatogoryCount(historyList: HistoryItem[]) {
         let foodCategoryCount = 0;
@@ -193,56 +200,63 @@ const App: React.FC = () => {
         return foodCategoryCount;
     }
 
+    const isValidInput = (input: string) => {
+        const regex = /^(\d*\.?\d*)$/;
+        return regex.test(input);
+    };
+
     const handleInput = (value: string) => {
-        if (currentAmount === "0") {
-            setCurrentAmount(value);
-        } else {
-            setCurrentAmount(currentAmount + value);
+        let newAmount = amount;
+        if (amount === "0" && value !== ".") {
+            newAmount = value;
+        } else if (value === "." && !amount.includes(".")) {
+            newAmount = amount + value;
+        } else if (value !== ".") {
+            newAmount = amount + value;
+        }
+        if (isValidInput(newAmount)) {
+            setAmount(newAmount);
         }
     };
 
     const handleClear = () => {
-        setCurrentAmount("0");
+        setAmount("0");
     };
 
     const handleBackspace = () => {
-        if (currentAmount.length > 1) {
-            setCurrentAmount(currentAmount.slice(0, -1));
+        if (amount.length > 1) {
+            setAmount(amount.slice(0, -1));
         } else {
-            setCurrentAmount("0");
+            setAmount("0");
         }
     };
 
     const handleOk = () => {
-        const amount = parseFloat(currentAmount);
-        if (isNaN(amount)) return;
+        const parsedAmount = parseFloat(amount);
+        if (isNaN(parsedAmount)) return;
 
-        setPendingAmount(amount);
-        setShowCategorySelector(true);
-        setCurrentAmount("0");
+        setCurrentPad(PadState.CategorySelector);
     };
 
     const handleSelectCategory = (category: string) => {
-        setShowCategorySelector(false);
+        const parsedAmount = parseFloat(amount);
+        if (isNaN(parsedAmount)) return;
 
-        if (pendingAmount === null) return;
+        const updatedHistory = editingItem
+            ? history.map(item =>
+                item.id === editingItem.id ? { ...item, amount: parsedAmount, category } : item
+            )
+            : [...history, { amount: parsedAmount, category, id: Date.now() }];
 
-        if (editingItem) {
-            setHistory(history.map(item =>
-                item.id === editingItem.id ? { ...item, amount: pendingAmount, category } : item
-            ));
-            setEditingItem(null);
-        } else {
-            const newItem = { amount: pendingAmount, category, id: Date.now() };
-            setHistory([...history, newItem]);
-        }
-        setPendingAmount(null);
+        setHistory(updatedHistory);
+        setEditingItem(null);
+        setAmount("0");
+        setCurrentPad(PadState.Keypad);
     };
 
-    const handleEdit = (id: number, amount: number, category: string) => {
-        setEditingItem({ id, amount, category });
-        setPendingAmount(amount);
-        setCurrentAmount(amount.toString());
+    const handleEdit = (id: number, editAmount: number, category: string) => {
+        setEditingItem({ id, amount: editAmount, category });
+        setAmount(editAmount.toString());
     };
 
     const handleDelete = (id: number) => {
@@ -253,14 +267,11 @@ const App: React.FC = () => {
     };
 
     const handleCancelCategorySelection = () => {
-        setPendingAmount(null);
-        setShowCategorySelector(false);
+        setCurrentPad(PadState.Keypad);
+        if (!editingItem) {
+            setAmount("0");
+        }
     };
-
-    useEffect(() => {
-        const newTotal = history.reduce((sum, item) => sum + item.amount, 0);
-        setTotal(newTotal);
-    }, [history]);
 
     return (
         <div className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
@@ -268,12 +279,12 @@ const App: React.FC = () => {
             <div className="p-2 bg-blue-500">
                 <HistoryList history={history} onEdit={handleEdit} onDelete={handleDelete} />
             </div>
-            {showCategorySelector ? (
+            {currentPad === PadState.CategorySelector ? (
                 <CategorySelector
                     onSelectCategory={handleSelectCategory}
                     onCancel={handleCancelCategorySelection}
-                    pendingAmount={pendingAmount || 0}
-                    initialCategory={editingItem ? editingItem.category : null} // Pass initial category
+                    pendingAmount={parseFloat(amount)}
+                    initialCategory={editingItem ? editingItem.category : null}
                 />
             ) : (
                 <Keypad
@@ -281,7 +292,7 @@ const App: React.FC = () => {
                     onClear={handleClear}
                     onBackspace={handleBackspace}
                     onOk={handleOk}
-                    currentAmount={currentAmount}
+                    currentAmount={amount}
                 />
             )}
         </div>

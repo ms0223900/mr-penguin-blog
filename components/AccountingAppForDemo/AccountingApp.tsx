@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { HistoryItem } from "./types";
+import { AccountingRepositoryImpl } from "./repo/AccountingRepository";
+
+const accountingRepository = new AccountingRepositoryImpl();
 
 interface DisplayProps {
     total: number;
@@ -206,14 +209,13 @@ const App: React.FC = () => {
     };
 
     const handleInput = (value: string) => {
-        let newAmount = amount;
-        if (amount === "0" && value !== ".") {
-            newAmount = value;
-        } else if (value === "." && !amount.includes(".")) {
-            newAmount = amount + value;
-        } else if (value !== ".") {
-            newAmount = amount + value;
-        }
+        const newAmount = (() => {
+            if (amount === "0" && value !== ".") return value;
+            if (value === "." && !amount.includes(".")) return amount + value;
+            if (value !== ".") return amount + value;
+            return amount;
+        })();
+
         if (isValidInput(newAmount)) {
             setAmount(newAmount);
         }
@@ -272,6 +274,20 @@ const App: React.FC = () => {
             setAmount("0");
         }
     };
+
+    // 使用 useEffect 來獲取初始帳目數據
+    useEffect(() => {
+        const fetchInitialEntries = async () => {
+            try {
+                const initialEntries = await accountingRepository.getEntries();
+                setHistory(initialEntries);
+            } catch (error) {
+                console.error("Failed to fetch initial entries:", error);
+            }
+        };
+
+        fetchInitialEntries();
+    }, []);
 
     return (
         <div className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">

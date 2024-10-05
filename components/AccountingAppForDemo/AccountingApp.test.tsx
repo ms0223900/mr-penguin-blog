@@ -1,11 +1,17 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from './AccountingApp';
+import { HistoryItem } from './types';
+import { AccountingRepositoryImpl } from './repo/AccountingRepository';
 
-function whenRender() {
-  render(<App />);
+jest.mock('./repo/AccountingRepository');
+
+async function whenRender() {
+  await act(async () => {
+    render(<App />);
+  });
 }
 
 function whenInputNumber(number: number) {
@@ -26,8 +32,8 @@ function whenClickButton(buttonText: string) {
   fireEvent.click(screen.getByText(buttonText));
 }
 
-function whenDoubleClickRecord(recordText: string) {
-  const recordElement = screen.getByText(recordText).parentElement;
+async function whenDoubleClickRecord(recordText: string) {
+  const recordElement = (await screen.findByText(recordText)).parentElement;
   if (recordElement) {
     userEvent.dblClick(recordElement);
   } else {
@@ -56,6 +62,12 @@ function thenElementShouldNotExist(text: string) {
 }
 
 describe('AccountingApp', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue([]);
+  });
+
   it('renders two components with total amount as $0', () => {
     whenRender();
 
@@ -135,7 +147,8 @@ describe('AccountingApp', () => {
   });
 
   it('allows editing of an existing record by double-clicking', async () => {
-    whenRender();
+    await whenRender();
+
     whenInputNumber(10);
     whenClickOK();
     whenSelectCategory('娛樂');
@@ -171,6 +184,24 @@ describe('AccountingApp', () => {
     whenClickButton('.');
     whenInputNumber(1);
     thenElementShouldExist('$0.1');
+  });
+
+  it('displays pre-existing accounting entries', async () => {
+    const mockEntries: HistoryItem[] = [
+      { id: 1, category: '飲食', amount: 100 },
+      { id: 2, category: '日用品', amount: 200 },
+    ];
+    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(mockEntries);
+
+    await whenRender();
+
+    await waitFor(() => {
+      thenCategoryShouldHave('飲食');
+      thenElementShouldExist('$100');
+      thenCategoryShouldHave('日用品');
+      thenElementShouldExist('$200');
+      thenTotalAmountShouldBe('$300');
+    });
   });
 });
 

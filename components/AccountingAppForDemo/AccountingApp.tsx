@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { HistoryItem } from "./types";
 import { AccountingRepositoryImpl } from "./repo/AccountingRepository";
-
+import { useQuery } from '@tanstack/react-query';
 const accountingRepository = new AccountingRepositoryImpl();
 
 interface DisplayProps {
@@ -233,14 +233,14 @@ const App: React.FC = () => {
         }
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         const parsedAmount = parseFloat(amount);
         if (isNaN(parsedAmount)) return;
 
         setCurrentPad(PadState.CategorySelector);
     };
 
-    const handleSelectCategory = (category: string) => {
+    const handleSelectCategory = async (category: string) => {
         const parsedAmount = parseFloat(amount);
         if (isNaN(parsedAmount)) return;
 
@@ -254,6 +254,9 @@ const App: React.FC = () => {
         setEditingItem(null);
         setAmount("0");
         setCurrentPad(PadState.Keypad);
+
+        // Save the entry using the repository
+        await accountingRepository.saveEntry({ amount: parsedAmount, category, id: Date.now() });
     };
 
     const handleEdit = (id: number, editAmount: number, category: string) => {
@@ -275,22 +278,31 @@ const App: React.FC = () => {
         }
     };
 
-    // 使用 useEffect 來獲取初始帳目數據
-    useEffect(() => {
-        const fetchInitialEntries = async () => {
-            try {
-                const initialEntries = await accountingRepository.getEntries();
-                setHistory(initialEntries);
-            } catch (error) {
-                console.error("Failed to fetch initial entries:", error);
-            }
-        };
+    const { data: initialEntries, isLoading, error } = useQuery<HistoryItem[]>(['initialEntries'], async () => {
+        try {
+            return await accountingRepository.getEntries();
+        } catch (error) {
+            console.error("Failed to fetch initial entries:", error);
+            throw error;
+        }
+    });
 
-        fetchInitialEntries();
-    }, []);
+    useEffect(() => {
+        if (initialEntries) {
+            setHistory(initialEntries);
+        }
+    }, [initialEntries]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error fetching entries. Please try again.</div>;
+    }
 
     return (
-        <div className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+        <div data-testid="accounting-app" className="max-w-md mx-auto mt-10 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
             <Display total={total} />
             <div className="p-2 bg-blue-500">
                 <HistoryList history={history} onEdit={handleEdit} onDelete={handleDelete} />

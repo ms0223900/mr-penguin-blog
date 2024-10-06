@@ -5,12 +5,20 @@ import '@testing-library/jest-dom';
 import App from './AccountingApp';
 import { HistoryItem } from './types';
 import { AccountingRepositoryImpl } from './repo/AccountingRepository';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 jest.mock('./repo/AccountingRepository');
 
 async function whenRender() {
   await act(async () => {
-    render(<App />);
+    await render(
+      <QueryClientProvider client={new QueryClient()}>
+        <App />
+      </QueryClientProvider>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByTestId("accounting-app")).toBeInTheDocument();
   });
 }
 
@@ -68,22 +76,28 @@ describe('AccountingApp', () => {
     jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue([]);
   });
 
-  it('renders two components with total amount as $0', () => {
-    whenRender();
+  it('renders two components with total amount as $0', async () => {
+    await whenRender();
 
-    thenAmountShouldBe('$0');
+    await waitFor(() => {
+      thenAmountShouldBe('$0');
+    });
   });
 
-  it('allows input of numbers and updates the display', () => {
-    whenRender();
+  it('allows input of numbers and updates the display', async () => {
+    await whenRender();
+
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
 
     whenInputNumber(123);
 
     thenElementShouldExist('$123');
   });
 
-  it('clears the input when AC button is clicked', () => {
-    whenRender();
+  it('clears the input when AC button is clicked', async () => {
+    await whenRender();
 
     whenInputNumber(12);
     whenClickButton('AC');
@@ -91,8 +105,8 @@ describe('AccountingApp', () => {
     thenAmountShouldBe('$0');
   });
 
-  it('removes last digit when backspace button is clicked', () => {
-    whenRender();
+  it('removes last digit when backspace button is clicked', async () => {
+    await whenRender();
 
     whenInputNumber(123);
     whenClickButton('⌫');
@@ -100,16 +114,16 @@ describe('AccountingApp', () => {
     thenElementShouldExist('$12');
   });
 
-  it('shows category selector when OK is clicked', () => {
-    whenRender();
+  it('shows category selector when OK is clicked', async () => {
+    await whenRender();
     whenInputNumber(10);
     whenClickOK();
     thenElementShouldExist('飲食');
     thenElementShouldExist('日用品');
   });
 
-  it('adds new item to history when category is selected and confirms', () => {
-    whenRender();
+  it('adds new item to history when category is selected and confirms', async () => {
+    await whenRender();
     whenInputNumber(10);
     whenClickOK();
     whenSelectCategory('飲食');
@@ -118,8 +132,8 @@ describe('AccountingApp', () => {
     thenAmountShouldBe('$10');
   });
 
-  it('deletes item from history when delete button is clicked', () => {
-    whenRender();
+  it('deletes item from history when delete button is clicked', async () => {
+    await whenRender();
     whenInputNumber(10);
     whenClickOK();
     whenSelectCategory('飲食');
@@ -131,8 +145,8 @@ describe('AccountingApp', () => {
     thenElementShouldNotExist('$10');
   });
 
-  it('renders multiple account amounts correctly', () => {
-    whenRender();
+  it('renders multiple account amounts correctly', async () => {
+    await whenRender();
     whenInputNumber(10);
     whenClickOK();
     whenSelectCategory('飲食');
@@ -155,20 +169,23 @@ describe('AccountingApp', () => {
     whenClickOK();
     thenCategoryShouldHave('娛樂');
     thenAmountShouldBe('$10');
+
     await whenDoubleClickRecord('娛樂');
+
     whenClickButton('AC');
-    whenInputNumber(20);
+    whenInputNumber(12345);
     whenClickOK();
     whenSelectCategory('飲食');
     whenClickOK();
+
     thenCategoryShouldHave('飲食');
-    thenAmountShouldBe('$20');
+    thenAmountShouldBe('$12345');
     thenElementShouldNotExist('娛樂');
     thenElementShouldNotExist('$10');
   });
 
-  it('only displays one decimal point when multiple are input', () => {
-    whenRender();
+  it('only displays one decimal point when multiple are input', async () => {
+    await whenRender();
     whenInputNumber(1);
     whenClickButton('.');
     whenClickButton('.');
@@ -178,8 +195,8 @@ describe('AccountingApp', () => {
     thenElementShouldExist('$1.1');
   });
 
-  it('allows input of decimal numbers starting with 0', () => {
-    whenRender();
+  it('allows input of decimal numbers starting with 0', async () => {
+    await whenRender();
     whenInputNumber(0);
     whenClickButton('.');
     whenInputNumber(1);
@@ -201,6 +218,52 @@ describe('AccountingApp', () => {
       thenCategoryShouldHave('日用品');
       thenElementShouldExist('$200');
       thenTotalAmountShouldBe('$300');
+    });
+  });
+
+  it('saves a new accounting entry and displays it after re-rendering', async () => {
+    let historyList: HistoryItem[] = [];
+    const ACCOUNTING_ENTRY: HistoryItem = { id: 1, category: '飲食', amount: 100 };
+
+    // 首次渲染應用
+    await whenRender();
+
+    // 新增一筆帳目
+    whenInputNumber(ACCOUNTING_ENTRY.amount);
+    whenClickOK();
+    whenSelectCategory(ACCOUNTING_ENTRY.category);
+    whenClickOK();
+
+    // 確認帳目已新增
+    thenCategoryShouldHave(ACCOUNTING_ENTRY.category);
+    thenAmountShouldBe(`$${ACCOUNTING_ENTRY.amount}`);
+
+    // 模擬保存操作
+    const mockSaveEntry = jest.spyOn(AccountingRepositoryImpl.prototype, 'saveEntry').mockImplementation(async () => {
+      // 模擬保存操作，這裡可以將新帳目加入到歷史列表中
+      historyList.push(ACCOUNTING_ENTRY);
+    });
+
+    // 初始化空的歷史列表
+    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
+
+    await waitFor(() => {
+      expect(mockSaveEntry).toHaveBeenCalledWith(expect.objectContaining({
+        category: ACCOUNTING_ENTRY.category,
+        amount: ACCOUNTING_ENTRY.amount
+      }));
+    });
+
+    // 清除 DOM 並重新渲染應用
+    jest.clearAllMocks();
+    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
+
+    await whenRender();
+
+    // 確認重新渲染後仍能看到該帳目
+    await waitFor(() => {
+      thenCategoryShouldHave('飲食');
+      thenAmountShouldBe('$100');
     });
   });
 });

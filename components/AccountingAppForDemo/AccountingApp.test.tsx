@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from './AccountingApp';
@@ -225,27 +225,19 @@ describe('AccountingApp', () => {
     let historyList: HistoryItem[] = [];
     const ACCOUNTING_ENTRY: HistoryItem = { id: 1, category: '飲食', amount: 100 };
 
-    // 首次渲染應用
+    const mockSaveEntry = jest.spyOn(AccountingRepositoryImpl.prototype, 'saveEntry').mockImplementation(async () => {
+      historyList.push(ACCOUNTING_ENTRY);
+    });
+
     await whenRender();
 
-    // 新增一筆帳目
     whenInputNumber(ACCOUNTING_ENTRY.amount);
     whenClickOK();
     whenSelectCategory(ACCOUNTING_ENTRY.category);
     whenClickOK();
 
-    // 確認帳目已新增
     thenCategoryShouldHave(ACCOUNTING_ENTRY.category);
     thenAmountShouldBe(`$${ACCOUNTING_ENTRY.amount}`);
-
-    // 模擬保存操作
-    const mockSaveEntry = jest.spyOn(AccountingRepositoryImpl.prototype, 'saveEntry').mockImplementation(async () => {
-      // 模擬保存操作，這裡可以將新帳目加入到歷史列表中
-      historyList.push(ACCOUNTING_ENTRY);
-    });
-
-    // 初始化空的歷史列表
-    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
 
     await waitFor(() => {
       expect(mockSaveEntry).toHaveBeenCalledWith(expect.objectContaining({
@@ -254,13 +246,12 @@ describe('AccountingApp', () => {
       }));
     });
 
-    // 清除 DOM 並重新渲染應用
-    jest.clearAllMocks();
+    cleanup();
+
     jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
 
     await whenRender();
 
-    // 確認重新渲染後仍能看到該帳目
     await waitFor(() => {
       thenCategoryShouldHave('飲食');
       thenAmountShouldBe('$100');

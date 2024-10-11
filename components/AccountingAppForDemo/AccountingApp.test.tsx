@@ -70,10 +70,19 @@ function thenElementShouldNotExist(text: string) {
 }
 
 describe('AccountingApp', () => {
+  let historyList: HistoryItem[];
+  let mockSaveEntry: jest.SpyInstance;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    historyList = [];
 
-    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue([]);
+    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
+
+    mockSaveEntry = jest.spyOn(AccountingRepositoryImpl.prototype, 'saveEntry')
+      .mockImplementation(async (entry) => {
+        historyList.push({ ...entry, id: Date.now() });
+      });
   });
 
   it('renders two components with total amount as $0', async () => {
@@ -222,12 +231,7 @@ describe('AccountingApp', () => {
   });
 
   it('saves a new accounting entry and displays it after re-rendering', async () => {
-    let historyList: HistoryItem[] = [];
-    const ACCOUNTING_ENTRY: HistoryItem = { id: 1, category: '飲食', amount: 100 };
-
-    const mockSaveEntry = jest.spyOn(AccountingRepositoryImpl.prototype, 'saveEntry').mockImplementation(async () => {
-      historyList.push(ACCOUNTING_ENTRY);
-    });
+    const ACCOUNTING_ENTRY: Omit<HistoryItem, 'id'> = { category: '飲食', amount: 100 };
 
     await whenRender();
 
@@ -247,8 +251,6 @@ describe('AccountingApp', () => {
     });
 
     cleanup();
-
-    jest.spyOn(AccountingRepositoryImpl.prototype, 'getEntries').mockResolvedValue(historyList);
 
     await whenRender();
 

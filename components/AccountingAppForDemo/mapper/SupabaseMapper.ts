@@ -7,7 +7,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function fetchAccountingData() {
-    let { data: ACCOUNTING, error } = await supabase
+    const { data: ACCOUNTING, error } = await supabase
         .from('ACCOUNTING')
         .select()
 

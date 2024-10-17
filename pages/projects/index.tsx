@@ -33,11 +33,19 @@ const ACCOUNTING_APP_POST_2 = SinglePostVO.makeSideProjectPost({
     thumbnailUrl: 'https://images.unsplash.com/photo-1459257831348-f0cdd359235f?q=70&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 }).value;
 
+const CURSOR_DEMO_POST = SinglePostVO.makeSideProjectPost({
+    id: `${STATIC_ROUTES.sideProjects}/cursor-demo`,
+    title: 'Cursor Demo',
+    subTitle: 'Cursor Demo',
+    thumbnailUrl: "https://images.unsplash.com/photo-1591439657848-9f4b9ce436b9?q=80&w=3102&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+}).value;
+
 const sideProjectPosts = [
     GENERATE_PASSWORD_POST,
     SHORTEN_URL_POST,
     ACCOUNTING_APP_POST,
     ACCOUNTING_APP_POST_2,
+    CURSOR_DEMO_POST,
 ];
 
 export const getStaticProps: GetStaticProps<PostListViewProps> = async (

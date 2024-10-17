@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AmountList from './AmountList';
 import { AmountSubmission } from './types';
 
 const AdvancedCounter: React.FC = () => {
     const [inputAmount, setInputAmount] = useState<string>('');
     const [amounts, setAmounts] = useState<AmountSubmission[]>([]);
-    const [totalCount, setTotalCount] = useState<number>(0);
+
+    const totalCount = useMemo(() => amounts.reduce((sum, amount) => sum + amount.amount, 0), [amounts]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputAmount(e.target.value);
@@ -22,11 +23,6 @@ const AdvancedCounter: React.FC = () => {
             setInputAmount('');
         }
     };
-
-    useEffect(() => {
-        const newTotal = amounts.reduce((sum, amount) => sum + amount.amount, 0);
-        setTotalCount(newTotal);
-    }, [amounts]);
 
     return (
         <div className="py-4">

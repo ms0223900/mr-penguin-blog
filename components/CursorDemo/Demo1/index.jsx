@@ -1,4 +1,5 @@
-import Counter from './Counter';
+import Counter from "./Counter";
+
 const CursorDemo1 = () => {
     return (
         <div>

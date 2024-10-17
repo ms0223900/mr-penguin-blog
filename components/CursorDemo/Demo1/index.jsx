@@ -1,5 +1,4 @@
 import Counter from "./Counter";
-import AdvancedCounter from "./AdvancedCounter";
 
 const CursorDemo1 = () => {
     return (
@@ -9,17 +8,6 @@ const CursorDemo1 = () => {
             <hr />
             <h2>Counter</h2>
             <Counter />
-        </div>
-    );
-};
-
-export const CursorDemo2 = () => {
-    return (
-        <div>
-            <h1>Cursor Demo 2</h1>
-            <hr />
-            <h2>Advanced Counter</h2>
-            <AdvancedCounter />
         </div>
     );
 };

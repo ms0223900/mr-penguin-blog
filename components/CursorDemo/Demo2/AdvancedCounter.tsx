@@ -14,14 +14,13 @@ const AdvancedCounter: React.FC = () => {
 
     const handleSubmit = () => {
         const amount = parseInt(inputAmount);
-        if (!isNaN(amount)) {
-            const newSubmission: AmountSubmission = {
-                amount,
-                createdAt: new Date().toISOString()
-            };
-            setAmounts([...amounts, newSubmission]);
-            setInputAmount('');
-        }
+        if (isNaN(amount)) return;
+        const newSubmission: AmountSubmission = {
+            amount,
+            createdAt: new Date().toISOString()
+        };
+        setAmounts([...amounts, newSubmission]);
+        setInputAmount('');
     };
 
     return (
@@ -42,7 +41,7 @@ const AdvancedCounter: React.FC = () => {
                 </button>
             </div>
             <div className="mb-4">
-                <h3 className="text-xl font-semibold">Total Count: {totalCount}</h3>
+                <h3 className="text-xl font-semibold">Total Count: <span className="text-red-500">{totalCount}</span></h3>
             </div>
             <div>
                 <h3 className="text-xl font-semibold mb-2">Amount History:</h3>

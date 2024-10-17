@@ -3,20 +3,14 @@ import React, { useState, useEffect } from 'react';
 import CursorDemo1 from 'components/CursorDemo/Demo1';
 enum DemoPage {
     Demo1 = 'demo1',
-    // Demo2 = 'demo2',
-    // Demo3 = 'demo3',
 }
 
 const demoButtons = [
     DemoPage.Demo1,
-    // DemoPage.Demo2,
-    // DemoPage.Demo3,
 ];
 
 const demoComponents = {
     [DemoPage.Demo1]: <CursorDemo1 />,
-    // [DemoPage.Demo2]: <div>Demo 2 Content</div>,
-    // [DemoPage.Demo3]: <div>Demo 3 Content</div>,
 };
 
 const CursorDemo: React.FC = () => {

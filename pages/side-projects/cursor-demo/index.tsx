@@ -1,16 +1,19 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import CursorDemo1 from 'components/CursorDemo/Demo1';
+import CursorDemo1, { CursorDemo2 } from 'components/CursorDemo/Demo1';
 enum DemoPage {
     Demo1 = 'demo1',
+    Demo2 = 'demo2',
 }
 
 const demoButtons = [
     DemoPage.Demo1,
+    DemoPage.Demo2,
 ];
 
 const demoComponents = {
     [DemoPage.Demo1]: <CursorDemo1 />,
+    [DemoPage.Demo2]: <CursorDemo2 />,
 };
 
 const CursorDemo: React.FC = () => {

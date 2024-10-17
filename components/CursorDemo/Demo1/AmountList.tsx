@@ -1,7 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const AmountList = ({ amounts }) => {
+interface Amount {
+    amount: number;
+    createdAt: string;
+}
+
+interface AmountListProps {
+    amounts: Amount[];
+}
+
+const AmountList: React.FC<AmountListProps> = ({ amounts }) => {
     return (
         <ul className="list-disc pl-5">
             {amounts.map((amount, index) => (
@@ -11,15 +19,6 @@ const AmountList = ({ amounts }) => {
             ))}
         </ul>
     );
-};
-
-AmountList.propTypes = {
-    amounts: PropTypes.arrayOf(
-        PropTypes.shape({
-            amount: PropTypes.number.isRequired,
-            createdAt: PropTypes.string.isRequired,
-        })
-    ).isRequired,
 };
 
 export default AmountList;

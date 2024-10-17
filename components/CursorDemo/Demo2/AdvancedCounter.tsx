@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AmountList from './AmountList';
-
-interface AmountSubmission {
-    amount: number;
-    createdAt: string;
-}
+import { AmountSubmission } from './types';
 
 const AdvancedCounter: React.FC = () => {
     const [inputAmount, setInputAmount] = useState<string>('');

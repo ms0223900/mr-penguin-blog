@@ -1,12 +1,8 @@
 import React from 'react';
-
-interface Amount {
-    amount: number;
-    createdAt: string;
-}
+import { AmountSubmission } from './types';
 
 interface AmountListProps {
-    amounts: Amount[];
+    amounts: AmountSubmission[];
 }
 
 const AmountList: React.FC<AmountListProps> = ({ amounts }) => {

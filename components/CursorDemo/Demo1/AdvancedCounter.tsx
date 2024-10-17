@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import AmountList from './AmountList';
 
-const AdvancedCounter = () => {
-    const [inputAmount, setInputAmount] = useState('');
-    const [amounts, setAmounts] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
+interface AmountSubmission {
+    amount: number;
+    createdAt: string;
+}
 
-    const handleInputChange = (e) => {
+const AdvancedCounter: React.FC = () => {
+    const [inputAmount, setInputAmount] = useState<string>('');
+    const [amounts, setAmounts] = useState<AmountSubmission[]>([]);
+    const [totalCount, setTotalCount] = useState<number>(0);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputAmount(e.target.value);
     };
 
     const handleSubmit = () => {
         const amount = parseInt(inputAmount);
         if (!isNaN(amount)) {
-            const newSubmission = {
+            const newSubmission: AmountSubmission = {
                 amount,
                 createdAt: new Date().toISOString()
             };

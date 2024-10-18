@@ -1,5 +1,4 @@
-import AdvancedCounter from "./AdvancedCounter";
-
+import AdvancedCounter from "./_/AdvancedCounter";
 export const CursorDemo2 = () => {
     return (
         <div>

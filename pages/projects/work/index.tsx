@@ -1,29 +1,10 @@
-import Link from 'next/link';
-import { Button } from '@mui/material';
-import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import { SinglePostVO } from '@/lib/handlers/SinglePostVO';
 import { STATIC_ROUTES } from '@/router';
 import PostList, { PostListViewProps } from '@/components/Post/PostList';
 import queryProjectTagArticles from '@/gql/queryProjectTagArticles';
 import QueriedArticleHandlers from '@/lib/handlers/QueriedArticleHandlers';
-
-const ProjectTabs = () => {
-    const router = useRouter();
-    const isWorkProjectPath = router.pathname === '/projects/work';
-    const isSideProjectPath = router.pathname === '/projects/side';
-
-    return (
-        <div className={"flex flex-row gap-2"}>
-            <Link href="/projects/work">
-                <Button variant={isWorkProjectPath ? 'contained' : 'outlined'}>Work Projects</Button>
-            </Link>
-            <Link href="/projects/side">
-                <Button variant={isSideProjectPath ? 'contained' : 'outlined'}>Side Projects</Button>
-            </Link>
-        </div>
-    )
-}
+import ProjectTabs from '@/components/Projects/ProjectTabs';
 
 const WorkProjectList = ({ postListData }: PostListViewProps) => {
     return (
@@ -37,7 +18,6 @@ const WorkProjectList = ({ postListData }: PostListViewProps) => {
         </div>
     )
 }
-
 
 const GENERATE_PASSWORD_POST = SinglePostVO.makeSideProjectPost({
     id: `${STATIC_ROUTES.sideProjects}/generate-password`,

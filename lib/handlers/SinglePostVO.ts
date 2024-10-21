@@ -11,7 +11,7 @@ export class SinglePostVO {
         return this._post;
     }
 
-    static makeSideProjectPost(param: {
+    static makePost(param: {
         thumbnailUrl: string;
         subTitle: string;
         id: string;

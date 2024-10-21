@@ -8,7 +8,7 @@ const navListData: SingleNav[] = [
   },
   {
     title: 'Projects',
-    link: '/projects',
+    link: '/projects/work',
     subNavList: [],
   },
   // {

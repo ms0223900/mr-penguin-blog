@@ -4,6 +4,7 @@ import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
 import { GetStaticProps } from 'next';
 import { STATIC_ROUTES } from "../../router";
 import { SinglePostVO } from "lib/handlers/SinglePostVO";
+import { useRouter } from 'next/router';
 
 const GENERATE_PASSWORD_POST = SinglePostVO.makeSideProjectPost({
     id: `${STATIC_ROUTES.sideProjects}/generate-password`,
@@ -75,4 +76,8 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
     }
 };
 
-export default PostList;
+const ProjectPage = () => {
+    return <></>
+}
+
+export default ProjectPage;

@@ -10,6 +10,16 @@ const nextConfig = {
 
     return config;
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/projects',
+        destination: '/projects/work',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

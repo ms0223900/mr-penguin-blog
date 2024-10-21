@@ -8,22 +8,28 @@ import PostList, { PostListViewProps } from '@/components/Post/PostList';
 import queryProjectTagArticles from '@/gql/queryProjectTagArticles';
 import QueriedArticleHandlers from '@/lib/handlers/QueriedArticleHandlers';
 
-const WorkProjectList = ({ postListData }: PostListViewProps) => {
+const ProjectTabs = () => {
     const router = useRouter();
     const isWorkProjectPath = router.pathname === '/projects/work';
     const isSideProjectPath = router.pathname === '/projects/side';
 
     return (
+        <div className={"flex flex-row gap-2"}>
+            <Link href="/projects/work">
+                <Button variant={isWorkProjectPath ? 'contained' : 'outlined'}>Work Projects</Button>
+            </Link>
+            <Link href="/projects/side">
+                <Button variant={isSideProjectPath ? 'contained' : 'outlined'}>Side Projects</Button>
+            </Link>
+        </div>
+    )
+}
+
+const WorkProjectList = ({ postListData }: PostListViewProps) => {
+    return (
         <div>
             <div className={"flex flex-col items-center gap-2 p-4"}>
-                <div className={"flex flex-row gap-2"}>
-                    <Link href="/projects/work">
-                        <Button variant={isWorkProjectPath ? 'contained' : 'outlined'}>Work Projects</Button>
-                    </Link>
-                    <Link href="/projects/side">
-                        <Button variant={isSideProjectPath ? 'contained' : 'outlined'}>Side Projects</Button>
-                    </Link>
-                </div>
+                <ProjectTabs />
                 <h1>Work Project List</h1>
                 <hr />
             </div>

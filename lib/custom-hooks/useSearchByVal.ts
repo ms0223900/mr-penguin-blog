@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { Url, UrlObject } from 'url';
@@ -15,7 +17,8 @@ const useSearchByVal = () => {
   const searchVal = useMemo(() => router.query.q as string, [router.query.q]);
 
   const handleSearchByVal = useCallback((val: string) => {
-    router.push(getSearchByValParams(val));
+    window.location.href =
+      getSearchByValParams(val).pathname + '?' + 'q=' + val;
   }, []);
 
   return {

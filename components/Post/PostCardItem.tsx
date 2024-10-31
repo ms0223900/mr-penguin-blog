@@ -65,7 +65,7 @@ const PostCardItem = (props: PostCardItemProps) => {
     const { id, title, subTitle, thumbnail, style } = props;
     const classes = useStyles(props);
     return (
-        <div id={id} className={classes.root} style={style}>
+        <div className={classes.root} style={style}>
             {/*// TODO, refactor*/}
             <Link href={id.includes(STATIC_ROUTES.sideProjects) ? id : STATIC_ROUTES.getPostWithId(id)}>
                 <Box

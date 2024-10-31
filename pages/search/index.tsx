@@ -17,8 +17,11 @@ const SearchedResultPage = ({ postListData }: SearchedResultPageProps) => {
 
   const hiddenPosts = postListData.map((p) => ({
     ...p,
-    style: {
-      display: 'none',
+    gridItemProps: {
+      id: p.id,
+      style: {
+        display: 'none',
+      },
     },
   }));
 
@@ -64,7 +67,6 @@ const SearchedResultPage = ({ postListData }: SearchedResultPageProps) => {
           id: p.id.toString(),
           title: p.title,
           subTitle: p.subTitle,
-          description: p.description,
         }))
       )}
 
@@ -72,8 +74,7 @@ const SearchedResultPage = ({ postListData }: SearchedResultPageProps) => {
               (p) =>
                 p.id.includes(searchVal) ||
                 p.title.includes(searchVal) || 
-                (p.subTitle && p.subTitle.includes(searchVal)) ||
-                (p.description && p.description.includes(searchVal))
+                (p.subTitle && p.subTitle.includes(searchVal))
             )
 
             window.addEventListener('load', () => {

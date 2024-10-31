@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, GridProps } from '@mui/material';
 import PostCardItem from 'components/Post/PostCardItem';
 import { WEB_TITLE } from 'config';
 import queryArticleList from 'gql/queryArticleList';
@@ -12,7 +12,9 @@ import PostDetailCardItem from './PostDetailCardItem';
 import styles from './post-list.module.scss';
 
 export interface PostListViewProps {
-  postListData: SinglePostFromPostList[];
+  postListData: (SinglePostFromPostList & {
+    gridItemProps?: GridProps;
+  })[];
 }
 
 export const PostList = ({ postListData }: PostListViewProps) => (
@@ -47,7 +49,7 @@ const PostListView = (props: PostListViewProps) => {
       >
         <Grid container spacing={3} rowSpacing={6}>
           {props.postListData.map((p) => (
-            <Grid key={p.id} item padding={0.5} xs={12} md={4}>
+            <Grid key={p.id} item padding={0.5} xs={12} md={4} {...p.gridItemProps}>
               <PostCardItem {...p} />
             </Grid>
           ))}

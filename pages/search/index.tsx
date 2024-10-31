@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
 import { SinglePost } from 'common-types';
 import TagLinkItem from 'components/Common/TagLinkItem';
-import { PostList } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
 import queryArticleByTag from 'gql/queryArticleByTag';
 import queryArticleByVal from 'gql/queryArticleByVal';
@@ -11,6 +10,13 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
 import React, { memo, useEffect, useState } from 'react';
+import Script from 'next/script';
+import PostList, {
+  getStaticProps,
+  PostListViewProps,
+  // getServerSideProps,
+} from 'components/Post/PostList';
+export { getStaticProps };
 
 const useQueryPost = () => {
   // const { state } = useContext(MainContext);
@@ -75,47 +81,94 @@ const useQueryPost = () => {
   };
 };
 
-export interface SearchedResultPageProps {
-  headTitle?: string;
-}
+export interface SearchedResultPageProps extends PostListViewProps { }
 
-const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
-  const { loading, searchVal, postList } = useQueryPost();
+const SearchedResultPage = ({ postListData }: SearchedResultPageProps) => {
+  const loading = false;
+  // const { loading, searchVal, postList } = useQueryPost();
   const recommendedTagList = ['vue', 'nuxt3'];
+
+  const hiddenPosts = postListData.map((p) => ({
+    ...p,
+    style: {
+      display: 'none',
+    },
+  }));
 
   return (
     <Container>
       <Head>
-        <title>{headTitle || `搜尋: ${searchVal} | ${WEB_TITLE}`}</title>
+        <title>{WEB_TITLE}</title>
       </Head>
-      <Typography textAlign={'center'}>
-        {`以下是搜尋: ${searchVal} 的結果`}
+
+      <Typography id="search-val-text" textAlign={'center'}>
+        {`以下是搜尋: `}<span id="search-val"></span>{` 的結果`}
       </Typography>
-      {loading && (
-        <Box textAlign={'center'}>
-          <CircularProgress />
-        </Box>
-      )}
+
+      <Box id="loadingContainer" textAlign={'center'}>
+        <CircularProgress />
+      </Box>
+
       <hr />
-      {postList.length > 0 && <PostList postListData={postList} />}
-      {!postList.length && !loading && (
-        <Box>
-          <Typography
-            variant="h5"
-            style={{
-              opacity: 0.6,
-            }}
-            textAlign={'center'}
-          >
-            {'找不到結果 :(\n，要不要試試看查這些關鍵字?'}
-          </Typography>
-          <Box display={'flex'} justifyContent={'center'}>
-            {recommendedTagList.map((t) => (
-              <TagLinkItem key={t} tagName={t} />
-            ))}
-          </Box>
+      <Box id="notFoundContainer" display={'none'}>
+        <Typography
+          variant="h5"
+          style={{
+            opacity: 0.6,
+          }}
+          textAlign={'center'}
+        >
+          {'找不到結果 :(\n，要不要試試看查這些關鍵字?'}
+        </Typography>
+        <Box display={'flex'} justifyContent={'center'}>
+          {recommendedTagList.map((t) => (
+            <TagLinkItem key={t} tagName={t} />
+          ))}
         </Box>
+      </Box>
+      {postListData.length > 0 && <PostList postListData={hiddenPosts} />}
+      <Script> {`
+        (() => {
+            const searchParams = new URLSearchParams(window.location.search);
+            const searchVal = searchParams.get('q') || '';
+
+            const postList = ${JSON.stringify(
+        postListData.map((p) => ({
+          id: p.id.toString(),
+          title: p.title,
+          subTitle: p.subTitle,
+          description: p.description,
+        }))
       )}
+
+            const filteredPostList = postList.filter(
+              (p) =>
+                p.id.includes(searchVal) ||
+                p.title.includes(searchVal) || 
+                (p.subTitle && p.subTitle.includes(searchVal)) ||
+                (p.description && p.description.includes(searchVal))
+            )
+
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    document.getElementById('loadingContainer').style.display = 'none';
+
+                    document.title = '搜尋: ' + searchVal + ' | ' + document.title;
+                    
+                    const searchValElement = document.getElementById('search-val')
+                    searchValElement.innerHTML = searchVal
+                    filteredPostList.forEach(p => {
+                        document.getElementById(p.id).style.display = 'block';
+                    })
+
+                    if(filteredPostList.length === 0) {
+                        document.getElementById('notFoundContainer').style.display = 'block';
+                    }
+                }, 100)
+            })
+         })()
+        `}
+      </Script>
     </Container>
   );
 };
@@ -125,18 +178,6 @@ const SearchedResultPage = ({ headTitle }: SearchedResultPageProps) => {
 //   fallback: false,
 //   // fallback: 'blocking',
 // });
-
-export const getStaticProps: GetStaticProps<SearchedResultPageProps> = async (
-  ctx
-) => {
-  const headTitle = `搜尋 | ${WEB_TITLE}`;
-
-  return {
-    props: {
-      headTitle,
-    },
-  };
-};
 
 // export const getServerSideProps: GetServerSideProps<
 //   SearchedResultPageProps

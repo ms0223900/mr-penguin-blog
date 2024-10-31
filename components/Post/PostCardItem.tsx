@@ -57,13 +57,15 @@ const useStyles = makeStyles<Theme, PostCardItemProps>(
     }
 );
 
-export type PostCardItemProps = SinglePostFromPostList;
+export type PostCardItemProps = SinglePostFromPostList & {
+    style?: React.CSSProperties;
+};
 
 const PostCardItem = (props: PostCardItemProps) => {
-    const { id, title, subTitle, thumbnail } = props;
+    const { id, title, subTitle, thumbnail, style } = props;
     const classes = useStyles(props);
     return (
-        <div className={classes.root}>
+        <div id={id} className={classes.root} style={style}>
             {/*// TODO, refactor*/}
             <Link href={id.includes(STATIC_ROUTES.sideProjects) ? id : STATIC_ROUTES.getPostWithId(id)}>
                 <Box

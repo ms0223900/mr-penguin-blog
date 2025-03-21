@@ -14,10 +14,10 @@ const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick, rowIndex, colI
     return (
         <div className="flip-card w-24 h-24 md:w-32 md:h-32 perspective">
             <div
-                className={`flip-card-inner relative w-full h-full transition-all duration-500 transform ${isRevealed ? 'rotate-y-180' : ''}`}
+                className={`flip-card-inner relative w-full h-full rounded-lg transition-all duration-500 transform ${isRevealed ? 'rotate-y-180' : ''}`}
                 onClick={onClick}
             >
-                <div className="flip-card-front absolute w-full h-full backface-hidden rounded-lg bg-gray-300 hover:bg-gray-400 flex items-center justify-center cursor-pointer">
+                <div className="flip-card-front absolute w-full h-full rounded-lg backface-hidden bg-gray-300 hover:bg-gray-400 flex items-center justify-center cursor-pointer">
                     <span className="text-gray-600 text-[60px] font-bold">{(rowIndex * 3 + colIndex + 1)}</span>
                 </div>
                 <div className={`
@@ -107,11 +107,66 @@ const GenderRevealPage = () => {
         setAllRevealed(false);
     };
 
+    const getWinningTiles = (grid: GenderGrid[][]): number[][] => {
+        const winningTiles: number[][] = [];
+        const lineGenders = getAllLineGender(grid);
+
+        lineGenders.forEach((line, index) => {
+            if (checkSameGender(line) && line[0] === 'male') {
+                if (index < 3) {
+                    // 水平線
+                    winningTiles.push([index, 0], [index, 1], [index, 2]);
+                } else if (index < 6) {
+                    // 垂直線
+                    winningTiles.push([0, index - 3], [1, index - 3], [2, index - 3]);
+                } else if (index === 6) {
+                    // 主對角線
+                    winningTiles.push([0, 0], [1, 1], [2, 2]);
+                } else {
+                    // 副對角線
+                    winningTiles.push([0, 2], [1, 1], [2, 0]);
+                }
+            }
+        });
+
+        return winningTiles;
+    };
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4">
             <Head>
                 <title>性別揭曉翻牌九宮格 | Mr. Penguin</title>
             </Head>
+
+            <style jsx>{`
+                .winning-tile {
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .winning-tile::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border: 8px solid #ffa500; 
+                    border-radius: 0.5rem;
+                    animation: drawBorder 0.5s forwards;
+                }
+
+                @keyframes drawBorder {
+                    0% {
+                        transform: scale(0.8);
+                        opacity: 0;
+                    }
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+            `}</style>
 
             <h1 className="text-3xl font-bold mb-8 text-center">性別揭曉翻牌九宮格</h1>
             <p className="text-center mb-8 max-w-lg">
@@ -120,16 +175,22 @@ const GenderRevealPage = () => {
 
             <div className="grid grid-cols-3 gap-4 mb-8">
                 {grid.map((row, rowIndex) => (
-                    row.map((tile, colIndex) => (
-                        <Tile
-                            key={`${rowIndex}-${colIndex}`}
-                            gender={tile.gender}
-                            isRevealed={tile.isRevealed}
-                            onClick={() => handleTileClick(rowIndex, colIndex)}
-                            rowIndex={rowIndex}
-                            colIndex={colIndex}
-                        />
-                    ))
+                    row.map((tile, colIndex) => {
+                        const isWinningTile = allRevealed && getWinningTiles(grid).some(
+                            ([r, c]) => r === rowIndex && c === colIndex
+                        );
+                        return (
+                            <div key={`${rowIndex}-${colIndex}`} className={isWinningTile ? 'winning-tile' : ''}>
+                                <Tile
+                                    gender={tile.gender}
+                                    isRevealed={tile.isRevealed}
+                                    onClick={() => handleTileClick(rowIndex, colIndex)}
+                                    rowIndex={rowIndex}
+                                    colIndex={colIndex}
+                                />
+                            </div>
+                        );
+                    })
                 ))}
             </div>
 

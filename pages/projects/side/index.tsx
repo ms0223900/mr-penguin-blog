@@ -56,7 +56,7 @@ const GENDER_REVEAL_POST = SinglePostVO.makePost({
     id: `${STATIC_ROUTES.sideProjects}/gender-reveal`,
     title: '性別揭曉翻牌九宮格',
     subTitle: '翻開卡片來揭曉性別',
-    thumbnailUrl: "https://images.unsplash.com/photo-1519426304922-533a3f0830a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    thumbnailUrl: "/assets/side-projects/gender-reveal.png"
 }).value;
 
 const sideProjectPosts = [

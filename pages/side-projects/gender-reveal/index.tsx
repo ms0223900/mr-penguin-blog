@@ -196,7 +196,7 @@ const GenderRevealPage = () => {
 
             {allRevealed && (
                 <div className="bg-green-100 p-4 rounded-lg text-center mb-8">
-                    <p className="text-green-800 font-bold">所有卡片都已揭曉！ 是個男孩紙！</p>
+                    <p className="text-green-800 font-bold">所有卡片都已揭曉！ 是個男孩紙👦！</p>
                 </div>
             )}
 

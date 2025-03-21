@@ -12,23 +12,23 @@ interface TileProps {
 
 const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick, rowIndex, colIndex }) => {
     return (
-        <div
-            className={`
-        w-24 h-24 md:w-32 md:h-32 rounded-lg cursor-pointer flex items-center justify-center 
-        transition-all duration-500 transform ${isRevealed ? 'rotate-y-180' : ''}
-        ${isRevealed && gender === 'male' ? 'bg-blue-500' : ''}
-        ${isRevealed && gender === 'female' ? 'bg-pink-500' : ''}
-        ${!isRevealed ? 'bg-gray-300 hover:bg-gray-400' : ''}
-      `}
-            onClick={onClick}
-        >
-            {isRevealed ? (
-                <span className="text-white text-4xl font-bold">
-                    {gender === 'male' ? '👦' : '👧'}
-                </span>
-            ) : (
-                <span className="text-gray-600 text-[60px] font-bold">{(rowIndex * 3 + colIndex + 1)}</span>
-            )}
+        <div className="flip-card w-24 h-24 md:w-32 md:h-32 perspective">
+            <div
+                className={`flip-card-inner relative w-full h-full transition-all duration-500 transform ${isRevealed ? 'rotate-y-180' : ''}`}
+                onClick={onClick}
+            >
+                <div className="flip-card-front absolute w-full h-full backface-hidden rounded-lg bg-gray-300 hover:bg-gray-400 flex items-center justify-center cursor-pointer">
+                    <span className="text-gray-600 text-[60px] font-bold">{(rowIndex * 3 + colIndex + 1)}</span>
+                </div>
+                <div className={`
+                    flip-card-back absolute w-full h-full backface-hidden rounded-lg flex items-center justify-center cursor-pointer rotate-y-180
+                    ${gender === 'male' ? 'bg-blue-500' : 'bg-pink-500'}
+                `}>
+                    <span className="text-white text-4xl font-bold">
+                        {gender === 'male' ? '👦' : '👧'}
+                    </span>
+                </div>
+            </div>
         </div>
     );
 };

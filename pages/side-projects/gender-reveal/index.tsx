@@ -36,6 +36,36 @@ interface GenderGrid {
     isRevealed: boolean;
 }
 
+const getAllLineGender = (grid: GenderGrid[][]): ('male' | 'female')[][] => {
+    const lineGenders: ('male' | 'female')[][] = [];
+    for (let row = 0; row < 3; row++) {
+        if (grid[row][0].isRevealed && grid[row][1].isRevealed && grid[row][2].isRevealed) {
+            lineGenders.push([grid[row][0].gender, grid[row][1].gender, grid[row][2].gender]);
+        }
+    }
+
+    for (let col = 0; col < 3; col++) {
+        if (grid[0][col].isRevealed && grid[1][col].isRevealed && grid[2][col].isRevealed) {
+            lineGenders.push([grid[0][col].gender, grid[1][col].gender, grid[2][col].gender]);
+        }
+    }
+
+    if (grid[0][0].isRevealed && grid[1][1].isRevealed && grid[2][2].isRevealed) {
+        lineGenders.push([grid[0][0].gender, grid[1][1].gender, grid[2][2].gender]);
+    }
+
+    if (grid[0][2].isRevealed && grid[1][1].isRevealed && grid[2][0].isRevealed) {
+        lineGenders.push([grid[0][2].gender, grid[1][1].gender, grid[2][0].gender]);
+    }
+
+    return lineGenders;
+};
+
+const checkSameGender = (genders: ('male' | 'female')[]): boolean => {
+    const gender = genders[0];
+    return genders.every(g => g === gender);
+};
+
 const GenderRevealPage = () => {
     // 預設的九宮格配置 (右邊一列都是男生，其他男女交錯但不會連成一線)
     const initialGrid: GenderGrid[][] = [
@@ -52,12 +82,9 @@ const GenderRevealPage = () => {
         newGrid[rowIndex][colIndex].isRevealed = true;
         setGrid(newGrid);
 
-        // 新增邏輯
-        // 如果檢查到有連成一線且該連線是指定的性別，則直接揭曉
         const lineGenders = getAllLineGender(grid);
         const hasSameGender = lineGenders?.find(lineGender => checkSameGender(lineGender));
         if (hasSameGender) {
-            // 翻開所有卡片
             const newGrid = grid.map(row =>
                 row.map(tile => ({ ...tile, isRevealed: true }))
             );
@@ -66,39 +93,8 @@ const GenderRevealPage = () => {
             return;
         }
 
-        // 檢查是否所有磁貼都已翻開
         const allAreRevealed = newGrid.flat().every(tile => tile.isRevealed);
         setAllRevealed(allAreRevealed);
-    };
-
-    const checkSameGender = (genders: ('male' | 'female')[]): boolean => {
-        const gender = genders[0];
-        return genders.every(g => g === gender);
-    };
-
-    const getAllLineGender = (grid: GenderGrid[][]): ('male' | 'female')[][] => {
-        const lineGenders: ('male' | 'female')[][] = [];
-        for (let row = 0; row < 3; row++) {
-            if (grid[row][0].isRevealed && grid[row][1].isRevealed && grid[row][2].isRevealed) {
-                lineGenders.push([grid[row][0].gender, grid[row][1].gender, grid[row][2].gender]);
-            }
-        }
-
-        for (let col = 0; col < 3; col++) {
-            if (grid[0][col].isRevealed && grid[1][col].isRevealed && grid[2][col].isRevealed) {
-                lineGenders.push([grid[0][col].gender, grid[1][col].gender, grid[2][col].gender]);
-            }
-        }
-
-        if (grid[0][0].isRevealed && grid[1][1].isRevealed && grid[2][2].isRevealed) {
-            lineGenders.push([grid[0][0].gender, grid[1][1].gender, grid[2][2].gender]);
-        }
-
-        if (grid[0][2].isRevealed && grid[1][1].isRevealed && grid[2][0].isRevealed) {
-            lineGenders.push([grid[0][2].gender, grid[1][1].gender, grid[2][0].gender]);
-        }
-
-        return lineGenders;
     };
 
     const resetGame = () => {

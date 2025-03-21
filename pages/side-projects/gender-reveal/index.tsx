@@ -27,7 +27,7 @@ const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick, rowIndex, colI
                     {gender === 'male' ? '👦' : '👧'}
                 </span>
             ) : (
-                <span className="text-gray-600 text-4xl">{(rowIndex * 3 + colIndex + 1)}</span>
+                <span className="text-gray-600 text-[60px] font-bold">{(rowIndex * 3 + colIndex + 1)}</span>
             )}
         </div>
     );

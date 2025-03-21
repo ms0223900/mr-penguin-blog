@@ -16,10 +16,9 @@ const useSearchByVal = () => {
 
   const searchVal = useMemo(() => router.query.q as string, [router.query.q]);
 
-  const handleSearchByVal = useCallback((val: string) => {
-    window.location.href =
-      getSearchByValParams(val).pathname + '?' + 'q=' + val;
-  }, []);
+  const handleSearchByVal = (val: string) => {
+    window.location.href = `/search?q=${val}`;
+  };
 
   return {
     searchVal,

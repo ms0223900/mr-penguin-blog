@@ -52,12 +52,20 @@ const CURSOR_DEMO_POST = SinglePostVO.makePost({
     thumbnailUrl: "https://images.unsplash.com/photo-1591439657848-9f4b9ce436b9?q=80&w=3102&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 }).value;
 
+const GENDER_REVEAL_POST = SinglePostVO.makePost({
+    id: `${STATIC_ROUTES.sideProjects}/gender-reveal`,
+    title: '性別揭曉翻牌九宮格',
+    subTitle: '翻開卡片來揭曉性別',
+    thumbnailUrl: "https://images.unsplash.com/photo-1519426304922-533a3f0830a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+}).value;
+
 const sideProjectPosts = [
     GENERATE_PASSWORD_POST,
     SHORTEN_URL_POST,
     ACCOUNTING_APP_POST,
     ACCOUNTING_APP_POST_2,
     CURSOR_DEMO_POST,
+    GENDER_REVEAL_POST,
 ];
 
 export const getStaticProps: GetStaticProps<PostListViewProps> = async () => {

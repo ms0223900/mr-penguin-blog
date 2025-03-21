@@ -6,9 +6,11 @@ interface TileProps {
     gender: 'male' | 'female';
     isRevealed: boolean;
     onClick: () => void;
+    rowIndex: number;
+    colIndex: number;
 }
 
-const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick }) => {
+const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick, rowIndex, colIndex }) => {
     return (
         <div
             className={`
@@ -25,7 +27,7 @@ const Tile: React.FC<TileProps> = ({ gender, isRevealed, onClick }) => {
                     {gender === 'male' ? '👦' : '👧'}
                 </span>
             ) : (
-                <span className="text-gray-600 text-4xl">❓</span>
+                <span className="text-gray-600 text-4xl">{(rowIndex * 3 + colIndex + 1)}</span>
             )}
         </div>
     );
@@ -124,6 +126,8 @@ const GenderRevealPage = () => {
                             gender={tile.gender}
                             isRevealed={tile.isRevealed}
                             onClick={() => handleTileClick(rowIndex, colIndex)}
+                            rowIndex={rowIndex}
+                            colIndex={colIndex}
                         />
                     ))
                 ))}

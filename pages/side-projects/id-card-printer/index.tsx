@@ -258,27 +258,7 @@ const IDCardPrinterPage = () => {
                             )}
                         </div>
                     </div>
-                    <div className="flex gap-4 mb-8">
-                        <button
-                            onClick={handleDownload}
-                            disabled={!frontImage || !backImage}
-                            className={`py-3 px-6 rounded-lg text-white font-bold 
-          ${(!frontImage || !backImage)
-                                    ? 'bg-gray-400 cursor-not-allowed'
-                                    : 'bg-blue-600 hover:bg-blue-700'}`}
-                        >
-                            下載影印圖片
-                        </button>
-                        <button
-                            onClick={handleReset}
-                            className="py-3 px-6 rounded-lg text-white font-bold bg-red-600 hover:bg-red-700"
-                        >
-                            重設
-                        </button>
-                    </div>
                 </div>
-
-
 
                 <div className="relative w-[50%] overflow-auto border border-gray-300 rounded-lg mb-8">
                     <div className="w-full bg-gray-100 p-2 text-sm text-gray-600 text-center">
@@ -293,6 +273,25 @@ const IDCardPrinterPage = () => {
                         />
                     </div>
                 </div>
+            </div>
+
+            <div className="flex gap-4 mb-8">
+                <button
+                    onClick={handleDownload}
+                    disabled={!frontImage || !backImage}
+                    className={`py-3 px-6 rounded-lg text-white font-bold 
+                    ${(!frontImage || !backImage)
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-blue-600 hover:bg-blue-700'}`}
+                >
+                    下載影印圖片
+                </button>
+                <button
+                    onClick={handleReset}
+                    className="py-3 px-6 rounded-lg text-white font-bold bg-red-600 hover:bg-red-700"
+                >
+                    重設
+                </button>
             </div>
 
             <div className="text-sm text-gray-600 mb-8 max-w-lg text-center">

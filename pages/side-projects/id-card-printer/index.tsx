@@ -11,8 +11,8 @@ enum ImageType {
 const GAP = 0;
 
 const START_POSITION = {
-    x: 100,
-    y: 100,
+    x: 50,
+    y: 50,
 }
 
 const IDCardPrinterPage = () => {
@@ -27,8 +27,8 @@ const IDCardPrinterPage = () => {
     const CANVAS_HEIGHT = 3508;
 
     // ID card dimensions on canvas
-    const CARD_WIDTH = 1012;
-    const CARD_HEIGHT = 638;
+    const CARD_WIDTH = 1012 * 1.05;
+    const CARD_HEIGHT = 638 * 1.05;
 
     useEffect(() => {
         drawCanvas();
@@ -173,7 +173,7 @@ const IDCardPrinterPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4">
+        <div className="flex flex-col items-center p-4 min-h-screen">
             <Head>
                 <title>身分證影印產生器 | Mr. Penguin</title>
             </Head>

@@ -68,7 +68,7 @@ const QRCodeGeneratorPage = () => {
 
             // Create download link
             const link = document.createElement('a');
-            link.download = generateFileName(format);
+            link.download = generateFileName(format, url);
             link.href = dataUrl;
             document.body.appendChild(link);
             link.click();
@@ -76,7 +76,7 @@ const QRCodeGeneratorPage = () => {
         };
 
         // Load SVG into image
-        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        img.src = 'data:image/svg+xml;base64,' + btoa(new TextEncoder().encode(svgData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
     };
 
     return (
@@ -229,11 +229,11 @@ export const getStaticProps: GetStaticProps = async () => {
     };
 };
 
-export const generateFileName = (format: 'png' | 'jpg'): string => {
+export const generateFileName = (format: 'png' | 'jpg', url: string): string => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '/');
     const formattedTime = today.toLocaleTimeString('zh-TW', { hour12: false }).slice(0, 5).replace(/:/g, '');
-    return `qrcode_${formattedDate}_${formattedTime}.${format}`;
+    const sanitizedUrl = url.replace(/\./g, '_').replace(/https?:\/\//, '');
+    return `qrcode_${formattedDate}_${formattedTime}_${sanitizedUrl}.${format}`;
 };
-
 export default QRCodeGeneratorPage; 

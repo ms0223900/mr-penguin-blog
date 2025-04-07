@@ -66,6 +66,13 @@ const ID_CARD_PRINTER_POST = SinglePostVO.makePost({
     thumbnailUrl: "/assets/side-projects/id-card-printer.jpg"
 }).value;
 
+const QR_CODE_GENERATOR_POST = SinglePostVO.makePost({
+    id: `${STATIC_ROUTES.sideProjects}/qr-code-generator`,
+    title: 'QR Code 產生器',
+    subTitle: '產生自訂 QR Code',
+    thumbnailUrl: "https://images.unsplash.com/photo-1595079803389-c9418ef081d9?q=80&w=2970&auto=format&fit=crop"
+}).value;
+
 const sideProjectPosts = [
     GENERATE_PASSWORD_POST,
     SHORTEN_URL_POST,
@@ -74,6 +81,7 @@ const sideProjectPosts = [
     CURSOR_DEMO_POST,
     GENDER_REVEAL_POST,
     ID_CARD_PRINTER_POST,
+    QR_CODE_GENERATOR_POST,
 ];
 
 export const getStaticProps: GetStaticProps<PostListViewProps> = async () => {

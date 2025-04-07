@@ -56,52 +56,13 @@ const IDCardPrinterPage = () => {
 
             frontImg.onload = () => {
                 backImg.onload = () => {
-                    // Position cards in a 5x2 grid (5 rows, 2 columns)
+                    // Generate positions for 5 rows
                     const positions = [
-                        // Row 1
-                        {
-                            x: START_POSITION.x,
-                            y: START_POSITION.y,
-                            type: ImageType.Front
-                        },
-                        {
-                            x: START_POSITION.x + CARD_WIDTH + GAP,
-                            y: START_POSITION.y,
-                            type: ImageType.Back
-                        },
-                        // Row 2
-                        {
-                            x: START_POSITION.x,
-                            y: START_POSITION.y + CARD_HEIGHT + GAP,
-                            type: ImageType.Front
-                        },
-                        {
-                            x: START_POSITION.x + CARD_WIDTH + GAP,
-                            y: START_POSITION.y + CARD_HEIGHT + GAP,
-                            type: ImageType.Back
-                        },
-                        // Row 3
-                        {
-                            x: START_POSITION.x,
-                            y: START_POSITION.y + CARD_HEIGHT * 2 + GAP * 2,
-                            type: ImageType.Front
-                        },
-                        {
-                            x: START_POSITION.x + CARD_WIDTH + GAP,
-                            y: START_POSITION.y + CARD_HEIGHT * 2 + GAP * 2,
-                            type: ImageType.Back
-                        },
-                        // Row 4
-                        {
-                            x: START_POSITION.x,
-                            y: START_POSITION.y + CARD_HEIGHT * 3 + GAP * 3,
-                            type: ImageType.Front
-                        },
-                        {
-                            x: START_POSITION.x + CARD_WIDTH + GAP,
-                            y: START_POSITION.y + CARD_HEIGHT * 3 + GAP * 3,
-                            type: ImageType.Back
-                        },
+                        ...makeRowCardPosition(0),
+                        ...makeRowCardPosition(1),
+                        ...makeRowCardPosition(2),
+                        ...makeRowCardPosition(3),
+                        ...makeRowCardPosition(4)
                     ];
 
                     // Draw all cards
@@ -120,6 +81,21 @@ const IDCardPrinterPage = () => {
             };
             frontImg.src = frontImage;
         }
+    };
+
+    const makeRowCardPosition = (rowIndex: number) => {
+        return [
+            {
+                x: START_POSITION.x,
+                y: START_POSITION.y + (CARD_HEIGHT + GAP) * rowIndex,
+                type: ImageType.Front
+            },
+            {
+                x: START_POSITION.x + CARD_WIDTH + GAP,
+                y: START_POSITION.y + (CARD_HEIGHT + GAP) * rowIndex,
+                type: ImageType.Back
+            }
+        ];
     };
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, type: ImageType) => {

@@ -8,6 +8,13 @@ enum ImageType {
     Back = 'back',
 }
 
+const GAP = 0;
+
+const START_POSITION = {
+    x: 100,
+    y: 100,
+}
+
 const IDCardPrinterPage = () => {
     const [frontImage, setFrontImage] = useState<string | null>(null);
     const [backImage, setBackImage] = useState<string | null>(null);
@@ -52,20 +59,49 @@ const IDCardPrinterPage = () => {
                     // Position cards in a 5x2 grid (5 rows, 2 columns)
                     const positions = [
                         // Row 1
-                        { x: 200, y: 200, type: ImageType.Front },
-                        { x: 1268, y: 200, type: ImageType.Back },
+                        {
+                            x: START_POSITION.x,
+                            y: START_POSITION.y,
+                            type: ImageType.Front
+                        },
+                        {
+                            x: START_POSITION.x + CARD_WIDTH + GAP,
+                            y: START_POSITION.y,
+                            type: ImageType.Back
+                        },
                         // Row 2
-                        { x: 200, y: 888, type: ImageType.Front },
-                        { x: 1268, y: 888, type: ImageType.Back },
+                        {
+                            x: START_POSITION.x,
+                            y: START_POSITION.y + CARD_HEIGHT + GAP,
+                            type: ImageType.Front
+                        },
+                        {
+                            x: START_POSITION.x + CARD_WIDTH + GAP,
+                            y: START_POSITION.y + CARD_HEIGHT + GAP,
+                            type: ImageType.Back
+                        },
                         // Row 3
-                        { x: 200, y: 1576, type: ImageType.Front },
-                        { x: 1268, y: 1576, type: ImageType.Back },
+                        {
+                            x: START_POSITION.x,
+                            y: START_POSITION.y + CARD_HEIGHT * 2 + GAP * 2,
+                            type: ImageType.Front
+                        },
+                        {
+                            x: START_POSITION.x + CARD_WIDTH + GAP,
+                            y: START_POSITION.y + CARD_HEIGHT * 2 + GAP * 2,
+                            type: ImageType.Back
+                        },
                         // Row 4
-                        { x: 200, y: 2264, type: ImageType.Front },
-                        { x: 1268, y: 2264, type: ImageType.Back },
-                        // Row 5
-                        { x: 200, y: 2952, type: ImageType.Front },
-                        { x: 1268, y: 2952, type: ImageType.Back },
+                        {
+                            x: START_POSITION.x,
+                            y: START_POSITION.y + CARD_HEIGHT * 3 + GAP * 3,
+                            type: ImageType.Front
+                        },
+                        {
+                            x: START_POSITION.x + CARD_WIDTH + GAP,
+                            y: START_POSITION.y + CARD_HEIGHT * 3 + GAP * 3,
+                            type: ImageType.Back
+                        },
                     ];
 
                     // Draw all cards

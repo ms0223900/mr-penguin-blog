@@ -63,7 +63,7 @@ const ID_CARD_PRINTER_POST = SinglePostVO.makePost({
     id: `${STATIC_ROUTES.sideProjects}/id-card-printer`,
     title: '身分證影印產生器',
     subTitle: '一次列印多張證件照',
-    thumbnailUrl: "/assets/side-projects/id-card-printer.png"
+    thumbnailUrl: "/assets/side-projects/id-card-printer.jpg"
 }).value;
 
 const sideProjectPosts = [

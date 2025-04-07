@@ -59,6 +59,13 @@ const GENDER_REVEAL_POST = SinglePostVO.makePost({
     thumbnailUrl: "/assets/side-projects/gender-reveal.png"
 }).value;
 
+const ID_CARD_PRINTER_POST = SinglePostVO.makePost({
+    id: `${STATIC_ROUTES.sideProjects}/id-card-printer`,
+    title: '身分證影印產生器',
+    subTitle: '一次列印多張證件照',
+    thumbnailUrl: "/assets/side-projects/id-card-printer.png"
+}).value;
+
 const sideProjectPosts = [
     GENERATE_PASSWORD_POST,
     SHORTEN_URL_POST,
@@ -66,6 +73,7 @@ const sideProjectPosts = [
     ACCOUNTING_APP_POST_2,
     CURSOR_DEMO_POST,
     GENDER_REVEAL_POST,
+    ID_CARD_PRINTER_POST,
 ];
 
 export const getStaticProps: GetStaticProps<PostListViewProps> = async () => {

@@ -68,7 +68,7 @@ const QRCodeGeneratorPage = () => {
 
             // Create download link
             const link = document.createElement('a');
-            link.download = `qrcode.${format}`;
+            link.download = generateFileName(format);
             link.href = dataUrl;
             document.body.appendChild(link);
             link.click();
@@ -227,6 +227,13 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {}
     };
+};
+
+export const generateFileName = (format: 'png' | 'jpg'): string => {
+    const today = new Date();
+    const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, '/');
+    const formattedTime = today.toLocaleTimeString('zh-TW', { hour12: false }).slice(0, 5).replace(/:/g, '');
+    return `qrcode_${formattedDate}_${formattedTime}.${format}`;
 };
 
 export default QRCodeGeneratorPage; 

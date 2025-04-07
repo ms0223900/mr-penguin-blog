@@ -179,115 +179,119 @@ const IDCardPrinterPage = () => {
             </Head>
 
             <h1 className="text-3xl font-bold mb-8 text-center">身分證影印產生器</h1>
-            <p className="text-center mb-8 max-w-lg">
-                上傳身分證正面和背面照片，一次產生多張證件影印排版。點擊下載按鈕儲存圖片以供列印。
-            </p>
-
             <div className="flex flex-col md:flex-row gap-6 mb-8 w-full max-w-4xl">
-                {/* Front ID Card Upload */}
-                <div
-                    className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
-                    onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, ImageType.Front)}
-                    onClick={() => frontFileInputRef.current?.click()}
-                >
-                    <input
-                        type="file"
-                        ref={frontFileInputRef}
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleFileUpload(e, ImageType.Front)}
-                    />
+                <div>
+                    <p className="text-center mb-8 max-w-lg">
+                        上傳身分證正面和背面照片，一次產生多張證件影印排版。點擊下載按鈕儲存圖片以供列印。
+                    </p>
 
-                    {frontImage ? (
-                        <div className="relative w-full">
-                            <img
-                                src={frontImage}
-                                alt="身分證正面"
-                                className="w-full h-auto object-contain max-h-40"
+                    <div className="flex flex-col md:flex-row gap-6 mb-8 w-full max-w-4xl">
+                        {/* Front ID Card Upload */}
+                        <div
+                            className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+                            onDragOver={handleDragOver}
+                            onDrop={(e) => handleDrop(e, ImageType.Front)}
+                            onClick={() => frontFileInputRef.current?.click()}
+                        >
+                            <input
+                                type="file"
+                                ref={frontFileInputRef}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={(e) => handleFileUpload(e, ImageType.Front)}
                             />
-                            <p className="mt-2 text-center text-sm text-gray-600">已上傳正面</p>
+
+                            {frontImage ? (
+                                <div className="relative w-full">
+                                    <img
+                                        src={frontImage}
+                                        alt="身分證正面"
+                                        className="w-full h-auto object-contain max-h-40"
+                                    />
+                                    <p className="mt-2 text-center text-sm text-gray-600">已上傳正面</p>
+                                </div>
+                            ) : (
+                                <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                    <p className="text-gray-600 text-center">
+                                        點擊或拖曳上傳<br />身分證<span className="font-bold">正面</span>
+                                    </p>
+                                </>
+                            )}
                         </div>
-                    ) : (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p className="text-gray-600 text-center">
-                                點擊或拖曳上傳<br />身分證<span className="font-bold">正面</span>
-                            </p>
-                        </>
-                    )}
-                </div>
 
-                {/* Back ID Card Upload */}
-                <div
-                    className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
-                    onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, ImageType.Back)}
-                    onClick={() => backFileInputRef.current?.click()}
-                >
-                    <input
-                        type="file"
-                        ref={backFileInputRef}
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => handleFileUpload(e, ImageType.Back)}
-                    />
-
-                    {backImage ? (
-                        <div className="relative w-full">
-                            <img
-                                src={backImage}
-                                alt="身分證背面"
-                                className="w-full h-auto object-contain max-h-40"
+                        {/* Back ID Card Upload */}
+                        <div
+                            className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+                            onDragOver={handleDragOver}
+                            onDrop={(e) => handleDrop(e, ImageType.Back)}
+                            onClick={() => backFileInputRef.current?.click()}
+                        >
+                            <input
+                                type="file"
+                                ref={backFileInputRef}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={(e) => handleFileUpload(e, ImageType.Back)}
                             />
-                            <p className="mt-2 text-center text-sm text-gray-600">已上傳背面</p>
-                        </div>
-                    ) : (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p className="text-gray-600 text-center">
-                                點擊或拖曳上傳<br />身分證<span className="font-bold">背面</span>
-                            </p>
-                        </>
-                    )}
-                </div>
-            </div>
 
-            <div className="flex gap-4 mb-8">
-                <button
-                    onClick={handleDownload}
-                    disabled={!frontImage || !backImage}
-                    className={`py-3 px-6 rounded-lg text-white font-bold 
+                            {backImage ? (
+                                <div className="relative w-full">
+                                    <img
+                                        src={backImage}
+                                        alt="身分證背面"
+                                        className="w-full h-auto object-contain max-h-40"
+                                    />
+                                    <p className="mt-2 text-center text-sm text-gray-600">已上傳背面</p>
+                                </div>
+                            ) : (
+                                <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                    <p className="text-gray-600 text-center">
+                                        點擊或拖曳上傳<br />身分證<span className="font-bold">背面</span>
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div className="flex gap-4 mb-8">
+                        <button
+                            onClick={handleDownload}
+                            disabled={!frontImage || !backImage}
+                            className={`py-3 px-6 rounded-lg text-white font-bold 
           ${(!frontImage || !backImage)
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-blue-600 hover:bg-blue-700'}`}
-                >
-                    下載影印圖片
-                </button>
-                <button
-                    onClick={handleReset}
-                    className="py-3 px-6 rounded-lg text-white font-bold bg-red-600 hover:bg-red-700"
-                >
-                    重設
-                </button>
-            </div>
-
-            <div className="relative w-full max-w-full overflow-auto border border-gray-300 rounded-lg mb-8">
-                <div className="w-full bg-gray-100 p-2 text-sm text-gray-600 text-center">
-                    A4 預覽 (2480 x 3508 像素)
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-blue-600 hover:bg-blue-700'}`}
+                        >
+                            下載影印圖片
+                        </button>
+                        <button
+                            onClick={handleReset}
+                            className="py-3 px-6 rounded-lg text-white font-bold bg-red-600 hover:bg-red-700"
+                        >
+                            重設
+                        </button>
+                    </div>
                 </div>
-                <div className="p-2 bg-gray-50">
-                    <canvas
-                        ref={canvasRef}
-                        width={CANVAS_WIDTH}
-                        height={CANVAS_HEIGHT}
-                        className="w-full h-auto border border-gray-200 shadow-sm"
-                        style={{ maxWidth: '100%' }}
-                    />
+
+
+
+                <div className="relative w-[50%] overflow-auto border border-gray-300 rounded-lg mb-8">
+                    <div className="w-full bg-gray-100 p-2 text-sm text-gray-600 text-center">
+                        A4 預覽 (2480 x 3508 像素)
+                    </div>
+                    <div className="p-2 bg-gray-50">
+                        <canvas
+                            ref={canvasRef}
+                            width={CANVAS_WIDTH}
+                            height={CANVAS_HEIGHT}
+                            className="w-full h-auto border border-gray-200 shadow-sm"
+                        />
+                    </div>
                 </div>
             </div>
 

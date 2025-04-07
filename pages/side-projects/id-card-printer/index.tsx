@@ -3,9 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
 
-interface IDCardImage {
-    src: string;
-    type: 'front' | 'back';
+enum ImageType {
+    Front = 'front',
+    Back = 'back',
 }
 
 const IDCardPrinterPage = () => {
@@ -52,25 +52,25 @@ const IDCardPrinterPage = () => {
                     // Position cards in a 5x2 grid (5 rows, 2 columns)
                     const positions = [
                         // Row 1
-                        { x: 200, y: 200, type: 'front' },
-                        { x: 1268, y: 200, type: 'back' },
+                        { x: 200, y: 200, type: ImageType.Front },
+                        { x: 1268, y: 200, type: ImageType.Back },
                         // Row 2
-                        { x: 200, y: 888, type: 'front' },
-                        { x: 1268, y: 888, type: 'back' },
+                        { x: 200, y: 888, type: ImageType.Front },
+                        { x: 1268, y: 888, type: ImageType.Back },
                         // Row 3
-                        { x: 200, y: 1576, type: 'front' },
-                        { x: 1268, y: 1576, type: 'back' },
+                        { x: 200, y: 1576, type: ImageType.Front },
+                        { x: 1268, y: 1576, type: ImageType.Back },
                         // Row 4
-                        { x: 200, y: 2264, type: 'front' },
-                        { x: 1268, y: 2264, type: 'back' },
+                        { x: 200, y: 2264, type: ImageType.Front },
+                        { x: 1268, y: 2264, type: ImageType.Back },
                         // Row 5
-                        { x: 200, y: 2952, type: 'front' },
-                        { x: 1268, y: 2952, type: 'back' },
+                        { x: 200, y: 2952, type: ImageType.Front },
+                        { x: 1268, y: 2952, type: ImageType.Back },
                     ];
 
                     // Draw all cards
                     positions.forEach(pos => {
-                        if (pos.type === 'front') {
+                        if (pos.type === ImageType.Front) {
                             ctx.drawImage(frontImg, pos.x, pos.y, CARD_WIDTH, CARD_HEIGHT);
                         } else {
                             ctx.drawImage(backImg, pos.x, pos.y, CARD_WIDTH, CARD_HEIGHT);
@@ -86,14 +86,14 @@ const IDCardPrinterPage = () => {
         }
     };
 
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, type: 'front' | 'back') => {
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, type: ImageType) => {
         const file = event.target.files?.[0];
         if (!file) return;
 
         const reader = new FileReader();
         reader.onload = (e) => {
             const imgSrc = e.target?.result as string;
-            if (type === 'front') {
+            if (type === ImageType.Front) {
                 setFrontImage(imgSrc);
             } else {
                 setBackImage(imgSrc);
@@ -106,7 +106,7 @@ const IDCardPrinterPage = () => {
         event.preventDefault();
     };
 
-    const handleDrop = (event: React.DragEvent<HTMLDivElement>, type: 'front' | 'back') => {
+    const handleDrop = (event: React.DragEvent<HTMLDivElement>, type: ImageType) => {
         event.preventDefault();
 
         const file = event.dataTransfer.files[0];
@@ -115,7 +115,7 @@ const IDCardPrinterPage = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const imgSrc = e.target?.result as string;
-            if (type === 'front') {
+            if (type === ImageType.Front) {
                 setFrontImage(imgSrc);
             } else {
                 setBackImage(imgSrc);
@@ -176,7 +176,7 @@ const IDCardPrinterPage = () => {
                 <div
                     className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
                     onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, 'front')}
+                    onDrop={(e) => handleDrop(e, ImageType.Front)}
                     onClick={() => frontFileInputRef.current?.click()}
                 >
                     <input
@@ -184,7 +184,7 @@ const IDCardPrinterPage = () => {
                         ref={frontFileInputRef}
                         className="hidden"
                         accept="image/*"
-                        onChange={(e) => handleFileUpload(e, 'front')}
+                        onChange={(e) => handleFileUpload(e, ImageType.Front)}
                     />
 
                     {frontImage ? (
@@ -212,7 +212,7 @@ const IDCardPrinterPage = () => {
                 <div
                     className="flex-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
                     onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, 'back')}
+                    onDrop={(e) => handleDrop(e, ImageType.Back)}
                     onClick={() => backFileInputRef.current?.click()}
                 >
                     <input
@@ -220,7 +220,7 @@ const IDCardPrinterPage = () => {
                         ref={backFileInputRef}
                         className="hidden"
                         accept="image/*"
-                        onChange={(e) => handleFileUpload(e, 'back')}
+                        onChange={(e) => handleFileUpload(e, ImageType.Back)}
                     />
 
                     {backImage ? (

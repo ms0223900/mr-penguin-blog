@@ -21,6 +21,7 @@ const IDCardPrinterPage = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const frontFileInputRef = useRef<HTMLInputElement>(null);
     const backFileInputRef = useRef<HTMLInputElement>(null);
+    const printFrameRef = useRef<HTMLIFrameElement>(null);
 
     // Canvas dimensions (A4 size)
     const CANVAS_WIDTH = 2480;
@@ -147,6 +148,47 @@ const IDCardPrinterPage = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    };
+
+    const handlePrint = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        // Create a new window with the canvas image
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            alert('請允許彈出視窗以使用列印功能');
+            return;
+        }
+
+        // Create HTML content for the print window
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>身分證影印</title>
+                    <style>
+                        body { margin: 0; padding: 0; display: flex; justify-content: center; }
+                        img { max-width: 100%; height: auto; }
+                        @media print {
+                            body { margin: 0; padding: 0; }
+                            img { width: 100%; height: auto; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <img src="${canvas.toDataURL('image/png')}" alt="身分證影印" />
+                    <script>
+                        window.onload = function() {
+                            setTimeout(function() {
+                                window.print();
+                                window.close();
+                            }, 200);
+                        };
+                    </script>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
     };
 
     const handleReset = () => {
@@ -287,6 +329,16 @@ const IDCardPrinterPage = () => {
                     下載影印圖片
                 </button>
                 <button
+                    onClick={handlePrint}
+                    disabled={!frontImage || !backImage}
+                    className={`py-3 px-6 rounded-lg text-white font-bold 
+                    ${(!frontImage || !backImage)
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-green-600 hover:bg-green-700'}`}
+                >
+                    直接影印
+                </button>
+                <button
                     onClick={handleReset}
                     className="py-3 px-6 rounded-lg text-white font-bold bg-red-600 hover:bg-red-700"
                 >
@@ -298,6 +350,9 @@ const IDCardPrinterPage = () => {
                 <p>上傳的照片僅在您的瀏覽器中處理，不會上傳至伺服器。</p>
                 <p className="mt-2">建議使用高解析度的身分證照片以獲得最佳列印效果。</p>
             </div>
+
+            {/* Hidden iframe for printing */}
+            <iframe ref={printFrameRef} style={{ display: 'none' }} />
         </div>
     );
 };

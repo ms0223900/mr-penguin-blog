@@ -87,7 +87,7 @@ const QRCodeGeneratorPage = () => {
 
             <h1 className="text-3xl font-bold mb-8 text-center">QR Code 產生器</h1>
 
-            <div className="flex flex-col md:flex-row gap-8 mb-8 w-full max-w-4xl">
+            <div className="flex flex-col xl:flex-row gap-8 mb-8 w-full max-w-[960px]">
                 <div className="flex-1">
                     <div className="mb-6">
                         <label htmlFor="url" className="block mb-2 font-medium">網址</label>
@@ -192,7 +192,7 @@ const QRCodeGeneratorPage = () => {
                     <div className="mb-4 text-lg font-medium">預覽</div>
                     <div
                         ref={qrCodeRef}
-                        className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm"
+                        className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm w-full max-w-[300px]"
                         style={{
                             backgroundColor: bgTransparent && format === 'png' ? 'transparent' : 'white'
                         }}
@@ -203,6 +203,7 @@ const QRCodeGeneratorPage = () => {
                                 size={size}
                                 level="H"
                                 marginSize={margin}
+                                className='w-full h-full'
                                 bgColor={bgTransparent && format === 'png' ? "transparent" : "#FFFFFF"}
                             />
                         ) : (

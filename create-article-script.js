@@ -1,4 +1,4 @@
-const { createArticle } = require('./blog/utils/article-graphql.js');
+const { createArticle } = require('./content-pipeline/utils/article-graphql.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -60,7 +60,7 @@ function showUsage() {
 
 範例:
   node create-article-script.js article.json
-  node create-article-script.js --verbose blog/article.json
+  node create-article-script.js --verbose content-pipeline/article.json
   node create-article-script.js -v ./data/my-article.json
 `);
 }

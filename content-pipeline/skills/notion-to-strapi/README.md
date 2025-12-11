@@ -17,7 +17,7 @@
 或使用 `@` 引用技能：
 
 ```
-請使用 @blog/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
+請使用 @content-pipeline/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
 [Notion URL]
 ```
 
@@ -82,7 +82,7 @@ Claude 會自動執行以下步驟：
 
 #### 步驟 2：格式化文章
 
-根據 `blog/docs/BLOG_PRD.md` 規格書，技能會自動：
+根據 `content-pipeline/docs/BLOG_PRD.md` 規格書，技能會自動：
 
 - **生成 Article ID**：使用小寫字母和連字符，包含關鍵字，長度控制在 50 字以內
   - 範例：`cursor-agent-token-consumption-issue`
@@ -103,7 +103,7 @@ Claude 會自動執行以下步驟：
 
 格式化後的文章會儲存為 JSON 檔案，路徑為：
 ```
-blog/docs/{articleId}.json
+content-pipeline/docs/{articleId}.json
 ```
 
 JSON 檔案格式範例：
@@ -129,7 +129,7 @@ JSON 檔案格式範例：
 
 技能會執行以下命令來建立文章：
 ```bash
-node create-article-script.js blog/docs/{articleId}.json
+node create-article-script.js content-pipeline/docs/{articleId}.json
 ```
 
 這個腳本會：
@@ -180,7 +180,7 @@ curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_AP3UL4xFT0PGsMZ2U
 技能相關的檔案結構如下：
 
 ```
-blog/
+content-pipeline/
 ├── skills/
 │   └── notion-to-strapi/
 │       ├── SKILL.md          # 技能說明文件
@@ -200,7 +200,7 @@ blog/
 1. **內容準備**：在 Notion 中完成文章草稿，確保內容完整
 2. **標題優化**：使用清晰、描述性的標題，有助於 SEO
 3. **內容結構**：確保文章有清晰的結構（引言、主體、結論）
-4. **定期備份**：生成的 JSON 檔案會保留在 `blog/docs/` 目錄，可作為備份
+4. **定期備份**：生成的 JSON 檔案會保留在 `content-pipeline/docs/` 目錄，可作為備份
 5. **監控成本**：注意 Token 使用量，特別是使用 Agent 模式時
 
 ## 常見問題

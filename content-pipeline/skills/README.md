@@ -43,7 +43,7 @@ skill-name/
 
 需要開發新技能時，請遵循以下步驟：
 
-1. **建立技能資料夾**：`blog/skills/your-skill-name`
+1. **建立技能資料夾**：`content-pipeline/skills/your-skill-name`
 2. **建立 SKILL.md**：技能的主要說明文件
 3. **建立其他文件**：README.md、workflow.md、examples.md（可選）
 

@@ -29,7 +29,7 @@
          ▼
 ┌─────────────────┐
 │ 生成 JSON 檔案 │
-│ blog/docs/      │
+│ content-pipeline/docs/      │
 └────────┬────────┘
          │
          ▼
@@ -60,7 +60,7 @@
 - 確保文章結構完整（引言、主體、結論）
 
 ### 4. 生成 JSON 檔案
-建立符合 Strapi 格式的 JSON 檔案，儲存於 `blog/docs/{articleId}.json`。
+建立符合 Strapi 格式的 JSON 檔案，儲存於 `content-pipeline/docs/{articleId}.json`。
 
 ### 5. 建立 Strapi 文章
 透過 GraphQL API 將文章建立到 Strapi CMS。

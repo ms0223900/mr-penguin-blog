@@ -13,7 +13,7 @@
 或者使用 `@` 引用：
 
 ```
-請使用 @blog/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
+請使用 @content-pipeline/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
 https://www.notion.so/penguin-cho/你的文章標題-xxx
 ```
 
@@ -35,9 +35,9 @@ AI 會自動完成所有步驟！
 - [ ] Strapi 環境變數已設定（`.env` 檔案）
 - [ ] 專案依賴已安裝（`npm install`）
 - [ ] 相關檔案存在：
-  - [ ] `blog/docs/BLOG_PRD.md`
+  - [ ] `content-pipeline/docs/BLOG_PRD.md`
   - [ ] `create-article-script.js`
-  - [ ] `blog/utils/article-graphql.js`
+  - [ ] `content-pipeline/utils/article-graphql.js`
   - [ ] `.cursor/commands/notion-to-strapi.md`（Cursor Command）
 
 ## 在 Cursor 中的使用方式
@@ -55,7 +55,7 @@ AI 會自動完成所有步驟！
 在 Cursor 的提示框中，使用 `@` 符號引用技能：
 
 ```
-請使用 @blog/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
+請使用 @content-pipeline/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
 https://www.notion.so/.../xxx
 ```
 
@@ -67,7 +67,7 @@ https://www.notion.so/.../xxx
 請幫我將這個 Notion 文章轉換為 Strapi 文章：
 https://www.notion.so/.../xxx
 
-請參考 @blog/skills/notion-to-strapi 的技能說明來執行。
+請參考 @content-pipeline/skills/notion-to-strapi 的技能說明來執行。
 ```
 
 ## 常見問題快速解答
@@ -87,7 +87,7 @@ A: Claude 會顯示錯誤訊息，並提供除錯建議。檢查環境變數和�
 **Q: 如何在 Cursor 中使用？**  
 A: 有三種方式：
 1. 使用 `/notion-to-strapi` 命令
-2. 使用 `@blog/skills/notion-to-strapi` 引用
+2. 使用 `@content-pipeline/skills/notion-to-strapi` 引用
 3. 直接描述需求並引用技能
 
 ## 進階使用
@@ -103,7 +103,7 @@ A: 有三種方式：
 ### 批次處理
 
 ```
-請使用 @blog/skills/notion-to-strapi 將以下 Notion 文章都轉換為 Strapi 文章：
+請使用 @content-pipeline/skills/notion-to-strapi 將以下 Notion 文章都轉換為 Strapi 文章：
 1. https://www.notion.so/.../文章1
 2. https://www.notion.so/.../文章2
 3. https://www.notion.so/.../文章3

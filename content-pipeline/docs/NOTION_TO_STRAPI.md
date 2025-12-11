@@ -11,9 +11,9 @@ notion 文章經過 @BLOG_PRD 規格書的整理後，可以透過 @article-grap
    - 使用 `@scripts/download-notion-images.mjs` 腳本下載圖片到 `public/assets/` 目錄
    - 圖片檔名格式：`{原檔名}-{hash}.{副檔名}`（例如：`screenshot-a1b2c3d4.png`）
    - 腳本會生成 `public/assets/filename-mapping.json` 記錄原始檔名與轉存檔名的對應關係
-3. 使用 @BLOG_PRD 規格書的整理 Notion 文章為適合 Strapi 文章的資料格式，並且於 blog/docs 目錄下存成 {articleId}.json 檔案作為下一步的輸入資料。
+3. 使用 @BLOG_PRD 規格書的整理 Notion 文章為適合 Strapi 文章的資料格式，並且於 content-pipeline/docs 目錄下存成 {articleId}.json 檔案作為下一步的輸入資料。
    - **將 content 中的 Notion 圖片 URL 替換為本地圖片路徑**：使用 `/assets/{新檔名}` 格式
-json 檔案範例 `@blog/formatted-articles/sample/sample.json`：
+json 檔案範例 `@content-pipeline/formatted-articles/sample/sample.json`：
 ```json
 {
   "title": "{notion_page_title}",

@@ -33,50 +33,17 @@
 
 ## 使用方式
 
-### 在 Cursor 中使用
+在 Cursor 中提供 Notion 頁面 URL，技能會自動完成整個轉換流程。
 
-#### 方法 1：使用 Cursor Command
+**快速開始**：參考 [QUICK_START.md](QUICK_START.md) 獲取詳細的使用說明
 
-在 Cursor 中輸入命令：
-
-```
-/notion-to-strapi https://www.notion.so/penguin-cho/文章標題-xxx
-```
-
-或使用完整命令：
-
-```
-請使用 @blog/skills/notion-to-strapi 技能，將這個 Notion 文章轉換為 Strapi 文章：
-https://www.notion.so/penguin-cho/Cursor-Agent-Token-2c0d5e29c68d8181b94eea22a921d6b8
-```
-
-#### 方法 2：直接引用技能
-
-在 Cursor 的提示框中，使用 `@` 符號引用技能：
-
-```
-請使用 @blog/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
-[Notion URL]
-```
-
-### 基本使用流程
-
-當你提供一個 Notion 頁面 URL 時，Claude 會：
-
-1. 使用 Notion MCP 工具獲取頁面內容
-2. 執行 `scripts/download-notion-images.mjs` 下載文章中的圖片到 `public/assets/` 目錄
-3. 根據 BLOG_PRD 規格書整理文章格式
-4. 將文章內容中的圖片 URL 替換為本地路徑
-5. 生成符合 Strapi 格式的 JSON 檔案
-6. 執行建立腳本將文章同步到 Strapi
-7. 觸發 Webhook 重新生成網站
-
-### 範例對話
-
-```
-請幫我將這個 Notion 文章轉換為 Strapi 文章：
-https://www.notion.so/penguin-cho/Cursor-Agent-Token-2c0d5e29c68d8181b94eea22a921d6b8
-```
+**基本流程**：
+1. 獲取 Notion 頁面內容
+2. 下載圖片到本地
+3. SEO 格式化文章
+4. 生成 JSON 檔案
+5. 建立 Strapi 文章
+6. 觸發網站重新生成
 
 ## 輸出格式
 

@@ -17,7 +17,7 @@
 https://www.notion.so/penguin-cho/你的文章標題-xxx
 ```
 
-Claude 會自動完成所有步驟！
+AI 會自動完成所有步驟！
 
 ## 完整流程（自動執行）
 
@@ -40,26 +40,34 @@ Claude 會自動完成所有步驟！
   - [ ] `blog/utils/article-graphql.js`
   - [ ] `.cursor/commands/notion-to-strapi.md`（Cursor Command）
 
-## 在 Cursor 中的三種使用方式
+## 在 Cursor 中的使用方式
 
-### 方式 1：使用 Command（最推薦）
+### 方法 1：使用 Command（推薦）
+
+在 Cursor 中按 `Cmd+L` (Mac) 或 `Ctrl+L` (Windows) 開啟命令面板，輸入：
 
 ```
 /notion-to-strapi https://www.notion.so/.../xxx
 ```
 
-### 方式 2：使用 @ 引用
+### 方法 2：使用 @ 引用
+
+在 Cursor 的提示框中，使用 `@` 符號引用技能：
 
 ```
 請使用 @blog/skills/notion-to-strapi 將這個 Notion 文章轉換為 Strapi 文章：
 https://www.notion.so/.../xxx
 ```
 
-### 方式 3：直接描述
+### 方法 3：直接描述需求
+
+直接告訴 Claude 你想要轉換 Notion 文章：
 
 ```
-請幫我將這個 Notion 文章轉換為 Strapi 文章，參考 @blog/skills/notion-to-strapi：
+請幫我將這個 Notion 文章轉換為 Strapi 文章：
 https://www.notion.so/.../xxx
+
+請參考 @blog/skills/notion-to-strapi 的技能說明來執行。
 ```
 
 ## 常見問題快速解答
@@ -104,7 +112,6 @@ A: 有三種方式：
 ## 需要更多幫助？
 
 - 📖 [完整使用教學](README.md)
-- 🖥️ [Cursor 使用指南](CURSOR_USAGE.md)
 - 🔄 [工作流程說明](workflow.md)
 - 💡 [使用範例](examples.md)
 - 📋 [技能說明文件](SKILL.md)

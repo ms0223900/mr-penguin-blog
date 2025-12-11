@@ -53,13 +53,13 @@ function extractImageUrls(content) {
 
     // 如果沒有檔名或檔名不包含副檔名，嘗試從 URL 參數中獲取
     if (!originalFilename || !originalFilename.includes('.')) {
-      // 嘗試從 URL 中提取檔名
-      const filenameMatch = imageUrl.match(/([^\/\?]+\.(png|jpg|jpeg|gif|webp|svg))/i);
+      // 嘗試從 URL 中提取檔名（支援更多格式）
+      const filenameMatch = imageUrl.match(/([^\/\?]+\.(png|jpg|jpeg|gif|webp|svg|heic|heif))/i);
       if (filenameMatch) {
         originalFilename = filenameMatch[1];
       } else {
         // 生成一個基於時間戳的檔名
-        const extension = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i)?.[1] || 'png';
+        const extension = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg|heic|heif)/i)?.[1] || 'png';
         originalFilename = `notion-image-${Date.now()}-${images.length + 1}.${extension}`;
       }
     }
@@ -67,11 +67,11 @@ function extractImageUrls(content) {
     // 清理檔名，移除查詢參數等
     originalFilename = originalFilename.split('?')[0];
 
-    // 提取副檔名
-    const extension = originalFilename.match(/\.(png|jpg|jpeg|gif|webp|svg)$/i)?.[1]?.toLowerCase() || 'png';
+    // 提取副檔名（支援更多格式）
+    const extension = originalFilename.match(/\.(png|jpg|jpeg|gif|webp|svg|heic|heif)$/i)?.[1]?.toLowerCase() || 'png';
 
     // 移除副檔名，取得檔名主體
-    const nameWithoutExt = originalFilename.replace(/\.(png|jpg|jpeg|gif|webp|svg)$/i, '');
+    const nameWithoutExt = originalFilename.replace(/\.(png|jpg|jpeg|gif|webp|svg|heic|heif)$/i, '');
 
     // 生成 hash
     const hash = generateHash(imageUrl);
@@ -198,6 +198,18 @@ async function verifyDownload(filePath) {
 
     // 檢查是否為有效的圖片文件（簡單檢查文件頭）
     const buffer = fs.readFileSync(filePath, { start: 0, end: 12 });
+    const fileExtension = path.extname(filePath).toLowerCase();
+
+    // HEIC/HEIF 格式需要特殊處理，先檢查副檔名
+    if (fileExtension === '.heic' || fileExtension === '.heif') {
+      // HEIC 格式：檢查文件大小，如果大於 0 就認為有效
+      // 因為 HEIC 格式的驗證需要特殊庫，這裡只做基本檢查
+      return {
+        valid: true,
+        size: stats.size,
+      };
+    }
+
     const isValidImage =
       buffer[0] === 0xFF && buffer[1] === 0xD8 && buffer[2] === 0xFF || // JPEG
       buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4E && buffer[3] === 0x47 || // PNG

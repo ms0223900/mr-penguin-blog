@@ -13,6 +13,7 @@
  * node scripts/download-notion-images.mjs --file "path/to/content.md"
  */
 
+import crypto from 'crypto';
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
@@ -25,9 +26,18 @@ const PROJECT_ROOT = path.join(__dirname, '..');
 const DEFAULT_OUTPUT_DIR = path.join(PROJECT_ROOT, 'public', 'assets');
 
 /**
+ * 從 URL 生成 hash
+ * @param {string} url - 圖片 URL
+ * @returns {string} hash 字串（前 8 個字元）
+ */
+function generateHash(url) {
+  return crypto.createHash('md5').update(url).digest('hex').substring(0, 8);
+}
+
+/**
  * 從 Markdown 內容中提取所有圖片 URL
  * @param {string} content - Notion Markdown 內容
- * @returns {Array<{url: string, filename: string}>} 圖片資訊陣列
+ * @returns {Array<{url: string, originalFilename: string, newFilename: string}>} 圖片資訊陣列
  */
 function extractImageUrls(content) {
   const imageRegex = /<image\s+source=["']([^"']+)["'][^>]*>/gi;
@@ -39,27 +49,40 @@ function extractImageUrls(content) {
     // 從 URL 中提取檔名，或生成一個檔名
     const urlObj = new URL(imageUrl);
     const pathname = urlObj.pathname;
-    let filename = path.basename(pathname);
+    let originalFilename = path.basename(pathname);
 
     // 如果沒有檔名或檔名不包含副檔名，嘗試從 URL 參數中獲取
-    if (!filename || !filename.includes('.')) {
+    if (!originalFilename || !originalFilename.includes('.')) {
       // 嘗試從 URL 中提取檔名
       const filenameMatch = imageUrl.match(/([^\/\?]+\.(png|jpg|jpeg|gif|webp|svg))/i);
       if (filenameMatch) {
-        filename = filenameMatch[1];
+        originalFilename = filenameMatch[1];
       } else {
         // 生成一個基於時間戳的檔名
         const extension = imageUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)/i)?.[1] || 'png';
-        filename = `notion-image-${Date.now()}-${images.length + 1}.${extension}`;
+        originalFilename = `notion-image-${Date.now()}-${images.length + 1}.${extension}`;
       }
     }
 
     // 清理檔名，移除查詢參數等
-    filename = filename.split('?')[0];
+    originalFilename = originalFilename.split('?')[0];
+
+    // 提取副檔名
+    const extension = originalFilename.match(/\.(png|jpg|jpeg|gif|webp|svg)$/i)?.[1]?.toLowerCase() || 'png';
+
+    // 移除副檔名，取得檔名主體
+    const nameWithoutExt = originalFilename.replace(/\.(png|jpg|jpeg|gif|webp|svg)$/i, '');
+
+    // 生成 hash
+    const hash = generateHash(imageUrl);
+
+    // 生成新檔名：{原檔名}-<hash>.{副檔名}
+    const newFilename = `${nameWithoutExt}-${hash}.${extension}`;
 
     images.push({
       url: imageUrl,
-      filename: filename,
+      originalFilename: originalFilename,
+      newFilename: newFilename,
     });
   }
 
@@ -323,11 +346,14 @@ Notion 圖片下載自動化腳本
 
   // 下載圖片
   const results = [];
+  const filenameMapping = []; // 儲存原始檔名和轉存檔名的對應關係
+
   for (let i = 0; i < images.length; i++) {
     const image = images[i];
-    const outputPath = path.join(outputDir, image.filename);
+    const outputPath = path.join(outputDir, image.newFilename);
 
-    console.log(`[${i + 1}/${images.length}] 📥 下載: ${image.filename}`);
+    console.log(`[${i + 1}/${images.length}] 📥 下載: ${image.newFilename}`);
+    console.log(`    原始檔名: ${image.originalFilename}`);
     console.log(`    URL: ${image.url.substring(0, 80)}...`);
 
     // 檢查文件是否已存在
@@ -335,10 +361,16 @@ Notion 圖片下載自動化腳本
       console.log(`    ⚠️  文件已存在，跳過下載`);
       const stats = fs.statSync(outputPath);
       results.push({
-        filename: image.filename,
+        originalFilename: image.originalFilename,
+        newFilename: image.newFilename,
         success: true,
         size: stats.size,
         skipped: true,
+      });
+      filenameMapping.push({
+        original: image.originalFilename,
+        new: image.newFilename,
+        url: image.url,
       });
       continue;
     }
@@ -356,15 +388,22 @@ Notion 圖片下載自動化腳本
       if (verification.valid) {
         console.log(`    ✅ 驗證通過 (${formatFileSize(verification.size)})`);
         results.push({
-          filename: image.filename,
+          originalFilename: image.originalFilename,
+          newFilename: image.newFilename,
           success: true,
           size: verification.size,
           verified: true,
         });
+        filenameMapping.push({
+          original: image.originalFilename,
+          new: image.newFilename,
+          url: image.url,
+        });
       } else {
         console.log(`    ❌ 驗證失敗: ${verification.error}`);
         results.push({
-          filename: image.filename,
+          originalFilename: image.originalFilename,
+          newFilename: image.newFilename,
           success: false,
           size: verification.size,
           verified: false,
@@ -374,7 +413,8 @@ Notion 圖片下載自動化腳本
     } else {
       console.log(`    ❌ 下載失敗: ${downloadResult.error}`);
       results.push({
-        filename: image.filename,
+        originalFilename: image.originalFilename,
+        newFilename: image.newFilename,
         success: false,
         error: downloadResult.error,
       });
@@ -408,8 +448,29 @@ Notion 圖片下載自動化腳本
     results
       .filter(r => !r.success || r.verified === false)
       .forEach(r => {
-        console.log(`   - ${r.filename}: ${r.error || '驗證失敗'}`);
+        console.log(`   - ${r.newFilename || r.originalFilename}: ${r.error || '驗證失敗'}`);
       });
+  }
+
+  // 輸出檔名匹配表
+  if (filenameMapping.length > 0) {
+    console.log('\n' + '='.repeat(60));
+    console.log('📋 檔名匹配表（Notion 原始檔名 → 轉存檔名）');
+    console.log('='.repeat(60));
+    filenameMapping.forEach((mapping, index) => {
+      console.log(`${index + 1}. ${mapping.original} → ${mapping.new}`);
+    });
+    console.log('='.repeat(60));
+
+    // 同時輸出 JSON 格式的匹配表（方便後續處理）
+    const mappingJsonPath = path.join(outputDir, 'filename-mapping.json');
+    const mappingJson = {
+      generatedAt: new Date().toISOString(),
+      outputDir: outputDir,
+      mappings: filenameMapping,
+    };
+    fs.writeFileSync(mappingJsonPath, JSON.stringify(mappingJson, null, 2), 'utf-8');
+    console.log(`\n💾 匹配表已保存至: ${mappingJsonPath}`);
   }
 
   console.log('\n' + '='.repeat(60));

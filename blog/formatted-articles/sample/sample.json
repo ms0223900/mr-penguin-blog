@@ -1,0 +1,8 @@
+{
+  "title": "Sample Title",
+  "subTitle": "Sample SubTitle",
+  "content": "Sample Content",
+  "description": "Sample Description",
+  "articleId": "sample-article-id",
+  "publishedAt": "${new Date().toISOString()}"
+}

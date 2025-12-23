@@ -56,4 +56,4 @@ skill-name/
 
 ## 相關資源
 
-- [BLOG_PRD 規格書](../docs/BLOG_PRD.md)
+- [BLOG_PRD 規格書](../docs/FORMAT_NOTE_TO_BLOG_PRD.md)

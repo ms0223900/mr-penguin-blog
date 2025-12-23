@@ -35,7 +35,7 @@ AI 會自動完成所有步驟！
 - [ ] Strapi 環境變數已設定（`.env` 檔案）
 - [ ] 專案依賴已安裝（`npm install`）
 - [ ] 相關檔案存在：
-  - [ ] `content-pipeline/docs/BLOG_PRD.md`
+  - [ ] `content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md`
   - [ ] `create-article-script.js`
   - [ ] `content-pipeline/utils/article-graphql.js`
   - [ ] `.cursor/commands/notion-to-strapi.md`（Cursor Command）

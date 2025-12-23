@@ -27,7 +27,7 @@
 2. **Strapi 環境**：需要 Strapi 的 GraphQL API 端點和認證 Token
 3. **環境變數**：確保 `.env` 檔案中包含必要的 Strapi 設定
 4. **專案結構**：確保專案中包含以下檔案：
-   - `content-pipeline/docs/BLOG_PRD.md` - 文章格式規格書
+   - `content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md` - 文章格式規格書
    - `create-article-script.js` - 文章建立腳本
    - `content-pipeline/utils/article-graphql.js` - GraphQL API 工具
 
@@ -63,7 +63,7 @@
 
 ## 相關資源
 
-- **規格書**：`content-pipeline/docs/BLOG_PRD.md` - 定義文章格式標準
+- **規格書**：`content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md` - 定義文章格式標準
 - **流程文件**：`content-pipeline/docs/NOTION_TO_STRAPI.md` - 詳細的轉換流程說明
 - **範例檔案**：`content-pipeline/formatted-articles/sample/sample.json` - JSON 格式範例
 

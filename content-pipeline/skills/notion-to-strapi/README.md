@@ -82,7 +82,7 @@ Claude 會自動執行以下步驟：
 
 #### 步驟 2：格式化文章
 
-根據 `content-pipeline/docs/BLOG_PRD.md` 規格書，技能會自動：
+根據 `content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md` 規格書，技能會自動：
 
 - **生成 Article ID**：使用小寫字母和連字符，包含關鍵字，長度控制在 50 字以內
   - 範例：`cursor-agent-token-consumption-issue`
@@ -186,7 +186,7 @@ content-pipeline/
 │       ├── SKILL.md          # 技能說明文件
 │       └── README.md          # 使用教學（本檔案）
 ├── docs/
-│   ├── BLOG_PRD.md           # 文章格式規格書
+│   ├── FORMAT_NOTE_TO_BLOG_PRD.md           # 文章格式規格書
 │   └── NOTION_TO_STRAPI.md   # 轉換流程說明
 ├── formatted-articles/
 │   └── sample/
@@ -250,5 +250,5 @@ A: 文章 ID 會根據標題自動生成，確保 SEO 最佳化。如果需要�
 ## 參考資料
 
 - [Claude Skills 官方文件](https://claude.com/blog/skills)
-- [BLOG_PRD 規格書](../docs/BLOG_PRD.md)
+- [BLOG_PRD 規格書](../docs/FORMAT_NOTE_TO_BLOG_PRD.md)
 - [NOTION_TO_STRAPI 流程說明](../docs/NOTION_TO_STRAPI.md)

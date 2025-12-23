@@ -24,7 +24,7 @@ https://www.notion.so/penguin-cho/文章標題-2c0d5e29c68d8181b94eea22a921d6b8
    - 提取文章中的所有圖片 URL
    - 使用 `scripts/download-notion-images.mjs` 下載圖片到 `public/assets/` 目錄
    - 圖片檔名格式：`{原檔名}-{hash}.{副檔名}`
-3. 根據 @content-pipeline/docs/BLOG_PRD.md 規格書整理文章格式
+3. 根據 @content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md 規格書整理文章格式
    - 將文章內容中的 Notion 圖片 URL 替換為本地路徑 `/assets/{新檔名}`
 4. 生成符合 Strapi 格式的 JSON 檔案（儲存在 `content-pipeline/docs/{articleId}.json`）
 5. 執行 `create-article-script.js` 建立 Strapi 文章
@@ -34,7 +34,7 @@ https://www.notion.so/penguin-cho/文章標題-2c0d5e29c68d8181b94eea22a921d6b8
 
 - Notion MCP 已設定並可正常使用
 - Strapi 環境變數已設定（`.env` 檔案）
-- 相關檔案存在：`content-pipeline/docs/BLOG_PRD.md`、`create-article-script.js`、`content-pipeline/utils/article-graphql.js`
+- 相關檔案存在：`content-pipeline/docs/FORMAT_NOTE_TO_BLOG_PRD.md`、`create-article-script.js`、`content-pipeline/utils/article-graphql.js`
 
 ## 相關文件
 

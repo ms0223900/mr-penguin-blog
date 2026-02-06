@@ -7,11 +7,14 @@
  * If STRAPI_ENDPOINT is not set, falls back to config.API + '/graphql'.
  */
 
+import dotenv from 'dotenv';
 import fs from 'fs-extra';
 import { GraphQLClient } from 'graphql-request';
 import path from 'path';
 import slugify from 'slugify';
 import { GET_ALL_ARTICLES } from './query';
+
+dotenv.config();
 
 /** Set STRAPI_ENDPOINT or default to local Strapi. */
 const STRAPI_ENDPOINT =

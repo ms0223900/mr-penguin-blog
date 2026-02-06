@@ -2,7 +2,7 @@ import { gql } from 'graphql-request';
 
 export const GET_ALL_ARTICLES = gql`
   query GET_ALL_ARTICLES {
-    articles(pagination: { limit: 1000 }) {
+    articles(pagination: { limit: -1 }) {
       data {
         id
         attributes {

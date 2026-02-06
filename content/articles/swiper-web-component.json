@@ -1,0 +1,20 @@
+{
+  "id": 133,
+  "articleId": "swiper-web-component",
+  "title": "【JavaScript】【Swiper】Swiper Web Component (with TypeScript, React)",
+  "subTitle": "在 React 怎麼放 Swiper 的 web component?",
+  "description": null,
+  "publishedAt": "2024-02-01T12:02:07.218Z",
+  "thumbnailUrl": "https://imgur.com/71JBnqJ.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "cannot-access-webpack-default-export",
+      "title": "解決 react markdown套用 React Syntax Highlighter 出現 Cannot access '__WEBPACK_DEFAULT_EXPORT__' ... 的問題",
+      "subTitle": "解決惱人的react-syntax-highlighter套件使用問題"
+    }
+  ],
+  "content": "### 重點\n\n- 官方文件提到，會推薦用 Web component 的形式來使用 Swiper，可能是開發者覺得維護各種框架的 Library 太累了，所以「回歸初衷」，推廣原生 Web component 開發的 Swiper 吧。\n\n- 直接用是沒什麼問題，但若使用在 React 中，組件那邊的型別會報錯，所以得自己「宣告」型別。像是以下這樣\n    \n    ```tsx\n    declare module \"react/jsx-runtime\" {\n      namespace JSX {\n        interface IntrinsicElements {\n          \"swiper-container\": React.HTMLAttributes<HTMLDivElement> & {\n            \"slides-per-view\": string;\n            //...\n          };\n          \"swiper-slide\": React.HTMLAttributes<HTMLDivElement>;\n        }\n      }\n    }\n    \n    //...\n    ```\n    \n- 另外，若在現階段型別的解決方案，想要有組件的 props「提示」，可能得自己手動宣告。如上面程式碼的這一段\n    \n    ```jsx\n    \"slides-per-view\": string;\n    ```\n    \n- 可能這得等之後官方釋出更新，才會把型別問題徹底解決。\n\n### 實作\n\n```tsx\nimport \"./styles.css\";\nimport { register } from \"swiper/element/bundle\";\n\nregister();\n\ndeclare module \"react/jsx-runtime\" {\n  namespace JSX {\n    interface IntrinsicElements {\n      \"swiper-container\": React.HTMLAttributes<HTMLDivElement> & {\n        \"slides-per-view\": string;\n        //...\n      };\n      \"swiper-slide\": React.HTMLAttributes<HTMLDivElement>;\n    }\n  }\n}\n\nconst SWIPER_LIST_DATA = Array(6).fill(0);\n\nexport default function App() {\n  return (\n    <div className=\"App\">\n      <h1>Hello CodeSandbox</h1>\n      <h2>Start editing to see some magic happen!</h2>\n      <swiper-container slides-per-view=\"3\" centered-slides={true} loop={true}>\n        {SWIPER_LIST_DATA.map((_, i) => (\n          <swiper-slide key={i}>Slide {i + 1}</swiper-slide>\n        ))}\n      </swiper-container>\n    </div>\n  );\n}\n```\n\n---\n\n### REF\n\n- https://swiperjs.com/element\n- https://swiperjs.com/swiper-api#typescript-definitions\n- CodeSandBox範例：\nhttps://www.keybr.com/"
+}

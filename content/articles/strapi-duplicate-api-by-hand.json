@@ -1,0 +1,14 @@
+{
+  "id": 179,
+  "articleId": "strapi-duplicate-api-by-hand",
+  "title": "【Strapi】如何在 Strapi 複製整支 API ？",
+  "subTitle": "手動複製 API 文件",
+  "description": "手動複製 API 的另一個做法",
+  "publishedAt": "2024-10-26T13:24:58.385Z",
+  "thumbnailUrl": "https://plus.unsplash.com/premium_photo-1677402408071-232d1c3c3787?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n1. 直接到 src > admin 複製 API 的整個資料夾\n2. 接著把檔案 rename（如下圖所示）\n    \n    ![Snipaste_2024-10-26_20-55-25.jpg](https://imgur.com/tytVEAt.jpg)\n    \n    1. API 資料夾名稱\n    2. content-types\n    3. controller\n    4. routes\n    5. services\n\n### 實作\n\n要注意 schema 的命名規則，以及要修改的地方\n\n- src/api/{API_ROUTE_NAME}/content-types/{API_ROUTE_NAME}/schema.json\n    - collectionName\n    - attribute\n    - 有 relation 作「連動的 API」，也要一起改\n- sample `schema.json`\n    \n    ```tsx\n    {\n      \"kind\": \"collectionType\",\n      \"collectionName\": \"curly_chu_articles\", // 這個是用 _ 連接的 name\n      \"info\": { // 用 - 串接\n        \"singularName\": \"curly-chu-article\",\n        \"pluralName\": \"curly-chu-articles\", // 複數\n        \"displayName\": \"curly-chu-article\",\n        \"description\": \"\"\n      },\n      //...\n      \"attributes\": {\n    \t  // 用 _ 連接去命名 or 其他命名規則（不能用 - ）\n        \"curly_chu_article_tags\": {\n          \"type\": \"relation\",\n          \"relation\": \"oneToMany\",\n          \"target\": \"api::curly-chu-article-tag.curly-chu-article-tag\" // 其他 API\n        },\n        \"related_curly_chu_articles\": {\n          \"type\": \"relation\",\n          \"relation\": \"oneToMany\",\n          \"target\": \"api::curly-chu-article.curly-chu-article\",\n          \"mappedBy\": \"curly_chu_article\"\n        },\n        \"curly_chu_article\": {\n          \"type\": \"relation\",\n          \"relation\": \"manyToOne\",\n          \"target\": \"api::curly-chu-article.curly-chu-article\",\n          \"inversedBy\": \"related_curly_chu_articles\"\n        },\n        \n    \t  //...\n      }\n    }\n    ```\n    \n\n---\n\n### REF\n\n- 自己研究出來的結果"
+}

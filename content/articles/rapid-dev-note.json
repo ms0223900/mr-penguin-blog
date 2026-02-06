@@ -1,0 +1,14 @@
+{
+  "id": 136,
+  "articleId": "rapid-dev-note",
+  "title": "極速開發課程分享",
+  "subTitle": "越寫越快",
+  "description": null,
+  "publishedAt": "2024-02-29T14:01:19.241Z",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1598495037740-2c360cf49e50?q=80&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "## 想法概要\n\n### 上課概要\n\n- 學會怎麼使用 IDE (JetBrains 系列，上課是用 WebStorm 寫 JavaScript 做示範)\n- 學 vim 怎麼用\n    - 安裝 vim：**IdeaVim**\n    https://lp.jetbrains.com/ideavim/\n    - 設定 vim：待補充\n- 課後持續練習 — 套句 91 所說，不練習，這堂課等同白上。\n\n### 心法\n\n- 核心: 懂得「自己要幹嘛」，叫「工具」幫我們做事。\n    - IDE 可以這樣做: `Shift * 2` → 只要輸入需求，就會跳出指令提示。\n    - 工具可以這樣做: mac 裝 `RayCast` 或 windows 裝 `wox`，在指令列直接指定「要做的事」。\n- 快速開發\n    - 為什麼要用 vim ？ → 因為可以透過指令的方式，做到我們「想做的事」\n   for example：往下三行 → 3j\n    - 來看一下 vim Cheat Sheet：有效的了解 vim 指令，更快速記住。\n    - 了解 vim 指令「概念」，有些有通則，這邊介紹些通則。(一點就通)\n        - Shift：多次、反轉。 Shift + A → aaaa 到這行最後；Shift + f（F） → 往前找\n        - 重複 N 次， N + 指令。 e.g.  2d、3k（往上三行）\n        - 設為「相對行數」`:set rnu!` >> 用 IDE 示範\n    - 先逼近，再精確。找到行數位置，再移動位置。（或是 `aceJump` 直接跳過去）\n- 極速開發\n    - 減少「不必要」的動作，像是選取(visual mode)。\n    - 找到重複的 pattern → 做 vim mapping。\n    - 善用 code snippet 工具：Live Template, postfix…等。\n    - 把不好用的 mapping 成好按的。(e.g. `jj` → Esc）\n    - 打越多字，越容易錯 → 關鍵字就好（1, 2 個就好）\n- 覺得很好用的(而且很常用) — surround\n    - va { — 包括整個 {} 的內容\n    - vat — 將整個 tag 的內容選起來\n    - vi { — {} 裡面的內容\n\n### 練習心得\n\n- 老師說的: 一天練習 12 min。\n- 自己體驗的: 只練習 12 min 沒啥用，應該要先找時間「全部練完」才好。\n- 對於需求不清楚，是我自己在練習途中的「大阻礙」，寫熟就順多了。\n\n### 總結\n\n- 工具、作法是一時的，想法才是核心價值。\n- 持續精進，打磨自己的工具。\n- 分享幾個 vim plugin\n    - Ace Jump：\n    https://github.com/acejump/AceJump\n    - Exchange：寫測試案例蠻常用的\n      https://github.com/tommcdo/vim-exchange\n        \n\n---\n\n### REF\n\n- 簡報檔案：\n https://docs.google.com/presentation/d/1EoWMAUKl9JJXZ1vjPUHbwf9nMCS-5txyhFHE-l5E0zE/edit#slide=id.g2ba0531d01e_0_40\n- vim cheat sheet：\nhttps://www.glump.net/_media/howto/desktop/vim-graphical-cheat-sheet-and-tutorial/vi-vim-cheat-sheet-and-tutorial.pdf?ref=linuxhandbook.com"
+}

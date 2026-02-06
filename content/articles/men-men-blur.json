@@ -1,0 +1,14 @@
+{
+  "id": 67,
+  "articleId": "men-men-blur",
+  "title": "悶悶blur",
+  "subTitle": "究竟有多BLUR?",
+  "description": "靈光一閃想到的網頁前端的哽，隨手做出來了。",
+  "publishedAt": "2022-10-24T17:15:11.642Z",
+  "thumbnailUrl": "https://imgur.com/hHuIINB.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "悶悶不樂，還是悶悶blur?\n\n![https://imgur.com/hHuIINB.jpg](https://imgur.com/hHuIINB.jpg)\n\n越不樂就越blur，blur到看不到BLUR。\n好吧，我也掰不出文案了。這只是靈光一閃想到網頁前端的哽，於是隨手做出來玩玩。\n這效果是運用CSS的濾鏡(filter)，調整其中的blur參數做到的。\n\n```\nfilter: blur(3px);\n```\n\n試玩連結: https://o4lv36.csb.app/"
+}

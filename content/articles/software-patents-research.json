@@ -1,0 +1,14 @@
+{
+  "id": 181,
+  "articleId": "software-patents-research",
+  "title": "台灣軟體專利研究",
+  "subTitle": "軟體專利，尚在起步階段",
+  "description": "軟體專利通常可以分為三種主要類型。特別是系統與方法類，較能取得更高的保護，專利價值也較高。",
+  "publishedAt": "2024-11-02T00:35:09.608Z",
+  "thumbnailUrl": "https://plus.unsplash.com/premium_photo-1688678097958-0620a452f0e8?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "tags": [
+    "卡片筆記"
+  ],
+  "relatedArticles": [],
+  "content": "## 重點\n\n### 軟體專利通常可以分為三種主要類型：\n\n系統與方法類，較能取得更高的保護，專利價值也較高。\n\n- **系統專利**：針對整體系統的創新。\n- ⭐ **方法專利**：針對特定方法或流程的創新。→ 最適合一般應用服務做申請的專利。\n- **應用專利**：針對特定應用場景的創新。\n\n### **滿足專利三要件**\n\n- **產業利用性**：必須能夠在產業中實際應用，並促進經濟發展。\n- **新穎性**：發明必須是新的，未曾公開或已被申請過。\n- **進步性**：相較於現有技術，必須有顯著的技術進步。\n\n### 專利常見問題\n\n- Q: 可以軟體發佈後再申請嗎？\nA: 不行，因為專利須符合「新穎性」。換句話說，在「公諸於世」之前，就要申請專利。\n- 純軟體發明一定是以申請 **`發明專利`** 為主要佈局策略。因為發明專利可以保護**方法與流程。**\n- 若以流程圖說明運作方式，不需透露程式碼也可以取得專利權，AI 發明人建議申請`方法專利`。\n\n### 申請專利之要件 — **充份技術揭露、可據以實現**\n\n> 翻成白話，專利要能寫得清楚明白，就像說明書一樣，讓同行可以看著專利（說明書）完成一樣的成品。\n> \n- 更簡單說來，技術專利就像是「技術文件」那樣 😂\n- 若申請的系統只寫說可以依照「資料庫儲存客戶資料，並依靠 LLM 之輔助…」，那麼會被打槍，這只是提供個概略的實現方向，沒有把「具體實作流程」給寫出來。（其實就是商業秘密啦）。\n- 申請專利前，要評估是走專利申請，還是作為「營業秘密」？\nhttps://www.tandemlaw.com.tw/article/law-class/intellectual-property/518-2022-8-3\n\n### 舉例\n\n- 充分技術揭露\n    \n    ![image.png](https://peaceful-hollows-08572.herokuapp.com/uploads/241102_01_fdf80c7446.png)\n    \n\n---\n\n### REF\n\n- 專利申請\n    - https://blog.li-chen.com/patent-application/how-to-apply-for-a-patent\n- 軟體專利\n    - 這個講得很完整 👇\n     https://www.ipbanks.com/post/軟體發明專利申請全攻略#viewer-10dpu\n    - https://www.tandemlaw.com.tw/article/law-class/intellectual-property/519-2022-8-4\n    - [電腦軟體申請專利？多數國內資訊業者缺乏相關認知 | iThome](https://www.notion.so/iThome-139f417f1082426889bc8564926bda03?pvs=21)"
+}

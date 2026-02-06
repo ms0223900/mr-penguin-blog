@@ -1,0 +1,15 @@
+{
+  "id": 26,
+  "articleId": "squoosh-cli-intro",
+  "title": "【免費圖片壓縮工具】Squoosh圖片壓縮工具 CLI簡介",
+  "subTitle": null,
+  "description": "Squoosh是Google開發的圖片壓縮工具，在維持「看不出來差異」的前提，圖片的容量可以被壓縮至相當小，是個相當好用的工具。",
+  "publishedAt": "2022-08-19T16:04:15.476Z",
+  "thumbnailUrl": "https://imgur.com/IGITQnQ.jpg",
+  "tags": [
+    "卡片筆記",
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "\n![https://imgur.com/IGITQnQ.jpg](https://imgur.com/IGITQnQ.jpg)\n\n### 摘要\n\nSquoosh是Google開發的圖片壓縮工具，在維持「看不出來差異」，圖片的容量可以被壓縮至相當小，是個相當好用的工具。\n\n重點是批次處理不用錢！\n\n如果是一般使用(非大量壓縮處理)，可以直接在前端網頁使用。\n\n[https://squoosh.app/](https://squoosh.app/)\n\n這次要介紹的是CLI工具，別於圖形化介面，使用CLI可以「批次」壓縮大量圖片，並輸出至指定的資料夾。\n\n### 重點整理\n\n- 可以直接讀取「整個資料夾」\n- config接受「字串化」的JSON格式\n\n### 實作範例\n\n- 基本語法\n    \n    ```bash\n    npx @squoosh/cli <options...>\n    ```\n    \n    詳見\n    \n    [https://github.com/GoogleChromeLabs/squoosh/tree/dev/cli](https://github.com/GoogleChromeLabs/squoosh/tree/dev/cli)\n    \n- 範例: \n壓縮./MY_PICTURES該資料夾的所有圖片，並傳到目標資料夾out\n    \n    ```bash\n    npx @squoosh/cli --mozjpeg '{quality:75}' -d out './MY_PICTURES'\n    ```\n    \n    壓縮成功畫面\n    \n    ![Untitled](https://imgur.com/Zpydi7Z.jpg)\n    \n\n---\n\n### REF\n\n- 教學參考\n    \n    [https://dev.to/0xkoji/optimize-images-with-cli-tool-from-google-squoosh-nfg](https://dev.to/0xkoji/optimize-images-with-cli-tool-from-google-squoosh-nfg)\n    \n- 關於config的其他選項\n    \n    [https://github.com/GoogleChromeLabs/squoosh/blob/7a2fc917c10418cda0e8383b93ed402d3626337b/libsquoosh/src/codecs.ts#L331](https://github.com/GoogleChromeLabs/squoosh/blob/7a2fc917c10418cda0e8383b93ed402d3626337b/libsquoosh/src/codecs.ts#L331)"
+}

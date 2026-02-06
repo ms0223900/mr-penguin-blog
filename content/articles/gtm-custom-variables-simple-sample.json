@@ -1,0 +1,20 @@
+{
+  "id": 76,
+  "articleId": "gtm-custom-variables-simple-sample",
+  "title": "【GTM】簡單的「自訂變數」範例",
+  "subTitle": "注意變數名稱的設定",
+  "description": "簡單的自訂變數範例，說簡單但也不太容易，畢竟GTM可以設定得太多了！",
+  "publishedAt": "2022-12-14T03:43:09.109Z",
+  "thumbnailUrl": "https://imgur.com/zQaeERg.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "seo-rich-result-review",
+      "title": "【SEO結構化標記】如何檢查網頁的SEO結構化標記呢？",
+      "subTitle": "教你用工具查看結構化標記！"
+    }
+  ],
+  "content": "### 重點 — 注意變數名稱的設定\n\n- GTM中，若有變數是想要自己定義或設計的，像是抓取特定計算過後的結果（以函式計算的自訂值），可以透過「新增」變數的方式設定。\n- 變數的名稱（介面左上角那個），就是其他GTM代碼所使用的「值」。\n    \n    ![Snipaste_2022-12-13_10-44-45.jpg](https://imgur.com/PXoXycZ.jpg)\n    \n    ![Snipaste_2022-12-12_13-59-12.jpg](https://imgur.com/ovWdiIn.jpg)\n    \n- 找到變數後，點擊新增，選擇自己要設定的選項即可，種類相當多。\n    \n    ![Untitled](https://imgur.com/x9F21j4.jpg)\n    \n\n### 實作\n\n以下用「自訂JavaScript」為範例，這次的範例是抓取local storage的值，作為「自訂變數」給其他GTM代碼使用。\n\n1. 新增變數\n    \n    ![Snipaste_2022-12-12_13-56-38.jpg](https://imgur.com/kZV8nuH.jpg)\n    \n2. 選擇「自訂JavaScript」\n    \n    ![Untitled](https://imgur.com/huEjFwz.jpg)\n    \n3. 寫入名稱、自訂的函式（注意，這邊不支援ES5以上的寫法，像是`const`什麼的語法都用不了，會報錯！）\n    \n    ![Snipaste_2022-12-12_14-30-07.jpg](https://imgur.com/oeYRCSr.jpg)\n    \n    程式碼範例\n    \n    ```tsx\n    function getLSData() {\n      // 不能用const\n      return localStorage.getItem('YOUR_LOCAL_STORAGE_KEY');\n    }\n    ```\n    \n    也可順便設定，抓不到值（`null`, `undefined`等）時，自動轉換為特定值（就不用寫在程式了）\n    \n\n---\n\n### REF\n\n- 更多更詳細請看這：[https://support.google.com/tagmanager/answer/7683362?hl=zh-Hans](https://support.google.com/tagmanager/answer/7683362?hl=zh-Hans)\n- 部落格參考來源\n    - [https://www.optizent.com/blog/how-to-add-javascript-to-google-tag-manager/](https://www.optizent.com/blog/how-to-add-javascript-to-google-tag-manager/)"
+}

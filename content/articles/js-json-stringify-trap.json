@@ -1,0 +1,14 @@
+{
+  "id": 132,
+  "articleId": "js-json-stringify-trap",
+  "title": "【JavaScript】注意JSON.stringify的使用，特別是「空欄位」",
+  "subTitle": null,
+  "description": "stringify()可能不是想像中那樣用喲!",
+  "publishedAt": "2023-12-17T12:08:43.337Z",
+  "thumbnailUrl": "https://i.imgur.com/LJrfJ1U.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n- 若用stringify來「壓扁」資料，要注意key為undefined的欄位，會「不見」\n- 不見有什麼問題？\n    - 後端找不到相對應的key，解析出來就會壞掉\n    - 原有的資料結構會「失真」\n- 比較好的解法\n    1. key在壓扁之前，檢查並賦予「空字串」\n    2. 欄位的default值給予空字串或是null\n\n### 實作\n\n```tsx\n\nconst formData = {\n\tname: undefined,\n\temail: 'abc@ccc.com',\n\tmeta: {\n\t\tdescp: undefined,\n\t\tavatarUrl: 'https://aaa.jpg'\n\t}\n}\n\nJSON.stringify(formData);\n// '{\"email\":\"abc@ccc.com\",\"meta\":{\"avatarUrl\":\"https://aaa.jpg\"}}'\n```\n\n將undefined改為null\n\n```java\nconst formData = {\n\tname: null,\n\temail: 'abc@ccc.com',\n\tmeta: {\n\t\tdescp: null,\n\t\tavatarUrl: 'https://aaa.jpg'\n\t}\n}\n\nJSON.stringify(formData);\n// '{\"name\":null,\"email\":\"abc@ccc.com\",\"meta\":{\"descp\":null,\"avatarUrl\":\"https://aaa.jpg\"}}'\n```\n\n---\n\n### REF\n\n- https://javascript.plainenglish.io/i-almost-lost-my-year-end-bonus-because-of-json-stringify-5ca73bb840ca"
+}

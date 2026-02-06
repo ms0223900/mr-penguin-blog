@@ -1,0 +1,20 @@
+{
+  "id": 121,
+  "articleId": "fantacy-sports-intro",
+  "title": "【遊戲研究】夢幻體育簡介 Fantacy Sports",
+  "subTitle": "玩家當球經，自組球員賽事",
+  "description": "- `Fantacy`也可以翻譯為「幻想」，可以說是「球迷」自己想像出來的體育賽事。\n- 在大概1980年時，一開始是群紐約的球迷開始玩這種遊戲，當時是以紙筆的方式預測，根據大聯盟現役球員名單的數據做排列，並根據他們該賽季的表現匯總得分，以賽事各球員的總得分來做排名比較。\n    - 遊玩者須以「已知結果」預測，模擬球員在下一場真正比賽的真實表現。\n    - 甚至還出版了「如何玩」的攻略，銷量還不錯，在美國曾經風靡一時。",
+  "publishedAt": "2023-07-11T14:52:43.372Z",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1589801258579-18e091f4ca26?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=700",
+  "tags": [
+    "遊戲研究"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "fantacy-games-feature",
+      "title": "【遊戲研究】夢幻遊戲(Fantacy Games)玩法與特色",
+      "subTitle": "基於稟賦效應支持喜愛的選手"
+    }
+  ],
+  "content": "### 重點 — 玩家當球經，自組球員賽事\n\n- 主要玩法：\n    1. 創建自訂比賽\n    2. 挑選球員，通常系統會分配每個球員不等的「點數」，在總合點數限制內，挑選球員成員，\n    3. 依照每個球員的表現「做預測」，安排N位球員組建自己的「夢幻隊伍」，預測會在未來即將開辦的比賽，得分最高的球隊。\n    4. 比賽公佈結果後，若自己預測的隊伍，總得分位在「比賽獲勝區」（也就是說，猜贏其他玩家），就可以拿到不等的獎金！\n- 主要獎金機制 — 獎金池\n    - 參加其他玩家的自訂比賽，會需要「付費」入場，這個入場費就是獎金池的獎金來源（也就是分母）\n    - 如何贏得獎金？ 挑選的球員總得分越高，越有機會贏得該自訂比賽的獎金。\n    - 通常不同比賽的「得分」計算方式不同，像是足球，可能會有前鋒進球額外加分，或是其他「規則」的加分規則。\n\n### 淵源歷史\n\n- `Fantacy`也可以翻譯為「幻想」，可以說是「球迷」自己想像出來的體育賽事。\n- 在大概1980年時，一開始是群紐約的球迷開始玩這種遊戲，當時是以紙筆的方式預測，根據大聯盟現役球員名單的數據做排列，並根據他們該賽季的表現匯總得分，以賽事各球員的總得分來做排名比較。\n    - 遊玩者須以「已知結果」預測，模擬球員在下一場真正比賽的真實表現。\n    - 甚至還出版了「如何玩」的攻略，銷量還不錯，在美國曾經風靡一時。\n\n### 值得一提\n\n- 因為球員的選擇和排序是需要「技術性」，目前這種「夢幻體育」算是「合法」遊戲，而不像是賭博那樣「黑箱隨機」作業。\n- 「積分」計算方式不會完全按照該球員的實際得分，可能會有權重的倍數加乘。\n\n---\n\n### REF\n\n- https://www.dream11.com/games/what-is-dream11\n- [https://baike.baidu.hk/item/夢幻體育/20151284](https://baike.baidu.hk/item/%E5%A4%A2%E5%B9%BB%E9%AB%94%E8%82%B2/20151284)\n- [https://marriedgames.com.br/zh-TW/dicas-guias/como-surgiu-o-fantasy-game/#3-fundação-moderna-da-“rotisserie”](https://marriedgames.com.br/zh-TW/dicas-guias/como-surgiu-o-fantasy-game/#3-funda%C3%A7%C3%A3o-moderna-da-%E2%80%9Crotisserie%E2%80%9D)"
+}

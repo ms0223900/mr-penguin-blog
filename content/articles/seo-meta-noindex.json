@@ -1,0 +1,12 @@
+{
+  "id": 118,
+  "articleId": "seo-meta-noindex",
+  "title": "【SEO】設定Meta標籤的noindex，禁止Google搜尋建立索引",
+  "subTitle": "不讓Google編入索引！",
+  "description": "noindex 是具有 <meta> 標記或 HTTP 回應標頭的規則組合，可用來防止支援 `noindex` 規則的搜尋引擎 (例如 Google) 將內容編入索引。",
+  "publishedAt": "2023-06-06T09:32:02.782Z",
+  "thumbnailUrl": "https://imgur.com/j3UKHLF.jpg",
+  "tags": [],
+  "relatedArticles": [],
+  "content": "### 前言\n\n`noindex` 是具有 `<meta>` 標記或 HTTP 回應標頭的規則組合，可用來防止支援 `noindex` 規則的搜尋引擎 (例如 Google) 將內容編入索引。\n\nnoindex規則和robots.txt有所衝突，若在robots.txt擋住該頁面的檢索，則爬蟲bot會因此找不到該網頁，會忽略掉noindex的設定，仍可能因此出現在「搜尋結果」當中。\n\n![](https://imgur.com/EnhJ4P6.jpg)\n\n### 重點 — 讓Google(爬蟲bot)無法編入該網頁\n\n以下介紹的是前端`<meta>`標籤的做法，若要看http回應標頭(headers)怎麼寫，詳見\nhttps://developers.google.com/search/docs/crawling-indexing/block-indexing?hl=zh-tw#http-response-header\n\n- 最基本的用法，是直接在不想要被檢索的頁面中，`<head>`加入`<meta name=”robots” content=”noindex” />`的標籤，像是以下這樣\n    \n    ```tsx\n    <head>\n    \t//...\n    \t<meta name=”robots” content=”noindex” />\n    </head>\n    <body>\n    </body>\n    ```\n    \n- 可以指定「特定的bot」不檢索該網頁，只要將name改為該bot名稱即可。像是以下就是防止Google的爬蟲bot檢索網頁。\n    \n    ```tsx\n    <head>\n    \t<meta name=”googlebot” content=”noindex” />\n    </head>\n    ```\n    \n\n### 舉例 & 應用 — 在資料找不到時，加上noindex的meta\n\nhttps://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics?hl=zh-tw#avoid-soft-404s\n\n另一篇文章有提到，可以在API找不到資料時，在這「錯誤的找不到資料」頁面中，將noindex的meta加入head。\n\n```tsx\nconst makeNoIndexMeta = () => {\n    const metaRobots = document.createElement('meta');\n    metaRobots.name = 'robots';\n    metaRobots.content = 'noindex';\n    return metaRobots;\n};\n\nconst checkNoIndexMetaExist = () => {\n\tconst metaEls = [...document.getElementsByTagName('meta')];\n\t\n    for (let i = 0; i < metaEls.length; i++) {\n        const metaEl = metaEls[i];\n        if(metaEl.name === 'robots' && metaEl.content === 'noindex') return true;\n    }\n\n    return false\n}\n\nconst appendNoIndexMetaToHead = () => {\n\t\t// 如果原先就有meta標籤，則不append noindex的meta\n    if(checkNoIndexMetaExist()) return;\n    \n    const metaEl = makeNoIndexMeta();\n    document.head.appendChild(metaEl);\n};\n\nfetch(`/api/articles?tag=${tag}`)\n\t.then(res => res.json())\n\t.then(articles => {\n\t\tif(articles.length === 0) {\n\t\t\tappendNoIndexMetaToHead();\n\t\t\treturn [];\n\t\t}\n\t\treturn articles;\n\t})\n```\n\n---\n\n### REF\n\n- https://developers.google.com/search/docs/crawling-indexing/block-indexing?hl=zh-tw"
+}

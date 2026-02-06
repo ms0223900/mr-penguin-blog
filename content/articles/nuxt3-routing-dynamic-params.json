@@ -1,0 +1,14 @@
+{
+  "id": 71,
+  "articleId": "nuxt3-routing-dynamic-params",
+  "title": "【Nuxt3】Routing 動態id",
+  "subTitle": "文章頁面就靠這個",
+  "description": "只要用「中括號」將檔案命名為[id]的形式，nuxt會自動「拆套」這個id出來。當然也可以命名為postId, abc之類的，在取用時只要確認key的名字，拿到正確的資料就行。",
+  "publishedAt": "2022-11-10T15:58:10.551Z",
+  "thumbnailUrl": "https://imgur.com/obbQTSy.jpg",
+  "tags": [
+    "nuxt3"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n- 只要用「中括號」將檔案命名為[id]的形式，nuxt會自動「拆套」這個id出來。\n- 當然也可以命名為postId, abc之類的，在取用時只要確認key的名字，拿到正確的資料就行。\n- 像是`/user-group-[groupName]/[userId].vue`這種形式也行正確解析出各自的值\n\n### 實作\n\n實作一個可以從網址取得id的文章(article)頁面。\n\n- [id].vue\n\n```jsx\n<template>\n  <main\n    class=\"flex items-center justify-center flex-col h-[100vh] text-center bg-gradient-to-r from-cyan-50 to-blue-100\"\n  >\n    <h1 class=\"text-6xl font-bold text-cyan-500\">文章</h1>\n    <p class=\"text-xl py-4\">Id: {{ id }}</p>\n  </main>\n</template>\n\n<script lang=\"ts\">\nimport { defineComponent } from \"vue\";\n\nexport default defineComponent({\n  name: \"ArticlePage\",\n  setup() {\n\t\t// 用useRoute取得id\n    const route = useRoute();\n    const id = computed(() => route.params.id);\n\n    return {\n      id,\n    };\n  },\n});\n</script>\n```\n\n- 放在`articles`資料夾底下，會被自動解析為`articles/[id]`這樣的路徑\n\n```jsx\n./pages/\n└── articles\n\t\t└─ [id].vue\n```\n\n會被編譯成vue-router的這個樣子\n\n```jsx\n{\n  \"routes\": [\n    {\n      \"path\": \"/articles/:id\",\n      \"component\": \"pages/articles/[id].vue\"\n    }\n  ]\n}\n```\n\n畫面長這樣\n\n![Snipaste_2022-11-07_20-45-15.jpg](https://imgur.com/obbQTSy.jpg)\n\n---\n\n### REF\n\n- [https://v3.nuxtjs.org/guide/directory-structure/pages/#dynamic-routes](https://v3.nuxtjs.org/guide/directory-structure/pages/#dynamic-routes)"
+}

@@ -1,0 +1,20 @@
+{
+  "id": 58,
+  "articleId": "seo-rich-result-review",
+  "title": "【SEO結構化標記】如何檢查網頁的SEO結構化標記呢？",
+  "subTitle": "教你用工具查看結構化標記！",
+  "description": "- 準備好vscode等搜尋功能強大的IDE（文字編輯器）\n此篇介紹文會用到「正規表達式」，無相關基礎也沒關係。SEO結構化標記只會出現在SSR網頁，或html等靜態生成的頁面中，無法從Client Side Rendering的網頁取得結構化標記程式碼。如為windows使用者，`cmd`可自行替換為`ctrl`鍵呦。",
+  "publishedAt": "2022-09-20T03:46:12.315Z",
+  "thumbnailUrl": "https://imgur.com/12K26Wx.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "nuxt3-google-login-button",
+      "title": "Nuxt3 實作 Google 登入",
+      "subTitle": "用原生的方式實作看看吧"
+    }
+  ],
+  "content": "### 前言\n\n- 準備好vscode等搜尋功能強大的IDE（文字編輯器）\n- 此篇介紹文會用到「正規表達式」\n- SEO結構化標記只會出現在SSR網頁，或html等靜態生成的頁面中，無法從Client Side Rendering的網頁取得結構化標記程式碼\n- 如為windows使用者，`cmd`可自行替換為`ctrl`鍵\n\n## 重點\n\n### 1. 開啟網頁並複製原始碼\n\n- 在你要檢驗的網址前面加上`view-source:`\n- 像是以下這樣（以dcard為例）\n    \n    ```tsx\n    view-source:https://www.dcard.tw/f\n    ```\n    \n- 接著會出現一大串文字，將其「全選並複製」（cmd+A, cmd+C），貼到IDE\n    \n    \n\n### 2. 查找「結構化標記」的片段\n\n備註：此步驟可以選擇略過，只是在第三步的工具驗證時，會處理比較久，而且不容易debug，因此建議還是執行此步驟。\n\n- 使用IDE的搜尋功能（用cmd+f呼叫搜尋功能），按下.*的按鈕，接著貼上這段「正規表達式」來搜尋\n    \n    `<script type=\"app.+</script>`\n    \n    ![https://imgur.com/jVc0Dj7.jpg](https://imgur.com/jVc0Dj7.jpg)\n    \n- 查找到我們要的「結構化標記」片段的程式碼\n    \n    ![https://imgur.com/YF8YKd1.jpg](https://imgur.com/YF8YKd1.jpg)\n    \n- 複製這段文字，呈現的樣子會像是以下這樣\n    \n    ```tsx\n    <script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"CollectionPage\",\"name\":\"Dcard\",\"url\":\"https://www.dcard.tw/f\",\"description\":\"廣受年輕人喜愛的 Dcard 是台灣最大的匿名交流平台，舉凡時事話題、感情心情、吃喝玩樂、學習工作等，都有卡友陪你聊！\"}</script><script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Dcard\",\"item\":\"https://www.dcard.tw\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"全部\",\"item\":\"https://www.dcard.tw/f\"}]}</script><script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"Dcard\",\"url\":\"https://www.dcard.tw\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://www.dcard.tw/_next/static/media/93a7e0749e4edfb00cf4ad4a6c1eb6c6-512.png\",\"width\":\"512\",\"height\":\"512\"}}</script>\n    ```\n    \n\n### 3. 使用Google「**複合式搜尋結果**」工具驗證\n\n- [https://search.google.com/test/rich-results](https://search.google.com/test/rich-results)\n- 剛剛複製的那一段<script …的文字，貼到輸入欄（下圖2的區塊），並點擊「測試代碼」\n    \n    ![https://imgur.com/12K26Wx.jpg](https://imgur.com/12K26Wx.jpg)\n    \n- 稍等一下，結果馬上出爐！\n    \n    ![https://imgur.com/fvMJBEd.jpg](https://imgur.com/fvMJBEd.jpg)\n    \n- 也可以「分享」測試結果給其他人查看呦\n    \n    [https://search.google.com/test/rich-results/result?id=XtuNANpaZAp_GL5NcCZqXg](https://search.google.com/test/rich-results/result?id=XtuNANpaZAp_GL5NcCZqXg)\n    \n    ![https://imgur.com/7PCTTS5.jpg](https://imgur.com/7PCTTS5.jpg)\n    \n\n---\n\n## REF\n\n- 複合式搜尋結果測試工具：[https://search.google.com/test/rich-results](https://search.google.com/test/rich-results)\n- vscode下載網址 [https://code.visualstudio.com/](https://code.visualstudio.com/)"
+}

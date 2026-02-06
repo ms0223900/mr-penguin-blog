@@ -1,0 +1,12 @@
+{
+  "id": 6,
+  "articleId": "cannot-access-webpack-default-export",
+  "title": "解決 react markdown套用 React Syntax Highlighter 出現 Cannot access '__WEBPACK_DEFAULT_EXPORT__' ... 的問題",
+  "subTitle": "解決惱人的react-syntax-highlighter套件使用問題",
+  "description": "solve __WEBPACK_DEFAULT_EXPORT__ react markdown issue",
+  "publishedAt": "2022-03-29T15:22:42.901Z",
+  "thumbnailUrl": "https://imgur.com/qbIxNr9.jpg",
+  "tags": [],
+  "relatedArticles": [],
+  "content": "### Problem\n在Next.js使用react markdown搭配react-syntac-highlighter時出現了以下錯誤\n\n```tsx\nCannot access '__WEBPACK_DEFAULT_EXPORT__' before initialization\n```\n\n### Solve\n百思不得其解，最終發現只要將使用到套件 ==esm的換成cjs== ，像是以下這樣，就解決問題了\n\n```tsx\nimport {\n  vscDarkPlus,\n} from 'react-syntax-highlighter/dist/cjs/styles/prism';\n\n```\n\n備註: 原本範例給的是react-syntax-highlighter/dist/cjs/styles/prism 這樣"
+}

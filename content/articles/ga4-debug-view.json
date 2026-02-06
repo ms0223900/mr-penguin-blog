@@ -1,0 +1,21 @@
+{
+  "id": 113,
+  "articleId": "ga4-debug-view",
+  "title": "【GA4】【GTM】用DebugView檢查GA4事件吧！ #debug #QA",
+  "subTitle": "比查看即時事件更好用",
+  "description": "- 安裝google analytics debugger插件\n- 關掉GA4篩選器（若有套用相關篩選規則）\n- 進到GTM或GA4的debug模式\n- 開始debug吧！",
+  "publishedAt": "2023-04-28T07:19:58.214Z",
+  "thumbnailUrl": "https://i.imgur.com/HZx9v9T.png",
+  "tags": [
+    "程式開發",
+    "GA4"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "gtm-click-element-tips",
+      "title": "【GTM】觸發條件的Click Element，要這樣做才能抓到元素！",
+      "subTitle": "小心Click Element的判斷元素方法"
+    }
+  ],
+  "content": "---\n\n## 重點綱要\n\n- 安裝google analytics debugger插件\n- 關掉GA4篩選器（若有套用相關篩選規則）\n- 進到GTM或GA4的debug模式\n- 開始debug吧！\n\n## 實作步驟詳解\n\n### 1. 安裝Google Analytics Debugger 插件\n\n- 到這邊裝插件。\n    \n    [https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?utm_source=chrome-ntp-icon](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?utm_source=chrome-ntp-icon)\n    \n- 安裝好之後，點擊拼圖icon，看到這個插件，按下去啟用它，接著圖示會多個ON的文字\n    \n    ![https://i.imgur.com/bVcVGcM.png](https://i.imgur.com/bVcVGcM.png)\n    \n\n### 2. GA4記得先關掉篩選器\n\n- 記得！ 要把資料篩選器的條件關掉，若之前有套用「篩選內部流量」的設定，請記得將該篩選「無效化」，否則即便是在debug view，資料也是一樣進不來喔！\n詳見 [【GA4】內部流量排除設定（含暫時解除內部流量篩選的方法）](https://www.notion.so/GA4-ebb00f8602794002a565b2c37fd59c29)\n- 在資料設定 > 資料篩選器 > 選擇要無效化的篩選器規則 > 無效\n    \n    ![https://i.imgur.com/OpDlRje.png](https://i.imgur.com/OpDlRje.png)\n    \n\n### 打開debug模式\n\n在GTM或GA4進行事件的debug查看\n\n- GTM\n    1. 先進入 [https://tagassistant.google.com/](https://tagassistant.google.com/)\n    2. 按下「Add Domain」，加入等等要debug的網址（localhost也能加），接著按下Connect按鈕\n        \n        ![https://i.imgur.com/asiYAgU.png](https://i.imgur.com/asiYAgU.png)\n        \n    3. 跳出剛剛輸入網址的那個網頁，且右下方有個小框框，顯示Tag Assistant Connected，而且是綠色勾勾的話，表示這個網頁已經成功被GTM連接囉！\n        \n        ![https://i.imgur.com/jHZNseU.png](https://i.imgur.com/jHZNseU.png)\n        \n    4. 選擇該網站先前已經埋設好的GTM評估ID。如果有選到正確的，會顯示一大堆Tags Not Fired的列表，如下圖所示。不過，這要在你早前已經設定好GTM的各種事件，才會像是圖中那樣，顯示各項未觸發的標籤事件。否則，不會像是圖片這樣有這麼多的未觸發事件。\n        \n        ![https://i.imgur.com/7sPy8iN.png](https://i.imgur.com/7sPy8iN.png)\n        \n    5. 開始debug，檢查GTM代碼和觸發是否正確囉～\n- GA4\n    1. 進入debug view頁面（設定 > DebugView）\n        \n        ![https://i.imgur.com/Hka2Dcg.png](https://i.imgur.com/Hka2Dcg.png)\n        \n    2. 自行打開需要debug GA4事件的網頁（GA4不像GTM那麼貼心，會自動開啟網頁）\n    3. 觸發需要測試的事件，等待大約5~30秒（最慢約一分鐘內），事件就會呈現在像是時間軸的介面\n        \n        ![https://i.imgur.com/Zgg70nZ.png](https://i.imgur.com/Zgg70nZ.png)\n        \n    4. 盡情debug吧，檢查GA4事件有無正確觸發囉～\n\n### 補充ＱＡ\n\n1. 上面都設定好了，但事件還是沒有觸發，怎麼辦？\n    - 有可能是「沒抓到指定裝置」，以下是解法：\n    - 可能因為「多人一起進行debug」，會因此找不到自己裝置測出來的事件，這時候要在「偵測裝置」那邊，選擇自己的裝置。\n        \n        ![https://i.imgur.com/aMKp5fT.png](https://i.imgur.com/aMKp5fT.png)\n        \n    - 目前尚未找到方法定義自己電腦裝置的名稱，所以大家的裝置名可能都長得一樣，每個都點點看，直到找到自己的裝置。\n    - 有個小訣竅，點擊數個事件，讓自己點擊的順序跟別人都不一樣，會比較好辨別得出來呦！\n        \n        ![https://i.imgur.com/apDOD7k.png](https://i.imgur.com/apDOD7k.png)\n        \n\n---\n\n## REF\n\n插件\n\n- [https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?utm_source=chrome-ntp-icon](https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna?utm_source=chrome-ntp-icon)\n\n文章\n\n- 官方文件：**[GA4] 在 DebugView 中監控事件**\n[https://support.google.com/analytics/answer/7201382?hl=zh-Hant](https://support.google.com/analytics/answer/7201382?hl=zh-Hant)\n- GTM Tag Assistant\n[https://tagassistant.google.com/](https://tagassistant.google.com/)"
+}

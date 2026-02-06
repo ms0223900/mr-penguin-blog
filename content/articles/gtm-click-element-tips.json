@@ -1,0 +1,14 @@
+{
+  "id": 110,
+  "articleId": "gtm-click-element-tips",
+  "title": "【GTM】觸發條件的Click Element，要這樣做才能抓到元素！",
+  "subTitle": "小心Click Element的判斷元素方法",
+  "description": "注意元件的抓取方式，若是用 >  來抓取緊鄰的子元件，有可能因為元素包裹的方式，抓不到該元件喔！",
+  "publishedAt": "2022-12-22T05:54:14.033Z",
+  "thumbnailUrl": "https://imgur.com/O7DkzTW.jpg",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n- 注意元件的抓取方式，若是用 `>`  來抓取緊鄰的子元件，有可能因為元素包裹的方式，抓不到該元件\n- ⭐ 雖然Variables那邊顯示的`Click Element`是字串，但其實不是！\n    - 所以用contains（包含）是沒用的！！！（並非我所想的那樣以`string.includes()`可以判斷包含的class 字串）\n    - 所以以下這樣設定，是沒有作用的喔！\n        \n        ![Untitled](https://imgur.com/aIOdHrS.jpg)\n        \n\n### 實作\n\n- 如何設定GTM，以匹配到特定的指定元件\n    1. 網頁空白處點空白，開啟「檢查」介面\n        \n        ![Snipaste_2022-12-21_11-18-53.jpg](https://imgur.com/wyoSKOh.jpg)\n        \n    2. 選擇到該元素，右鍵點擊\n    3. 選擇複製（copy），接著選擇「複製selector」（Copy Selector）\n        \n        ![Snipaste_2022-12-21_11-19-47.jpg](https://imgur.com/H321h9V.jpg)\n        \n    4. 接著到GTM的`觸發條件`介面\n    5. 點擊新增\n        \n        ![Snipaste_2022-12-21_11-37-38.jpg](https://imgur.com/saNzKJK.jpg)\n        \n    6. 選擇「所有元素」\n    7. 如圖中所示\n        \n        ![Snipaste_2022-12-21_11-35-19.jpg](https://imgur.com/nZqFx92.jpg)\n        \n        1. 設定觸發條件的名稱，\n        2. 設定為「部分點擊」\n        3. 在下拉選單選擇`Click Element`和`符合CSS選取器`\n    8. 最後將該剛剛複製的selector字串，貼到最右邊那個欄位\n    9. 點擊`儲存`，並預覽或提交，就能測試最新的觸發條件設定了\n- 如何「模糊匹配」符合條件的元件\n    1. 因為css 選取器是抓取「符合class」的元件，所以可以跟我們在用`document.querySelectorAll`一樣，抓到符合條件的「所有元件」\n    2. 原本的條件\n        - `#__nuxt > div.layout--wrapper > div.subscribe-root > div > div > form > input`\n        - 這樣只能抓到特定的input元素\n        - 像是只拿抓到這個input\n            \n            ![Untitled](https://imgur.com/4ERdkPm.png)\n            \n    3. 改為以下「放寬條件」這樣\n        - 將 `>` 改為 `空格`，即「緊鄰」改為「以下所有」，詳見css selector\n        [https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Selectors](https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Selectors)\n        - `div.subsribe-view > div.content-grid--wrapper > form input`\n        - 就能抓到所有符合條件的input（含input[type=”submit”]）\n            \n            ![Snipaste_2022-12-21_12-19-32.jpg](https://imgur.com/jiK43b8.jpg)\n            \n\n---\n\n### REF\n\n- 部落格\n    - [https://measureschool.com/css-selector-google-tag-manager/](https://measureschool.com/css-selector-google-tag-manager/)\n    - [https://www.simoahava.com/analytics/css-selector-guide-google-tag-manager/](https://www.simoahava.com/analytics/css-selector-guide-google-tag-manager/)\n    - [https://www.i-spotmedia.com/Blog/gtm-css-selector-button-event/](https://www.i-spotmedia.com/Blog/gtm-css-selector-button-event/)\n- 問答\n    - 關於Click Classes和Click Element的差異：\n    [https://stackoverflow.com/questions/43477486/differences-between-click-classes-and-click-element-in-google-tag-manager](https://stackoverflow.com/questions/43477486/differences-between-click-classes-and-click-element-in-google-tag-manager)"
+}

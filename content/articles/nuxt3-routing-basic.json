@@ -1,0 +1,14 @@
+{
+  "id": 70,
+  "articleId": "nuxt3-routing-basic",
+  "title": "【Nuxt3】Routing基本",
+  "subTitle": "檔案就是路徑",
+  "description": "每一個資料夾，都是一層/隔開。如果直接放在pages/底下，就是變成根路徑直接存取。",
+  "publishedAt": "2022-11-10T15:57:23.616Z",
+  "thumbnailUrl": "https://imgur.com/PvwDjvJ.jpg",
+  "tags": [
+    "nuxt3"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n- 每一個資料夾，都是一層`/`隔開。\n- 如果直接放在pages/底下，就是變成根路徑直接存取。\n- 直接將檔案丟到pages/資料夾即可，什麼設定都不用做\n\n### 實作\n\n實作about的頁面\n\n- about.vue\n\n```jsx\n<template>\n  <main\n    class=\"flex items-center justify-center flex-col h-[100vh] text-center bg-gradient-to-r from-cyan-50 to-blue-100\"\n  >\n    <h1 class=\"text-6xl font-bold text-cyan-500\">About Me</h1>\n    <p class=\"text-xl py-4\">Hi 我是企鵝 🐧</p>\n  </main>\n</template>\n```\n\n- 路徑\n\n```jsx\n./pages/\n└── about.vue\n```\n\n會被Nuxt編譯成vue-router那樣的路徑\n\n```jsx\n{\n  \"routes\": [\n    {\n      \"path\": \"/about\",\n      \"component\": \"pages/about.vue\"\n    }\n  ]\n}\n```\n\n在網址列輸入`http://localhost:3000/about`就會有畫面了\n\n![Untitled](https://imgur.com/PvwDjvJ.jpg)\n\n---\n\n### REF\n\n- [https://v3.nuxtjs.org/getting-started/routing/#pages](https://v3.nuxtjs.org/getting-started/routing/#pages)"
+}

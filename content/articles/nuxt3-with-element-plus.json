@@ -1,0 +1,12 @@
+{
+  "id": 38,
+  "articleId": "nuxt3-with-element-plus",
+  "title": "Nuxt3使用Element Plus套件要注意的事",
+  "subTitle": null,
+  "description": "一定愛注意!",
+  "publishedAt": "2022-08-25T18:11:42.363Z",
+  "thumbnailUrl": "https://imgur.com/PIePruf.jpg",
+  "tags": [],
+  "relatedArticles": [],
+  "content": "### 核心 — 注意import方式\n\n- 注意！最重要的！如果使用nuxt，組件一定要從`element-plus/dist/index.full`引入\n    \n    像是這樣\n    \n    ```tsx\n    import { ElAutocomplete } from 'element-plus/dist/index.full';\n    ```\n    \n- 有些組件要用ClientOnly包裹起來才行，像是ElAutoComplete\n    \n    ```tsx\n    <client-only>\n        <ElAutocomplete\n            clearable\n            :prefix-icon=\"Search\"\n            :trigger-on-focus=\"false\"\n            v-model=\"searchVal\"\n            :placeholder=\"placeholder\"\n            :fetch-suggestions=\"handleSearch\"\n            @select=\"handleSelect\"\n        />\n    </client-only>\n    ```\n    \n\n---\n\n### REF\n\n[Element Plus using nuxt3](https://element-plus.org/en-US/guide/quickstart.html#using-nuxt-js)\n\n[https://glitch.com/edit/#!/nuxt-element-plus?path=components%2FExamples.vue%3A1%3A0](https://glitch.com/edit/#!/nuxt-element-plus?path=components%2FExamples.vue%3A1%3A0)"
+}

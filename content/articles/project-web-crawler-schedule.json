@@ -1,0 +1,14 @@
+{
+  "id": 116,
+  "articleId": "project-web-crawler-schedule",
+  "title": "【專案】Python自動化爬蟲專案",
+  "subTitle": "利用schedule套件定時抓取檔案",
+  "description": null,
+  "publishedAt": "2023-06-05T15:24:59.450Z",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+  "tags": [
+    "projects"
+  ],
+  "relatedArticles": [],
+  "content": "### 摘要\n\n此專案為「定時」抓取網頁的檔案，並搭配登入下載驗證，做到「自動化」更新數據資料，無須再以人工方式定期手動下載。\n\n接手時已經完成約7成，是執行剩下3成的排程抓取關鍵。主要為補上後續的排程，與檔案處理的功能撰寫。除了功能的實作，開發的同時，也將程式進行重構，將其變得更加精簡，每個執行的函式顆粒度更小。\n\n---\n\n### 專案中的角色\n\n負責專案的接續開發，與需求端進行溝通討論。確認「最後定案」的實際執行排程，敏捷式地進行頻繁的測試與除錯，直到需求的最終拍板定案，將專案做最後的結案收尾，才正式完成這個案子。\n\n### 主要使用的技術、工具或系統\n\n主要使用了以下技術與套件：python的虛擬環境venv, schedule, time，以及pm2將其封裝為完整的服務。\n\n### 時程規劃\n\n因為其他主專案開發的時程，此專案是在其他空閒時間才開發，因此為時1~2個月才陸續完成功能的開發。在正式發布之前，進行QA測試以驗證資料的正確性，以及檢驗排程的功能是否正常，最後大約在第三個月左右，才正式啟用服務。\n\n服務啟用後，偶爾進行「無預期發生之錯誤」的debug，陸續完善功能，後續執行數個月的期間，都沒有發生問題，很順利如預期地執行自動化排程下載。\n\n---\n\n### REF\n\n- 排程執行套件 schedule: https://schedule.readthedocs.io/en/stable/"
+}

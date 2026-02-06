@@ -1,0 +1,26 @@
+{
+  "id": 119,
+  "articleId": "project-bb-news",
+  "title": "【專案】BBIN News專案簡介",
+  "subTitle": "Nuxt3框架新聞資訊站",
+  "description": "B2B的遊戲新聞網站，客戶可以接收到最新、最即時的產品資訊。主要使用者為公司內部及遊戲的營運商（俗稱業主），是一個具有會員功能的中等規模新聞網站。",
+  "publishedAt": "2023-06-11T15:01:54.994Z",
+  "thumbnailUrl": "https://imgur.com/X5PsFMU.jpg",
+  "tags": [
+    "nuxt3",
+    "projects"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "project-web-crawler-schedule",
+      "title": "【專案】Python自動化爬蟲專案",
+      "subTitle": "利用schedule套件定時抓取檔案"
+    },
+    {
+      "articleId": "intro-page-simple-editor",
+      "title": "【專案】【React】說明頁簡易編輯器",
+      "subTitle": "以Slate富文本套件為核心的簡易編輯器"
+    }
+  ],
+  "content": "![news-preview](https://i.imgur.com/9TXnLJW.png)\n\n### 摘要 — 獨自開發的中型資訊站\n\n正式網址：https://bbin-news.com/\n\nB2B的遊戲新聞網站，客戶可以接收到最新、最即時的產品資訊。主要使用者為公司內部及遊戲的營運商（俗稱業主），是一個具有會員功能的中等規模新聞網站。\n\n工作約6成的時間都在進行此專案，使用Nuxt3(vue3)+TypeScript+pinia。為時1年完成主架構，並接著繼續進行主功能新增與開發。\n\n---\n\n### 專案中的角色 — 主要的前端工程師\n\n- 20%完成度後接手: 重構以前的程式碼，改為更優的通用組建架構。\n- 基於SEO的考量改為Nuxt3。後續進行一系列SEO優化，包括GA4和GTM埋設、文章結構優化，首頁部分的SEO分數高達100分。\n- 此專案有少許的單元測試，主要是核心邏輯部分進行測試，以jest作爲測試工具。\n\n### 主要使用的技術、工具或系統 — Nuxt3 + Pinia + TS\n\n- 包含但不限於以下功能：會員登入、i18n多國語系、留言功能、即時通知、banner輪播、投票功能、彈窗功能、表單填寫…etc\n- 技術：\n    - 核心：⛰️ Nuxt3(vue3), 🍍 Pinia, TypeScript, @nuxtjs/i18n\n    - 其他：Swiper, Pusher, gsap\n- 其他執行項目：\n    - SEO優化：GA4+GTM的事件埋設、title和descripion相關的meta資料優化…等\n    - 單元測試：以jest為主，進行函式的單元測試\n\n### 成果展現\n\n待補截圖\n\n### 時程規劃 — 入職後到現在的Main Project\n\n- 為期半個月，完成主要的前端「可抽換頁面」架構撰寫\n- 接著半個月，進行vue3的組件與功能開發，並逐步加上TypeScript。\n- 後續約半年～一年時間繼續「第二階段」的開發，以「會員系統」為主的新功能開發\n\n---\n\n### REF\n\n- https://bbin-news.com/"
+}

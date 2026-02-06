@@ -1,0 +1,26 @@
+{
+  "id": 115,
+  "articleId": "ga4-custom-form-report",
+  "title": "【GA4】GA4怎麼看「手機」的事件呢？ 在報表篩選就行囉！（含新增自訂報表教學）",
+  "subTitle": "看你只想看的數據吧！",
+  "description": "- 主要流程：\n    - 報表\n    - 找到「有事件」的報表\n    - 點擊「自訂報表」按鈕（最右邊的鉛筆icon）\n    - 在「報表篩選器」欄位，新增篩選器\n    - 選取「裝置類別」維度\n    - 維度值勾選「mobile」\n    - 點擊「儲存」按鈕，選擇「儲存為新的報表」，套用自訂篩選器的報表就完成囉～",
+  "publishedAt": "2023-05-04T06:12:45.042Z",
+  "thumbnailUrl": "https://i.imgur.com/UeadFpr.png",
+  "tags": [
+    "程式開發",
+    "GA4"
+  ],
+  "relatedArticles": [
+    {
+      "articleId": "gtm-custom-variables-simple-sample",
+      "title": "【GTM】簡單的「自訂變數」範例",
+      "subTitle": "注意變數名稱的設定"
+    },
+    {
+      "articleId": "ga4-debug-view",
+      "title": "【GA4】【GTM】用DebugView檢查GA4事件吧！ #debug #QA",
+      "subTitle": "比查看即時事件更好用"
+    }
+  ],
+  "content": "## 重點 — 套用篩選器就好囉\n\n- 主要流程：\n    - 報表\n    - 找到「有事件」的報表\n    - 點擊「自訂報表」按鈕（最右邊的鉛筆icon）\n    - 在「報表篩選器」欄位，新增篩選器\n    - 選取「裝置類別」維度\n    - 維度值勾選「mobile」\n    - 點擊「儲存」按鈕，選擇「儲存為新的報表」，套用自訂篩選器的報表就完成囉～\n\n## 實作流程\n\n### 1. 進到已經建立好「事件」的報表\n\n你的操作介面可能長得不一樣，總之就是找到「事件」這個報表（若你的GA4是新創建的資源，則可以在`報表 > 生命週期 > 參與 > 事件` 這邊找到）\n\n![https://i.imgur.com/aV8fFIz.png](https://i.imgur.com/aV8fFIz.png)\n\n### 2. 進入該報表後，點擊「自訂報表」按鈕\n\n![https://i.imgur.com/Dgey6d8.png](https://i.imgur.com/Dgey6d8.png)\n\n### 3. 在「報表篩選器」中，新增篩選器\n\n並選擇「裝置類別」的維度，`維度值選擇「mobile」`\n\n![https://i.imgur.com/0ogZs1E.png](https://i.imgur.com/0ogZs1E.png)\n\n![https://i.imgur.com/65Cxn4Q.png](https://i.imgur.com/65Cxn4Q.png)\n\n![https://i.imgur.com/QfMMVbx.png](https://i.imgur.com/QfMMVbx.png)\n\n### 4. 點擊「套用」，接著點擊「儲存」，選擇「儲存為新報表」\n\n![https://i.imgur.com/WfV24vL.png](https://i.imgur.com/WfV24vL.png)\n\n![https://i.imgur.com/hy7mFOU.png](https://i.imgur.com/hy7mFOU.png)\n\n### 5. 你會發現，咦？ 剛剛新增的報表…在哪裏… 🤔 ???\n\n別擔心，報表沒消失，只是沒顯示出來而已。\n\n![https://i.imgur.com/vPTtWVo.png](https://i.imgur.com/vPTtWVo.png)\n\n### 6. 到「媒體庫」那邊，找到剛剛的報表\n\n找到你想要在哪個「集合」中顯示，點擊「編輯集合」\n\n![https://i.imgur.com/4UVmlem.png](https://i.imgur.com/4UVmlem.png)\n\n![https://i.imgur.com/ddL6Ydb.png](https://i.imgur.com/ddL6Ydb.png)\n\n### 7. 選擇你想要歸屬的資料夾，將報表拖拉過去，按下「儲存」。\n\n![https://i.imgur.com/XaIUXsw.png](https://i.imgur.com/XaIUXsw.png)\n\n### 8. 點擊「返回」，完成！\n\n這樣就能在資料夾中，看到剛剛新增的報表呦！\n\n![https://i.imgur.com/DBb2zxf.png](https://i.imgur.com/DBb2zxf.png)\n\n---\n\n## REF\n\n- 自己研究的"
+}

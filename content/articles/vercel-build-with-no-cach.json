@@ -1,0 +1,14 @@
+{
+  "id": 180,
+  "articleId": "vercel-build-with-no-cach",
+  "title": "【Vercel】如何打包時不用 build cache？",
+  "subTitle": "調整設定給參數就好",
+  "description": "有 3 種方式可以在 build 時，不理會 buildCache 去「重新打包」",
+  "publishedAt": "2024-10-29T12:19:28.055Z",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1541282474174-3f672fa6d210?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "tags": [
+    "程式開發"
+  ],
+  "relatedArticles": [],
+  "content": "### 重點\n\n> 有 3 種方式可以在 build 時，不理會 buildCache 去「重新打包」\n> \n- 若為 webhook 觸發，可以加上 query param\n- 也可設定 env\n- 最終解決方法：手動去 Vercel 後台按 `Redeply` 按鈕\n\n### 實作\n\n- 自己是設定這種方法\n👉 webhook\n    \n    ```tsx\n    {WEBHOOK_URL}??buildCache=false\n    ```\n    \n- 設定 env\n    \n    ```tsx\n    VERCEL_FORCE_NO_BUILD_CACHE=true\n    ```\n    \n\n---\n\n### REF\n\n- https://vercel.com/docs/deployments/deploy-hooks#build-cache\n    - 順帶一提，2021 左右創建的 hook，預設是 buildCache 為 false，每次打包都會是全新的一份。\n- https://github.com/vercel/vercel/discussions/8057"
+}

@@ -1,0 +1,14 @@
+{
+  "id": 117,
+  "articleId": "intro-page-simple-editor",
+  "title": "【專案】【React】說明頁簡易編輯器",
+  "subTitle": "以Slate富文本套件為核心的簡易編輯器",
+  "description": "使用者可以在「後台」自行創建「說明頁」內容，不用再打開Visual Studio Code，不必再實際動手編寫html，解決非工程師使用者得親自「更改html代碼」的困擾。",
+  "publishedAt": "2023-06-05T15:30:03.485Z",
+  "thumbnailUrl": "https://i.imgur.com/YLBaG9U.png",
+  "tags": [
+    "projects"
+  ],
+  "relatedArticles": [],
+  "content": "### 摘要 — 壓力之下仍維持品質\n\ndemo網址：\nhttp://pcs-go-plus-247649813.ap-northeast-1.elb.amazonaws.com/#/zh/games-management/poker-hall\n\n使用者可以在「後台」自行創建「說明頁」內容，不用再打開Visual Studio Code，不必再實際動手編寫html，解決非工程師使用者得親自「更改html代碼」的困擾。\n\n僅以2~3週開發完成主架構，即便專案時間緊迫，仍維持程式的高品質水準，後續另一個專案基於此專案開發，毋須打掉重構，可順利地擴充功能來進行專案。\n\n---\n\n### 專案中的角色 — 前台與後台並進\n\n- 以SlateEditor套件開發後台的「富文本編輯」，使用者可以自行創建「說明頁」內容，套用「預先寫好」的組件，直接編輯其中內容，而不必動手改code。\n- 使用了React Context進行global state管理，以最新版ReactRouter做路由切換\n- 僅以2~3週開發完成主架構，仍維持程式的高品質水準，後續進行新功能開發，毋須打掉重構再繼續。\n\n### 主要使用的技術、工具或系統\n\n- 技術\n    - 核心：React18, Slate, Slate-react, React-router,TypeScript\n    - 其他：axios, mui, sass\n\n### 成果展現\n\n前台\n\n![](https://i.imgur.com/LsRakhM.png)\n\n後台\n\n![](https://i.imgur.com/YLBaG9U.png)\n\n![](https://i.imgur.com/4uJp2Ff.png)\n\n### 時程規劃\n\n- 約15個工作天的開發，從無到有，以agile敏捷開發的方式，逐步迭代開發前台與編輯內容的後台\n- 後續根據回饋，僅有做一些設計上的微調，與少數的bug修正，幾乎無太多根本上的調整。\n\n---\n\n### REF\n\n- http://pcs-go-plus-247649813.ap-northeast-1.elb.amazonaws.com/#/zh/games-management/poker-hall"
+}

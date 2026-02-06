@@ -1,0 +1,15 @@
+{
+  "id": 39,
+  "articleId": "nuxt3-proxy-setting",
+  "title": "Nuxt3中如何使用proxy代理伺服器？",
+  "subTitle": "設定在nuxt.config.ts",
+  "description": "Nuxt3設定proxy，寫在nuxt.config.ts",
+  "publishedAt": "2022-08-26T15:43:40.578Z",
+  "thumbnailUrl": "https://imgur.com/U4sZNOs.jpg",
+  "tags": [
+    "vue",
+    "nuxt3"
+  ],
+  "relatedArticles": [],
+  "content": "### 核心\n\n- 設定寫在nuxt.config.ts中的vite屬性\n- 記得要「rewrite」路徑\n- 請用`http`而非https\n\n### 實作\n\n- nuxt.config.ts\n    \n    ```tsx\n    import { defineNuxtConfig } from 'nuxt';\n    \n    // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config\n    export default defineNuxtConfig({\n        vite: {\n            server: {\n                proxy: {\n                    '/api-main': {\n                        target: 'http://your-api-here',\n                        ws: true,\n                        changeOrigin: true,\n                        rewrite: (path) => path.replace(/^\\/api-main/, ''), \n    \t\t\t\t\t\t\t\t\t\t// rewrite這個proxy的路徑\n                    },\n                },\n            },\n        },\n    });\n    ```\n    \n\n---\n\n### REF\n\n[https://stackblitz.com/edit/nuxt-starter-g2m6nk?file=README.md](https://stackblitz.com/edit/nuxt-starter-g2m6nk?file=README.md)\n\n[https://github.com/nuxt/framework/discussions/1223](https://github.com/nuxt/framework/discussions/1223)"
+}

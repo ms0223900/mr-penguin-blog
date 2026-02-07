@@ -6,7 +6,7 @@ class ArticleMapper {
     return {
       uid: article.id.toString(),
       createdAt: article.publishedAt,
-      id: article.id.toString(),
+      id: article.articleId.toString(),
       title: article.title,
       subTitle: article.subTitle || '',
       description: article.description || '',

@@ -1,13 +1,9 @@
 import { Container, Grid, GridProps } from '@mui/material';
 import PostCardItem from 'components/Post/PostCardItem';
 import { WEB_TITLE } from 'config';
-import queryArticleList from 'gql/queryArticleList';
-import { GetServerSideProps, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { SinglePostFromPostList } from 'pages/api/posts';
-import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
-import React, { memo } from 'react';
-import posts from 'static/posts';
+import { memo } from 'react';
 import PostDetailCardItem from './PostDetailCardItem';
 import styles from './post-list.module.scss';
 
@@ -60,63 +56,6 @@ const PostListView = (props: PostListViewProps) => {
 };
 
 const isDEV = process.env.NODE_ENV === 'development';
-
-const getStaticProps: GetStaticProps<PostListViewProps> = async (ctx) => {
-  // const res = {
-  //   data: posts,
-  // };
-  // const postListData = res.data;
-  try {
-    const queried = await queryArticleList();
-    const postListData = QueriedArticleHandlers.handleQueriedArticleList(
-      queried.data.articles
-    );
-
-    return {
-      props: {
-        postListData,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        postListData: [],
-      },
-    };
-  }
-};
-
-const getServerSideProps: GetServerSideProps<PostListViewProps> = async (
-  ctx
-) => {
-  // const res = {
-  //   data: posts,
-  // };
-  // const postListData = res.data;
-  try {
-    const queried = await queryArticleList();
-    const postListData = QueriedArticleHandlers.handleQueriedArticleList(
-      queried.data.articles
-    );
-
-    return {
-      props: {
-        postListData,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        postListData: [],
-      },
-    };
-  }
-};
-
-export { getStaticProps };
-// export { getServerSideProps }
 
 const Comp = memo(PostListView) as any;
 

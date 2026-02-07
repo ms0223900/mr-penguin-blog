@@ -1,8 +1,7 @@
-import { GetStaticProps } from 'next';
 import PostList, { PostListViewProps } from '@/components/Post/PostList';
-import queryProjectTagArticles from '@/gql/queryProjectTagArticles';
-import QueriedArticleHandlers from '@/lib/handlers/QueriedArticleHandlers';
 import ProjectTabs from '@/components/Projects/ProjectTabs';
+import { articleQueryService } from '@/repository/article/ArticleQueryService';
+import { GetStaticProps } from 'next';
 
 const WorkProjectList = ({ postListData }: PostListViewProps) => {
     return (
@@ -19,11 +18,7 @@ const WorkProjectList = ({ postListData }: PostListViewProps) => {
 
 export const getStaticProps: GetStaticProps<PostListViewProps> = async () => {
     try {
-        const queried = await queryProjectTagArticles();
-
-        const postListData = QueriedArticleHandlers.handleQueriedArticleList(
-            queried.data.articles
-        );
+        const postListData = articleQueryService.getProjectTagArticleList();
 
         return {
             props: {

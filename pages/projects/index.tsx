@@ -1,10 +1,8 @@
-import PostList, { PostListViewProps } from 'components/Post/PostList'; // getServerSideProps,
-import queryProjectTagArticles from 'gql/queryProjectTagArticles';
-import QueriedArticleHandlers from 'lib/handlers/QueriedArticleHandlers';
+import { SinglePostVO } from '@/lib/handlers/SinglePostVO';
+import { articleQueryService } from '@/repository/article/ArticleQueryService';
+import { PostListViewProps } from 'components/Post/PostList'; // getServerSideProps,
 import { GetStaticProps } from 'next';
 import { STATIC_ROUTES } from "../../router";
-import { SinglePostVO } from "lib/handlers/SinglePostVO";
-import { useRouter } from 'next/router';
 
 const GENERATE_PASSWORD_POST = SinglePostVO.makePost({
     id: `${STATIC_ROUTES.sideProjects}/generate-password`,
@@ -53,11 +51,7 @@ export const getStaticProps: GetStaticProps<PostListViewProps> = async (
     ctx
 ) => {
     try {
-        const queried = await queryProjectTagArticles();
-
-        const postListData = QueriedArticleHandlers.handleQueriedArticleList(
-            queried.data.articles
-        );
+        const postListData = articleQueryService.getProjectTagArticleList();
 
         return {
             props: {

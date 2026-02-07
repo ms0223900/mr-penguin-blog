@@ -1,14 +1,14 @@
+import { articleQueryService } from '@/repository/article/ArticleQueryService';
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
 import TagLinkItem from 'components/Common/TagLinkItem';
-import { WEB_TITLE } from 'config';
-import Head from 'next/head';
-import React, { memo } from 'react';
-import Script from 'next/script';
 import PostList, {
-  getStaticProps,
   PostListViewProps,
 } from 'components/Post/PostList';
-export { getStaticProps };
+import { WEB_TITLE } from 'config';
+import { GetStaticProps } from 'next';
+import Head from 'next/head';
+import Script from 'next/script';
+import { memo } from 'react';
 
 export type SearchedResultPageProps = PostListViewProps;
 
@@ -100,5 +100,25 @@ const SearchedResultPage = ({ postListData }: SearchedResultPageProps) => {
     </Container>
   );
 };
+
+export const getStaticProps: GetStaticProps<PostListViewProps> = async (ctx) => {
+  try {
+    const postListData = articleQueryService.getArticleList();
+
+    return {
+      props: {
+        postListData,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        postListData: [],
+      },
+    };
+  }
+};
+
 
 export default memo(SearchedResultPage);

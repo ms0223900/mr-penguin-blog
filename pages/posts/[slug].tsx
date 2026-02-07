@@ -1,3 +1,4 @@
+import { articleQueryService } from '@/repository/article/ArticleQueryService';
 import { Grid, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
@@ -9,15 +10,10 @@ import RelatedArticleLinkList, {
 } from 'components/Post/RelatedArticleLinkList';
 import { API, WEB_TITLE } from 'config';
 import GA_EVENTS from 'ga';
-import queryArticleByArticleId from 'gql/queryArticleByArticleId';
-import queryArticleByTag from 'gql/queryArticleByTag';
-import queryArticleList from 'gql/queryArticleList';
-import queryReadMoreArticleList from 'gql/queryReadMoreArticleList';
 import MarkdownContentHandlers from 'lib/handlers/MarkdownContentHandlers';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import React, { memo, useEffect, useMemo } from 'react';
-import QueriedArticleHandlers from '../../lib/handlers/QueriedArticleHandlers';
+import { memo, useEffect, useMemo } from 'react';
 import styles from './slug.module.scss';
 
 export interface PostViewProps {
@@ -97,11 +93,8 @@ const PostView = (props: PostViewProps) => {
 };
 
 const getStaticPaths: GetStaticPaths = async () => {
-  // const paths = posts.map((p) => `/posts/${p.id}`);
-  const queried = await queryArticleList();
-  const paths = QueriedArticleHandlers.getArticleIdList(
-    queried.data.articles
-  ).map((id) => `/posts/${id}`);
+  const paths = articleQueryService.getArticleList().map(post => `/posts/${post.id}`);
+
   return {
     paths,
     fallback: 'blocking',
@@ -120,23 +113,8 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
   // const res = {
   //   data: getMatchedPost(postId),
   // };
-  const queried = await queryArticleByArticleId(postId);
-  const res = queried.data.articles.data[0]
-    ? QueriedArticleHandlers.handleQueriedArticleList(queried.data.articles)[0]
-    : undefined;
-
-  let articleData: SinglePost = {
-    uid: -1,
-    id: '',
-    subTitle: '',
-    title: 'NotFound',
-    description: 'Post not found',
-    content: '',
-    tagList: [],
-    createdAt: '',
-    thumbnail: null,
-    relatedArticleList: [],
-  };
+  const res = articleQueryService.getArticleById(postId);
+  let articleData: SinglePost = res;
   if (res) {
     articleData = res;
   }
@@ -151,21 +129,13 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
     let otherPostListData = [];
     if (tagName) {
       otherPostListData = (
-        await queryArticleByTag(tagName, {
-          paginationLimit,
-          articleUid,
-        })
-      ).data.articles.data;
+        articleQueryService.getArticleListByTag(tagName).slice(0, paginationLimit)
+      );
     } else {
-      otherPostListData = (await queryReadMoreArticleList(articleUid)).data
-        .articles.data;
+      otherPostListData = articleQueryService.getReadMoreArticleList(String(articleUid));
     }
-    const handledOtherPostListData =
-      QueriedArticleHandlers.convertQueriedSimpleArticleList({
-        data: otherPostListData,
-      }).filter((a) => !relatedPostListData.map((r) => r.id).includes(a.id));
 
-    relatedPostListData = [...relatedPostListData, ...handledOtherPostListData];
+    relatedPostListData = [...relatedPostListData, ...otherPostListData];
   }
   // console.log('articleUid: ', articleUid);
   // console.log(
@@ -223,8 +193,7 @@ const getStaticProps: GetStaticProps<PostViewProps> = async ({
 //   };
 // };
 
-export { getStaticPaths };
-export { getStaticProps };
+export { getStaticPaths, getStaticProps };
 // export { getServerSideProps };
 
 export default memo(PostView);

@@ -1,11 +1,8 @@
+import { articleQueryService } from '@/repository/article/ArticleQueryService';
 import HomepageContainer from 'components/Homepage/HomepageContainer';
-import {
-  PostList,
-  getStaticProps,
-  PostListViewProps,
-} from 'components/Post/PostList';
+import { PostListViewProps, } from 'components/Post/PostList';
 import { WEB_TITLE } from 'config';
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.scss';
 
@@ -34,6 +31,24 @@ const Home: NextPage<HomeProps> = (props: HomeProps) => {
   );
 };
 
-export { getStaticProps };
+
+export const getStaticProps: GetStaticProps<PostListViewProps> = async (ctx) => {
+  try {
+    const postListData = articleQueryService.getArticleList();
+
+    return {
+      props: {
+        postListData,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        postListData: [],
+      },
+    };
+  }
+};
 
 export default Home;

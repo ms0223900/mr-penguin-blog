@@ -3,9 +3,11 @@ import ArticleMapper from "@/lib/content/articleMapper";
 import { SinglePost } from "common-types";
 
 interface ArticleQueryService {
+  getArticleById(articleId: string): SinglePost;
+
   getArticleList(limit: number, offset: number): SinglePost[];
 
-  getArticleListByTag(tag: string, limit: number, offset: number): SinglePost[];
+  getArticleListByTag(tag: string): SinglePost[];
 
   getReadMoreArticleList(articleId: string): SinglePost[];
 }

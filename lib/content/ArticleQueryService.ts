@@ -7,12 +7,16 @@ interface ArticleQueryService {
 
   getArticleList(limit?: number, offset?: number): SinglePost[];
 
+  getProjectTagArticleList(): SinglePost[];
+
   getArticleListByTag(tag: string): SinglePost[];
 
   getReadMoreArticleList(articleId: string): SinglePost[];
 }
 
 class ArticleQueryServiceImpl implements ArticleQueryService {
+  PROJECT_TAG = 'projects';
+
   getArticleList(limit: number = -1, offset: number = 0): SinglePost[] {
     const articles = getAllArticles();
 
@@ -23,6 +27,10 @@ class ArticleQueryServiceImpl implements ArticleQueryService {
     const articles = this.getArticleList();
 
     return articles.filter((a) => a.tagList.includes(tag));
+  }
+
+  getProjectTagArticleList(): SinglePost[] {
+    return this.getArticleListByTag(this.PROJECT_TAG);
   }
 
   getArticleById(articleId: string): SinglePost {

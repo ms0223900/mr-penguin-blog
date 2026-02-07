@@ -1,5 +1,5 @@
-import { getAllArticles, getArticleById } from "@/lib/content/article.repository";
-import ArticleMapper from "@/lib/content/ArticleMapper";
+import ArticleMapper from "@/repository/article/ArticleMapper";
+import { getAllArticles, getArticleById } from "@/repository/article/ArticleRepository";
 import { SinglePost } from "common-types";
 
 interface ArticleQueryService {

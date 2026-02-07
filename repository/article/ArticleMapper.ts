@@ -1,4 +1,4 @@
-import { Article } from "@/lib/content/article.types";
+import { Article } from "@/repository/article/article.types";
 import { SinglePost } from "common-types";
 
 class ArticleMapper {

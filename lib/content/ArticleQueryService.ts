@@ -5,7 +5,7 @@ import { SinglePost } from "common-types";
 interface ArticleQueryService {
   getArticleById(articleId: string): SinglePost;
 
-  getArticleList(limit: number, offset: number): SinglePost[];
+  getArticleList(limit?: number, offset?: number): SinglePost[];
 
   getArticleListByTag(tag: string): SinglePost[];
 

@@ -27,7 +27,7 @@ export function getAllArticles(): Article[] {
     );
 }
 
-export function getArticleById(articleId: string): Article | null {
+export function getArticleById(articleId: Article['articleId']): Article | null {
   const filePath = path.join(ARTICLES_DIR, `${articleId}.json`);
 
   if (!fs.existsSync(filePath)) return null;
@@ -39,4 +39,16 @@ export function getArticleById(articleId: string): Article | null {
 export function queryArticleByTag(tag: string): Article[] {
   const articles = getAllArticles();
   return articles.filter((a) => a.tags.includes(tag));
+}
+
+export function queryReadMoreArticleList(uid: Article['id']): Article[] {
+  const articles = getAllArticles();
+
+  const sortedArticles = articles.sort((a, b) => b.id - a.id);
+
+  const greaterArticles = sortedArticles.filter((a) => a.id > uid);
+
+  const lessArticles = sortedArticles.filter((a) => a.id < uid);
+
+  return [...greaterArticles, ...lessArticles].slice(0, 3);
 }

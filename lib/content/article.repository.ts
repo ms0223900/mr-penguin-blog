@@ -35,3 +35,8 @@ export function getArticleById(articleId: string): Article | null {
   const raw = fs.readFileSync(filePath, 'utf8');
   return JSON.parse(raw) as Article;
 }
+
+export function queryArticleByTag(tag: string): Article[] {
+  const articles = getAllArticles();
+  return articles.filter((a) => a.tags.includes(tag));
+}

@@ -5,8 +5,8 @@
 
 ### 程序流程
 - 使用 Notion MCP 擷取特定頁面內容，將 content 存成 json 的 content 欄位。
-- 將 Notion 文章中的圖片下載到 public/assets/ 目錄，並生成檔名對照表，修改 content 中的圖片路徑為 /assets/{新檔名}。
-- json 檔案存於 content/articles/{articleId}.json。
+- 將 Notion 文章中的圖片下載到 `public/assets/` 目錄，並生成檔名對照表，修改 content 中的圖片路徑為 `public/assets/{新檔名}`。
+- json 檔案存於 `content/articles/articleTemp.json`。
 - 直接生成這些欄位：
   - publishedAt: {now}
   - content: {NOTION_CONTENT}

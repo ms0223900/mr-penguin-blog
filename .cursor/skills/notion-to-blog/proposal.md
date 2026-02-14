@@ -3,8 +3,8 @@
 
 ## 大致步驟：
 
-### 程序流程
-- 使用 Notion MCP 擷取特定頁面內容，將 content 存成 json 的 content 欄位。
+### 第一步：程序流程
+- 使用 Notion MCP 擷取特定頁面內容，將 content 存成 json 的 content 欄位。（或可改用 Notion Client 來取得 content）
 - 將 Notion 文章中的圖片下載到 `public/assets/` 目錄，並生成檔名對照表，修改 content 中的圖片路徑為 `public/assets/{新檔名}`。
 - json 檔案存於 `content/articles/articleTemp.json`。
 - 直接生成這些欄位：
@@ -13,7 +13,7 @@
   - thumbnailUrl: {NOTION_CONTENT中的第一張圖片}
   - relatedArticleIds: {跟這篇相同tag的前三篇最新文章}
 
-### AI 自動判斷內容
+### 第二步：AI 自動判斷內容
 從 Notion 獲取內容之後，請 AI 生成以下欄位至 json 檔案。
 - title：生成文章標題，優先取用 Notion 頁面中的 title 欄位，如果沒有則取用 content 中的第一個 h1 標題，再沒有就 AI 生成。
 - subTitle：生成文章副標題，由 AI 生成。

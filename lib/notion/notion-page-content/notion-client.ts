@@ -1,4 +1,5 @@
 import { Client, QueryDataSourceParameters, QueryDataSourceResponse, } from '@notionhq/client';
+import dotenv from 'dotenv';
 import {
   ILogger,
   INotionClientService,
@@ -6,6 +7,8 @@ import {
   NotionBlock,
   NotionPage
 } from './types';
+
+dotenv.config();
 
 /**
  * Notion API client service with connection management

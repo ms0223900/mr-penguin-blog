@@ -3,8 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { getSearchByValParams } from 'lib/custom-hooks/useSearchByVal';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { memo } from 'react';
-import { STATIC_ROUTES } from 'router';
+import { memo } from 'react';
 
 const defaultColor = '#ddd';
 
@@ -23,7 +22,6 @@ const useStyles = makeStyles<Theme, TagLinkItemProps>(
       padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
       borderRadius: `10000px`,
       backgroundColor: (props) => {
-        console.log(props);
         return props.color || defaultColor;
       },
       cursor: 'pointer',
@@ -51,14 +49,14 @@ const TagLinkItem = (props: TagLinkItemProps) => {
           style={{
             backgroundColor: props.color || defaultColor,
           }}
-          // onClick={() => {
-          //   router.push({
-          //     pathname: '/search/[searchVal]',
-          //     query: {
-          //       searchVal: `@${tagName}`,
-          //     },
-          //   });
-          // }}
+        // onClick={() => {
+        //   router.push({
+        //     pathname: '/search/[searchVal]',
+        //     query: {
+        //       searchVal: `@${tagName}`,
+        //     },
+        //   });
+        // }}
         >
           {`#${tagName}`}
         </a>

@@ -10,11 +10,12 @@
 import { NotionContentExtractor } from '@/lib/notion/notion-page-content/content-extractor';
 import { EnvNotionConfig, NotionClientService } from '@/lib/notion/notion-page-content/notion-client';
 import { PageQueryService } from '@/lib/notion/notion-page-content/page-query';
+import { PageContent } from '@/lib/notion/notion-page-content/types';
 import { Article } from '@/repository/article/article.types';
 import path from 'path';
 import { AIContentAnalyzer } from './ai-content-analyzer';
 import { ArticleGenerator } from './article-generator';
-import { ImageProcessor } from './image-processor';
+import { ImageProcessingResult, ImageProcessor } from './image-processor';
 
 export interface NotionToBlogConfig {
   notionToken?: string;
@@ -86,75 +87,19 @@ export class NotionToBlogService {
     callbacks: ConversionCallbacks = {}
   ): Promise<ConversionResult> {
     try {
-      console.log(`🚀 Starting conversion for Notion page: ${pageId}`);
+      const pageData = await this.getPageData(pageId);
 
-      // Step 1: Fetch page data from Notion
-      console.log(`📥 Fetching page data from Notion...`);
-      const pageData = await this.pageQueryService.getPageData(pageId);
+      callbacks.onBeforeProcess?.(pageData);
 
-      if (callbacks.onBeforeProcess) {
-        callbacks.onBeforeProcess(pageData);
-      }
+      const extractedContent = this.extractPageData(pageData);
 
-      // Step 2: Extract content
-      console.log(`📝 Extracting content...`);
-      const contentResult = this.contentExtractor.extractContent(pageData);
+      const imageProcessingResult = await this.processContentImage(extractedContent, callbacks);
 
-      if (!contentResult.success) {
-        throw new Error(`Failed to extract content: ${contentResult.error}`);
-      }
+      const article = await this.analysizePageContent(pageData, imageProcessingResult);
 
-      const extractedContent = contentResult.data!.content;
-      console.log(`✅ Content extracted (${extractedContent.length} characters)`);
+      callbacks.onAfterProcess?.(article);
 
-      // Step 3: Process images
-      console.log(`🖼️  Processing images...`);
-      const imageProcessingResult = await this.imageProcessor.processImagesInContent(
-        extractedContent,
-        (imageUrl, localPath) => {
-          if (callbacks.onImageDownload) {
-            callbacks.onImageDownload(imageUrl, localPath);
-          }
-        }
-      );
-
-      console.log(`✅ Images processed: ${imageProcessingResult.processed} downloaded, ${imageProcessingResult.skipped} skipped`);
-
-      // Step 4: Generate article with AI analysis if enabled
-      console.log(`📄 Generating article...`);
-
-      let article: Article;
-      if (this.aiAnalyzer && this.config.enableAiAnalysis) {
-        console.log(`🤖 Performing AI content analysis...`);
-        article = await this.articleGenerator.generateArticleWithAIAnalysis(
-          pageData,
-          imageProcessingResult.processedContent,
-          this.aiAnalyzer,
-          this.config.maxRelatedArticles
-        );
-      } else {
-        console.log(`📝 Generating article without AI analysis...`);
-        article = await this.articleGenerator.generateArticle(
-          pageData,
-          imageProcessingResult.processedContent,
-          this.config.maxRelatedArticles
-        );
-      }
-
-      if (callbacks.onAfterProcess) {
-        callbacks.onAfterProcess(article);
-      }
-
-      // Step 5: Save article
-      console.log(`💾 Saving article...`);
-      const saveResult = await this.articleGenerator.saveArticle(article);
-
-      if (!saveResult.success) {
-        throw new Error(`Failed to save article: ${saveResult.error}`);
-      }
-
-      console.log(`✅ Article saved: ${saveResult.articlePath}`);
-      console.log(`🎉 Conversion completed successfully!`);
+      const saveResult = await this.saveArticle(article);
 
       return {
         success: true,
@@ -174,6 +119,79 @@ export class NotionToBlogService {
         error: error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
+  }
+
+  private async saveArticle(article: Article) {
+    console.log(`💾 Saving article...`);
+    const saveResult = await this.articleGenerator.saveArticle(article);
+
+    if (!saveResult.success) {
+      throw new Error(`Failed to save article: ${saveResult.error}`);
+    }
+
+    console.log(`✅ Article saved: ${saveResult.articlePath}`);
+    console.log(`🎉 Conversion completed successfully!`);
+    return saveResult;
+  }
+
+  private async analysizePageContent(pageData: PageContent, imageProcessingResult: ImageProcessingResult) {
+    console.log(`📄 Generating article...`);
+
+    let article: Article;
+    if (this.aiAnalyzer && this.config.enableAiAnalysis) {
+      console.log(`🤖 Performing AI content analysis...`);
+      article = await this.articleGenerator.generateArticleWithAIAnalysis(
+        pageData,
+        imageProcessingResult.processedContent,
+        this.aiAnalyzer,
+        this.config.maxRelatedArticles
+      );
+    } else {
+      console.log(`📝 Generating article without AI analysis...`);
+      article = await this.articleGenerator.generateArticle(
+        pageData,
+        imageProcessingResult.processedContent,
+        this.config.maxRelatedArticles
+      );
+    }
+    return article;
+  }
+
+  private async processContentImage(extractedContent: string, callbacks: ConversionCallbacks) {
+    console.log(`🖼️  Processing images...`);
+    const imageProcessingResult = await this.imageProcessor.processImagesInContent(
+      extractedContent,
+      (imageUrl, localPath) => {
+        if (callbacks.onImageDownload) {
+          callbacks.onImageDownload(imageUrl, localPath);
+        }
+      }
+    );
+
+    console.log(`✅ Images processed: ${imageProcessingResult.processed} downloaded, ${imageProcessingResult.skipped} skipped`);
+    return imageProcessingResult;
+  }
+
+  private extractPageData(pageData: PageContent) {
+    console.log(`📝 Extracting content...`);
+    const contentResult = this.contentExtractor.extractContent(pageData);
+
+    if (!contentResult.success) {
+      throw new Error(`Failed to extract content: ${contentResult.error}`);
+    }
+
+    const extractedContent = contentResult.data!.content;
+    console.log(`✅ Content extracted (${extractedContent.length} characters)`);
+    return extractedContent;
+  }
+
+  private async getPageData(pageId: string): Promise<PageContent> {
+    console.log(`🚀 Starting conversion for Notion page: ${pageId}`);
+
+    // Step 1: Fetch page data from Notion
+    console.log(`📥 Fetching page data from Notion...`);
+    const pageData = await this.pageQueryService.getPageData(pageId);
+    return pageData;
   }
 
   /**

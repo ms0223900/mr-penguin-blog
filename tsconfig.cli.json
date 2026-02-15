@@ -2,14 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "typeRoots": [
-      "./@types",
-      "./node_modules/@types"
-    ],
-    "types": [
-      "@types/gtag.js",
-      "@types/jest"
-    ]
+    "typeRoots": ["./@types", "./node_modules/@types"],
+    "types": ["common-types", "@types/gtag.js", "@types/jest"]
   },
   "include": [
     "src/notion-to-blog/scripts/convert-cli.ts",

@@ -1,11 +1,11 @@
 import {
+  IContentExtractor,
+  ILogger,
   NotionBlock,
   NotionBlockType,
   PageContent,
   PageContentResult,
-  IContentExtractor,
-  RichTextContent,
-  ILogger
+  RichTextContent
 } from './types';
 
 /**
@@ -59,7 +59,7 @@ export class NotionContentExtractor implements IContentExtractor {
   /**
    * Extract plain text from Notion blocks
    */
-  private extractPlainTextFromBlocks(blocks: NotionBlock[], separator: string = '\n'): string {
+  private extractPlainTextFromBlocks(blocks: NotionBlock[], separator = '\n'): string {
     const contentParts: string[] = [];
 
     for (const block of blocks) {

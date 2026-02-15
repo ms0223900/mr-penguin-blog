@@ -107,7 +107,7 @@ export class NotionClientService implements INotionClientService {
     let cursor: string | null | undefined = undefined;
 
     do {
-      const response = await this.getPageBlocks({
+      const response: ListBlockChildrenResponse = await this.getPageBlocks({
         block_id: blockId,
         start_cursor: cursor
       });

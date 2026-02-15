@@ -12,7 +12,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "download-notion-images": "node scripts/download-notion-images.mjs",
-    "migrate": "ts-node -P tsconfig.migrate.json scripts/migrate-strapi-to-json/migrate-strapi-to-json.ts"
+    "migrate": "ts-node -P tsconfig.migrate.json scripts/migrate-strapi-to-json/migrate-strapi-to-json.ts",
+    "convert-notion": "node src/notion-to-blog/scripts/simple-convert-cli.ts",
+    "convert-notion-full": "npx ts-node -P tsconfig.cli.json src/notion-to-blog/scripts/convert-cli.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",

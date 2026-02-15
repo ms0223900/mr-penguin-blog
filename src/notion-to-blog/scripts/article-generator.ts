@@ -204,7 +204,7 @@ export class ArticleGenerator {
       const allTags = new Set<string>();
 
       articles.forEach(article => {
-        article.tagList.forEach(tag => allTags.add(tag));
+        article.tagList.forEach((tag: string) => allTags.add(tag));
       });
 
       return Array.from(allTags);

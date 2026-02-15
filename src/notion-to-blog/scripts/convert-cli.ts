@@ -7,7 +7,7 @@
  */
 
 // Register tsconfig paths for module resolution
-require('tsconfig-paths/register');
+import 'tsconfig-paths/register';
 
 import { NotionToBlogService } from './notion-to-blog-service';
 

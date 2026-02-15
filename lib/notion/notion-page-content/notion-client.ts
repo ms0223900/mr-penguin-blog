@@ -1,4 +1,4 @@
-import { Client, QueryDataSourceParameters, QueryDataSourceResponse, } from '@notionhq/client';
+import { Client, ListBlockChildrenParameters, ListBlockChildrenResponse, QueryDataSourceParameters, QueryDataSourceResponse, } from '@notionhq/client';
 import dotenv from 'dotenv';
 import {
   ILogger,
@@ -88,13 +88,12 @@ export class NotionClientService implements INotionClientService {
   /**
    * Get page blocks (content)
    */
-  async getPageBlocks(blockId: string, params: any = {}): Promise<any> {
+  async getPageBlocks(params: ListBlockChildrenParameters): Promise<ListBlockChildrenResponse> {
     const client = this.getNotionClient();
 
     const defaultParams = {
-      block_id: blockId,
+      ...params,
       page_size: 100,
-      ...params
     };
 
     return await client.blocks.children.list(defaultParams);
@@ -105,14 +104,15 @@ export class NotionClientService implements INotionClientService {
    */
   async getAllBlocks(blockId: string): Promise<NotionBlock[]> {
     const allBlocks: NotionBlock[] = [];
-    let cursor: string | undefined = undefined;
+    let cursor: string | null | undefined = undefined;
 
     do {
-      const response = await this.getPageBlocks(blockId, {
+      const response = await this.getPageBlocks({
+        block_id: blockId,
         start_cursor: cursor
       });
 
-      allBlocks.push(...response.results);
+      allBlocks.push(...response.results as NotionBlock[]);
       cursor = response.has_more ? response.next_cursor : undefined;
     } while (cursor);
 

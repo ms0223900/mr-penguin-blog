@@ -3,6 +3,8 @@
  * These types define the structure of Notion pages and blocks for content extraction
  */
 
+import { ListBlockChildrenParameters, ListBlockChildrenResponse } from "@notionhq/client/build/src/api-endpoints";
+
 // Notion block types enum
 export enum NotionBlockType {
   PARAGRAPH = 'paragraph',
@@ -67,7 +69,7 @@ export interface INotionConfig {
 export interface INotionClientService {
   testConnection(): Promise<boolean>;
   getPage(pageId: string): Promise<NotionPage>;
-  getPageBlocks(blockId: string, params?: any): Promise<any>;
+  getPageBlocks(params: ListBlockChildrenParameters): Promise<ListBlockChildrenResponse>;
   getAllBlocks(blockId: string): Promise<NotionBlock[]>;
 }
 

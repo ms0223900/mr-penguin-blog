@@ -28,34 +28,53 @@ function printUsage() {
   console.log('  --help, -h    Show this help message');
 }
 
-function parseArgs() {
-  try {
-    const args = process.argv.slice(2);
+function parseArgs(): { pageId: string } {
+  const args = process.argv.slice(2);
 
-    validateArgs(args);
+  const result = validateArgs(args);
 
-    const pageId = parsePageIdFromArg(args[0]);
-
-    validateUuid(pageId);
-
-    return { pageId };
-  } catch (error) {
-    console.error('❌ Error:', (error as Error).message);
-    process.exit(1);
+  switch (result.type) {
+    case ValidationResultType.OK: {
+      const pageId = parsePageIdFromArg(result.pageId);
+      validateUuid(pageId);
+      return { pageId };
+    }
+    case ValidationResultType.HELP:
+      printUsage();
+      process.exit(0);
+    case ValidationResultType.ERROR:
+      console.error('❌ Error:', result.message);
+      process.exit(1);
   }
 }
 
-function validateArgs(args: string[]) {
-  if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
-    printUsage();
-    process.exit(0);
+enum ValidationResultType {
+  OK = 'ok',
+  HELP = 'help',
+  ERROR = 'error',
+}
+
+type ValidationResult =
+  | { type: ValidationResultType.OK; pageId: string }
+  | { type: ValidationResultType.HELP }
+  | { type: ValidationResultType.ERROR; message: string };
+
+function validateArgs(args: string[]): ValidationResult {
+  if (args.includes('--help') || args.includes('-h')) {
+    return { type: ValidationResultType.HELP };
+  }
+
+  if (args.length === 0) {
+    return { type: ValidationResultType.ERROR, message: 'Page ID is required' };
   }
 
   if (args.length !== 1) {
-    printUsage();
-    throw new Error('Exactly one page ID is required');
+    return { type: ValidationResultType.ERROR, message: 'Exactly one page ID is required' };
   }
+
+  return { type: ValidationResultType.OK, pageId: args[0] };
 }
+
 
 // parse page id from arg
 function parsePageIdFromArg(arg: string): string {

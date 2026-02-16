@@ -9,7 +9,8 @@
 // Register tsconfig paths for module resolution
 import 'tsconfig-paths/register';
 
-import { NotionToBlogService } from './notion-to-blog-service';
+import { parseNotionUrlToId } from '@/src/notion-to-blog/scripts/parse-notion-url-to-id';
+import { ConversionResult, NotionToBlogService } from './notion-to-blog-service';
 
 function printUsage() {
   console.log('Usage: ts-node convert-cli.ts <page-id>');
@@ -28,44 +29,67 @@ function printUsage() {
 }
 
 function parseArgs() {
-  const args = process.argv.slice(2);
+  try {
+    const args = process.argv.slice(2);
 
+    validateArgs(args);
+
+    const pageId = parsePageIdFromArg(args[0]);
+
+    validateUuid(pageId);
+
+    return { pageId };
+  } catch (error) {
+    console.error('❌ Error:', (error as Error).message);
+    process.exit(1);
+  }
+}
+
+function validateArgs(args: string[]) {
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
     printUsage();
     process.exit(0);
   }
 
   if (args.length !== 1) {
-    console.error('❌ Error: Exactly one page ID is required');
-    console.log('');
     printUsage();
-    process.exit(1);
+    throw new Error('Exactly one page ID is required');
+  }
+}
+
+// parse page id from arg
+function parsePageIdFromArg(arg: string): string {
+  function isNotionUrl(arg: string): boolean {
+    try {
+      const url = new URL(arg);
+      return url.hostname.includes('notion.so');
+    } catch {
+      return false;
+    }
   }
 
-  const pageId = args[0];
+  if (isNotionUrl(arg)) {
+    return parseNotionUrlToId(arg);
+  }
+  return arg
+}
 
-  // Basic validation for Notion page ID format (UUID v4)
+function isValidUuid(uuid: string): boolean {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  if (!uuidRegex.test(pageId)) {
-    console.error('❌ Error: Invalid page ID format. Expected UUID format (e.g., 12345678-abcd-1234-5678-123456789abc)');
-    process.exit(1);
-  }
+  return uuidRegex.test(uuid);
+}
 
-  return { pageId };
+function validateUuid(uuid: string): void {
+  if (!isValidUuid(uuid)) {
+    const errorMessage = 'Invalid page ID format. Expected UUID format (e.g., 12345678-abcd-1234-5678-123456789abc)';
+    throw new Error(errorMessage);
+  }
 }
 
 async function main() {
   const { pageId } = parseArgs();
 
   console.log('🚀 Notion to Blog Converter CLI\n');
-
-  // Check for NOTION_TOKEN environment variable
-  if (!process.env.NOTION_TOKEN) {
-    console.error('❌ Error: NOTION_TOKEN environment variable is not set');
-    console.error('Please set it with: export NOTION_TOKEN=your_notion_integration_token');
-    console.error('Create an integration at: https://developers.notion.com/');
-    process.exit(1);
-  }
 
   // Initialize the service with configuration optimized for CLI usage
   const service = new NotionToBlogService({
@@ -82,9 +106,7 @@ async function main() {
     const connected = await service.testConnection();
 
     if (!connected) {
-      console.error('❌ Cannot connect to Notion API.');
-      console.error('Please ensure NOTION_TOKEN environment variable is set correctly.');
-      console.error('Create an integration at: https://developers.notion.com/');
+      showConnectedFailedMessage();
       process.exit(1);
     }
 
@@ -103,23 +125,7 @@ async function main() {
     });
 
     if (result.success) {
-      console.log('\n🎉 Conversion completed successfully!');
-      console.log('='.repeat(50));
-      console.log(`Article ID: ${result.articleId}`);
-      console.log(`Saved to: ${result.articlePath}`);
-
-      if (result.metadata) {
-        console.log(`Images processed: ${result.metadata.imagesDownloaded}`);
-        console.log(`Content length: ${result.metadata.contentLength} characters`);
-      }
-
-      console.log('='.repeat(50));
-      console.log('\nNext steps:');
-      console.log('1. Review the generated article JSON');
-      console.log('2. Check downloaded images in public/assets/');
-      console.log('3. Commit and push changes to your repository');
-      console.log('4. The article is now ready for publication!');
-
+      showSuccessfulMessage(result);
       process.exit(0);
     } else {
       console.error('\n❌ Conversion failed:');
@@ -130,6 +136,31 @@ async function main() {
   } catch (error) {
     console.error('\n💥 Unexpected error:', error);
     process.exit(1);
+  }
+
+  function showConnectedFailedMessage() {
+    console.error('❌ Cannot connect to Notion API.');
+    console.error('Please ensure NOTION_TOKEN environment variable is set correctly.');
+    console.error('Create an integration at: https://developers.notion.com/');
+  }
+
+  function showSuccessfulMessage(result: ConversionResult) {
+    console.log('\n🎉 Conversion completed successfully!');
+    console.log('='.repeat(50));
+    console.log(`Article ID: ${result.articleId}`);
+    console.log(`Saved to: ${result.articlePath}`);
+
+    if (result.metadata) {
+      console.log(`Images processed: ${result.metadata.imagesDownloaded}`);
+      console.log(`Content length: ${result.metadata.contentLength} characters`);
+    }
+
+    console.log('='.repeat(50));
+    console.log('\nNext steps:');
+    console.log('1. Review the generated article JSON');
+    console.log('2. Check downloaded images in public/assets/');
+    console.log('3. Commit and push changes to your repository');
+    console.log('4. The article is now ready for publication!');
   }
 }
 
